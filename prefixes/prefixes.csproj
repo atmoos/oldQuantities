@@ -1,9 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\prefixes\prefixes.csproj" />
-    <ProjectReference Include="..\measures\measures.csproj" />
-    <ProjectReference Include="..\units\units.csproj" />
     <ProjectReference Include="..\common\common.csproj" />
   </ItemGroup>
 

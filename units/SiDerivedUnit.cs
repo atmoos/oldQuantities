@@ -2,8 +2,7 @@ using System;
 
 namespace Quantities.Unit
 {
-    public abstract class SiDerivedUnit : IUnit
+    public abstract class SiDerivedUnit : SiUnit
     {
-        public abstract override String ToString();
     }
 }

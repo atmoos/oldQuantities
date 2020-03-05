@@ -1,6 +1,6 @@
 using System;
 
-namespace Quantities.Prefix
+namespace Quantities.Prefixes
 {
     /*
     yotta   Y   1000000000000000000000000   10+21

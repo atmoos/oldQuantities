@@ -5,6 +5,7 @@
     <ProjectReference Include="..\measures\measures.csproj" />
     <ProjectReference Include="..\units\units.csproj" />
     <ProjectReference Include="..\common\common.csproj" />
+    <ProjectReference Include="..\dimensions\dimensions.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

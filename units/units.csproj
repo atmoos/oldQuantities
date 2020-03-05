@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\prefixes\prefixes.csproj" />
     <ProjectReference Include="..\common\common.csproj" />
+    <ProjectReference Include="..\dimensions\dimensions.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

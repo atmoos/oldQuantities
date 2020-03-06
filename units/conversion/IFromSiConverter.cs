@@ -2,9 +2,7 @@ using System;
 
 namespace Quantities.Unit.Conversion
 {
-    public interface IFromSiConverter<out TSiUnit, in TNonSiUnit>
-        where TSiUnit : SiUnit
-        where TNonSiUnit : INonSiUnit
+    public interface IFromSiConverter
     {
         Double FromSi(Double siValue);
     }

@@ -2,9 +2,7 @@ using System;
 
 namespace Quantities.Unit.Conversion
 {
-    public abstract class Convertible<TSi, TNonSi> : IToSiConverter<TNonSi, TSi>, IFromSiConverter<TSi, TNonSi>
-        where TSi : SiUnit, new()
-        where TNonSi : INonSiUnit, new()
+    public abstract class Convertible : IConvertible
     {
         private readonly Double _asSiUnit;
         private readonly Double _fromSiUnit;

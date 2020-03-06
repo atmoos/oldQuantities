@@ -49,10 +49,21 @@ namespace Quantities
             return new Length(Quantity<ILength>.NonSi<TNonSiUnit>(in value));
         }
 
-        private sealed class LengthUnit<TPrefix, TUnit> : SiUnit, ILength
+        public static Length operator +(Length left, Length right)
+        {
+            return new Length(left.Quantity.Add(right.Quantity));
+        }
+
+        public override String ToString() => Quantity.ToString();
+        private sealed class LengthUnit<TPrefix, TUnit> : SiUnit, ILength, IScaler<ILength>
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
+            public double Scale<TOther>(in double other) where TOther : ILength, new()
+            {
+                throw new NotImplementedException();
+            }
+
             public override String ToString() => Pool<PrefixedUnit<TPrefix, TUnit>>.Item.ToString();
         }
     }

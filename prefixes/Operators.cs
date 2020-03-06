@@ -2,6 +2,13 @@ using System;
 
 namespace Quantities.Prefixes
 {
+    internal static class Scale<TLeft, TRight>
+        where TLeft : Prefix, new()
+        where TRight : Prefix, new()
+    {
+        private static readonly Double _scaleFactor = Math.Pow(10d, Pool<TLeft>.Item.Exponent + Pool<TRight>.Item.Exponent);
+        public static Double Lift(in Double value) => _scaleFactor * value;
+    }
     internal static class Multiply<TLeft, TRight>
         where TLeft : Prefix, new()
         where TRight : Prefix, new()

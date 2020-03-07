@@ -51,7 +51,12 @@ namespace Quantities
 
         public static Length operator +(Length left, Length right)
         {
-            return null;
+            return new Length(left.Quantity.Add(right.Quantity));
+        }
+
+        public static Length operator -(Length left, Length right)
+        {
+            return new Length(left.Quantity.Subtract(right.Quantity));
         }
 
         public override String ToString() => Quantity.ToString();

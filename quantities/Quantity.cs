@@ -17,6 +17,17 @@ namespace Quantities
         public abstract Quantity<TDimesion> ToNonSi<TNonSiDimesion>()
             where TNonSiDimesion : INonSiUnit, TDimesion, new();
 
+        public Quantity<TDimesion> Add(Quantity<TDimesion> other)
+        {
+            var converted = this.Map(other);
+            return With(Value + converted.Value);
+        }
+        public Quantity<TDimesion> Subtract(Quantity<TDimesion> other)
+        {
+            var converted = this.Map(other);
+            return With(Value - converted.Value);
+        }
+
         public override String ToString() => $"{Value:g5} {Dimension}";
 
         public String ToString(String format, IFormatProvider formatProvider)
@@ -26,6 +37,7 @@ namespace Quantities
 
         public abstract void InjectInto(IInjectable<TDimesion> injectable);
         private protected abstract Quantity<TDimesion> With(in Double value);
+        private protected abstract Quantity<TDimesion> Map(Quantity<TDimesion> other);
         public static Quantity<TDimesion> Si<TSiDimesion>(in Double value)
             where TSiDimesion : ISiMeasure, IScaler<ISiMeasure>, TDimesion, new()
         {
@@ -56,6 +68,11 @@ namespace Quantities
             }
             public override void InjectInto(IInjectable<TDimesion> injectable) => injectable.Inject<TSiDimesion>();
             private protected override Quantity<TDimesion> With(in Double value) => new SiQuantity<TSiDimesion>(in value);
+
+            private protected override Quantity<TDimesion> Map(Quantity<TDimesion> other)
+            {
+                return other.To<TSiDimesion>();
+            }
         }
         private sealed class NonSiQuantity<TNonSiDimesion> : Quantity<TDimesion>
             where TNonSiDimesion : INonSiUnit, TDimesion, new()
@@ -75,6 +92,11 @@ namespace Quantities
             }
             public override void InjectInto(IInjectable<TDimesion> injectable) => injectable.Inject<TNonSiDimesion>();
             private protected override Quantity<TDimesion> With(in Double value) => new NonSiQuantity<TNonSiDimesion>(in value);
+
+            private protected override Quantity<TDimesion> Map(Quantity<TDimesion> other)
+            {
+                return other.ToNonSi<TNonSiDimesion>();
+            }
         }
     }
 }

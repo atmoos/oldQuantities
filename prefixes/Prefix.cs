@@ -25,7 +25,7 @@ namespace Quantities.Prefixes
     zepto   z   0.000000000000000000001   10−21
     yocto   y   0.000000000000000000000001   10−24
     */
-    public abstract class Prefix : IScaler<Prefix>
+    public abstract class Prefix
     {
         internal Int32 Exponent { get; }
         protected internal Prefix(Int32 exponent) => Exponent = exponent;
@@ -33,7 +33,7 @@ namespace Quantities.Prefixes
             where TRight : Prefix, new();
         internal abstract Prefix Divide<TDenominator>()
             where TDenominator : Prefix, new();
-        public abstract Double Scale<TOther>(in Double other)
+        internal abstract Double Scale<TOther>(in Double other)
             where TOther : Prefix, new();
 
         public abstract override String ToString();

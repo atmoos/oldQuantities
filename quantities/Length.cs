@@ -1,8 +1,8 @@
 using System;
 using Quantities.Unit;
-using Quantities.Unit.Compound;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
+using Quantities.Measures;
 
 namespace Quantities
 {
@@ -18,13 +18,13 @@ namespace Quantities
         public Length To<TUnit>()
             where TUnit : SiUnit, ILength, new()
         {
-            return new Length(Quantity.To<TUnit>());
+            return To<UnitPrefix, TUnit>();
         }
         public Length To<TPrefix, TUnit>()
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
-            return new Length(Quantity.To<LengthUnit<TPrefix, TUnit>>());
+            return new Length(Quantity.To<SiLength<TPrefix, TUnit>>());
         }
         public Length ToNonSi<TUnit>()
             where TUnit : INonSiUnit, ILength, new()
@@ -35,13 +35,13 @@ namespace Quantities
         public static Length Create<TUnit>(in Double value)
             where TUnit : SiUnit, ILength, new()
         {
-            return new Length(Quantity<ILength>.Si<TUnit>(in value));
+            return Create<UnitPrefix, TUnit>(in value);
         }
-        public static Length Create<TPrefix, TUnit>(Double value)
+        public static Length Create<TPrefix, TUnit>(in Double value)
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
-            return new Length(Quantity<ILength>.Si<LengthUnit<TPrefix, TUnit>>(in value));
+            return new Length(Quantity<ILength>.Si<SiLength<TPrefix, TUnit>>(in value));
         }
         public static Length CreateNonSi<TNonSiUnit>(Double value)
             where TNonSiUnit : INonSiUnit, ILength, new()
@@ -51,20 +51,14 @@ namespace Quantities
 
         public static Length operator +(Length left, Length right)
         {
-            return new Length(left.Quantity.Add(right.Quantity));
+            return null;
         }
 
         public override String ToString() => Quantity.ToString();
-        private sealed class LengthUnit<TPrefix, TUnit> : SiUnit, ILength, IScaler<ILength>
+        private sealed class SiLength<TPrefix, TUnit> : SiMeasure<TPrefix, TUnit>, ILength
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
-            public double Scale<TOther>(in double other) where TOther : ILength, new()
-            {
-                throw new NotImplementedException();
-            }
-
-            public override String ToString() => Pool<PrefixedUnit<TPrefix, TUnit>>.Item.ToString();
         }
     }
 }

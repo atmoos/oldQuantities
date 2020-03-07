@@ -13,6 +13,7 @@ namespace Quantities.Measures
         private static readonly String REPRESENTATION = $"{PREFIX}{UNIT}";
         public Prefix Prefix => PREFIX;
         public SiUnit Unit => UNIT;
+        public Double Normalize(in Double value) => PREFIX.Scale<UnitPrefix>(in value);
         public Double Scale<TOther>(in Double other) where TOther : ISiMeasure, new()
         {
             return Pool<TOther>.Item.Prefix.Scale<TPrefix>(in other);

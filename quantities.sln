@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "common", "common\common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dimensions", "dimensions\dimensions.csproj", "{0761294A-C4A3-4FD7-9495-A203D152FD4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quantities.test", "quantities.test\quantities.test.csproj", "{AACE997C-DEC6-4F56-8656-848D6F09066A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,5 +102,17 @@ Global
 		{0761294A-C4A3-4FD7-9495-A203D152FD4A}.Release|x64.Build.0 = Release|Any CPU
 		{0761294A-C4A3-4FD7-9495-A203D152FD4A}.Release|x86.ActiveCfg = Release|Any CPU
 		{0761294A-C4A3-4FD7-9495-A203D152FD4A}.Release|x86.Build.0 = Release|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Debug|x64.Build.0 = Debug|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Debug|x86.Build.0 = Debug|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Release|x64.ActiveCfg = Release|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Release|x64.Build.0 = Release|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Release|x86.ActiveCfg = Release|Any CPU
+		{AACE997C-DEC6-4F56-8656-848D6F09066A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

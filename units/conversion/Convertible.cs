@@ -13,7 +13,7 @@ namespace Quantities.Unit.Conversion
             _fromSiUnit = 1d / asSiUnit;
         }
 
-        public Double ToSi(Double nonSiValue) => nonSiValue * _asSiUnit;
-        public Double FromSi(Double siValue) => siValue * _fromSiUnit;
+        public Double ToSi(in Double nonSiValue) => nonSiValue * _asSiUnit;
+        public Double FromSi(in Double siValue) => siValue * _fromSiUnit;
     }
 }

@@ -9,11 +9,8 @@ namespace Quantities
     public sealed class Length : ILength
     {
         public Double Value => Quantity.Value;
-
         public ILength Dimension => Quantity.Dimension;
-
         private Quantity<ILength> Quantity { get; }
-
         private Length(Quantity<ILength> quantity) => Quantity = quantity;
         public Length To<TUnit>()
             where TUnit : SiUnit, ILength, new()
@@ -31,7 +28,6 @@ namespace Quantities
         {
             return new Length(Quantity.ToNonSi<TUnit>());
         }
-
         public static Length Create<TUnit>(in Double value)
             where TUnit : SiUnit, ILength, new()
         {
@@ -48,12 +44,10 @@ namespace Quantities
         {
             return new Length(Quantity<ILength>.NonSi<TNonSiUnit>(in value));
         }
-
         public static Length operator +(Length left, Length right)
         {
             return new Length(left.Quantity.Add(right.Quantity));
         }
-
         public static Length operator -(Length left, Length right)
         {
             return new Length(left.Quantity.Subtract(right.Quantity));

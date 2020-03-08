@@ -6,4 +6,7 @@ namespace Quantities
     {
         Double Scale<TOther>(in Double other) where TOther : TBase, new();
     }
+
+    public interface IScaleUp { }
+    public interface IScaleDown { }
 }

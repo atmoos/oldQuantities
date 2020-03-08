@@ -1,22 +1,20 @@
-using System;
 using Xunit;
 using Quantities.Unit.Si;
 using Quantities.Unit.Imperial;
 using Quantities.Prefixes;
 
+using static Quantities.Test.Metrics;
+
 namespace Quantities.Test
 {
     public sealed class LengthTest
     {
-        private const Int32 SI_PRECISION = 15;
-        private const Int32 IMPERIAL_PRECISION = 9;
-
         [Fact]
         public void MetreToKilometre()
         {
             var metres = Length.Create<Metre>(1000);
             var kilometres = metres.To<Kilo, Metre>();
-            Assert.Equal(1d, kilometres.Value, SI_PRECISION);
+            Assert.Equal(1d, kilometres.Value, SiPrecision);
         }
 
         [Fact]
@@ -24,7 +22,7 @@ namespace Quantities.Test
         {
             var metres = Length.Create<Metre>(1);
             var millimetres = metres.To<Milli, Metre>();
-            Assert.Equal(1000d, millimetres.Value, SI_PRECISION);
+            Assert.Equal(1000d, millimetres.Value, SiPrecision);
         }
 
         [Fact]
@@ -32,7 +30,7 @@ namespace Quantities.Test
         {
             var millimetres = Length.Create<Milli, Metre>(2e6);
             var kilometres = millimetres.To<Kilo, Metre>();
-            Assert.Equal(2, kilometres.Value, SI_PRECISION);
+            Assert.Equal(2, kilometres.Value, SiPrecision);
         }
 
         [Fact]
@@ -40,7 +38,7 @@ namespace Quantities.Test
         {
             var miles = Length.CreateNonSi<Mile>(1);
             var kilometres = miles.To<Kilo, Metre>();
-            Assert.Equal(1.609334, kilometres.Value, SI_PRECISION);
+            Assert.Equal(1.609334, kilometres.Value, SiPrecision);
         }
 
         [Fact]
@@ -48,14 +46,14 @@ namespace Quantities.Test
         {
             var kilometres = Length.Create<Kilo, Metre>(1.609334);
             var miles = kilometres.ToNonSi<Mile>();
-            Assert.Equal(1, miles.Value, SI_PRECISION);
+            Assert.Equal(1, miles.Value, SiPrecision);
         }
         [Fact]
         public void FootToMile()
         {
             var feet = Length.CreateNonSi<Foot>(5279.967192);
             var miles = feet.ToNonSi<Mile>();
-            Assert.Equal(1, miles.Value, IMPERIAL_PRECISION);
+            Assert.Equal(1, miles.Value, ImperialPrecision);
         }
 
         [Fact]
@@ -64,7 +62,7 @@ namespace Quantities.Test
             var kilometres = Length.Create<Kilo, Metre>(10);
             var metres = Length.Create<Metre>(20);
             var result = kilometres + metres;
-            Assert.Equal(10.02, result.Value, SI_PRECISION);
+            Assert.Equal(10.02, result.Value, SiPrecision);
         }
         [Fact]
         public void AddKilometresToMiles()
@@ -72,7 +70,7 @@ namespace Quantities.Test
             Length kilometres = Length.Create<Kilo, Metre>(1);
             var miles = Length.CreateNonSi<Mile>(1);
             var result = miles + kilometres;
-            Assert.Equal(1.62137505328, result.Value, IMPERIAL_PRECISION);
+            Assert.Equal(1.62137505328, result.Value, ImperialPrecision);
         }
         [Fact]
         public void AddMilesToKilometres()
@@ -80,7 +78,7 @@ namespace Quantities.Test
             var kilometres = Length.Create<Kilo, Metre>(1);
             var miles = Length.CreateNonSi<Mile>(1);
             var result = kilometres + miles;
-            Assert.Equal(2.609334, result.Value, SI_PRECISION);
+            Assert.Equal(2.609334, result.Value, SiPrecision);
         }
         [Fact]
         public void SubtractKilometresFromMetres()
@@ -88,7 +86,7 @@ namespace Quantities.Test
             var metres = Length.Create<Metre>(2000);
             var kilometres = Length.Create<Kilo, Metre>(0.5);
             var result = metres - kilometres;
-            Assert.Equal(1500, result.Value, SI_PRECISION);
+            Assert.Equal(1500, result.Value, SiPrecision);
         }
 
         [Fact]
@@ -97,7 +95,7 @@ namespace Quantities.Test
             var kilometres = Length.Create<Kilo, Metre>(2.609334);
             var miles = Length.CreateNonSi<Mile>(1);
             var result = kilometres - miles;
-            Assert.Equal(1, result.Value, SI_PRECISION);
+            Assert.Equal(1, result.Value, SiPrecision);
         }
     }
 }

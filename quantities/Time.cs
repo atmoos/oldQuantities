@@ -1,49 +1,44 @@
 using System;
 using Quantities.Unit;
+using Quantities.Unit.Si;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
 
 namespace Quantities
 {
-    public sealed class Time : ITime
+    public sealed class Time : IQuantity<ITime>, ITime
     {
         public Double Value => Quantity.Value;
         public ITime Dimension => Quantity.Dimension;
         private Quantity<ITime> Quantity { get; }
         private Time(Quantity<ITime> quantity) => Quantity = quantity;
-        public Time To<TUnit>()
-            where TUnit : SiUnit, ITime, new()
-        {
-            return To<UnitPrefix, TUnit>();
-        }
+        public Time ToSeconds() => To<UnitPrefix, Second>();
         public Time To<TPrefix, TUnit>()
-            where TPrefix : Prefix, new()
+            where TPrefix : Prefix, IScaleDown, new()
             where TUnit : SiUnit, ITime, new()
         {
             return new Time(Quantity.To<SiTime<TPrefix, TUnit>>());
         }
-        public Time ToNonSi<TUnit>()
-            where TUnit : INonSiUnit, ITime, new()
+        public Time ToSiDerived<TUnit>()
+            where TUnit : SiDerivedUnit, ITime, new()
         {
-            return new Time(Quantity.ToNonSi<TUnit>());
+            return new Time(Quantity.ToOther<TUnit>());
         }
-        public static Time Create<TUnit>(in Double value)
-            where TUnit : SiUnit, ITime, new()
-        {
-            return Create<UnitPrefix, TUnit>(in value);
-        }
+        public TimeSpan ToTimeSpan() => TimeSpan.FromSeconds(ToSeconds().Value);
+        public static Time Seconds(in Double value) => Create<UnitPrefix, Second>(in value);
         public static Time Create<TPrefix, TUnit>(in Double value)
-            where TPrefix : Prefix, new()
+            where TPrefix : Prefix, IScaleDown, new()
             where TUnit : SiUnit, ITime, new()
         {
             return new Time(Quantity<ITime>.Si<SiTime<TPrefix, TUnit>>(in value));
         }
-        public static Time CreateNonSi<TNonSiUnit>(Double value)
-            where TNonSiUnit : INonSiUnit, ITime, new()
+        public static Time CreateSiDerived<TSiDerived>(Double value)
+            where TSiDerived : SiDerivedUnit, ITime, new()
         {
-            return new Time(Quantity<ITime>.NonSi<TNonSiUnit>(in value));
+            return new Time(Quantity<ITime>.Other<TSiDerived>(in value));
         }
+        public static implicit operator Time(TimeSpan span) => Seconds(span.TotalSeconds);
         public static Time operator +(Time left, Time right)
         {
             return new Time(left.Quantity.Add(right.Quantity));

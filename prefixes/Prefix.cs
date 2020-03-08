@@ -38,7 +38,7 @@ namespace Quantities.Prefixes
 
         public abstract override String ToString();
     }
-    public sealed class Yotta : Prefix
+    public sealed class Yotta : Prefix, IScaleUp
     {
         public Yotta() : base(24) { }
         public override String ToString() => "Y";
@@ -46,7 +46,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Yotta, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Yotta, TOther>.Lift(other);
     }
-    public sealed class Zetta : Prefix
+    public sealed class Zetta : Prefix, IScaleUp
     {
         public Zetta() : base(21) { }
         public override String ToString() => "Z";
@@ -54,7 +54,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Zetta, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Zetta, TOther>.Lift(other);
     }
-    public sealed class Exa : Prefix
+    public sealed class Exa : Prefix, IScaleUp
     {
         public Exa() : base(18) { }
         public override String ToString() => "E";
@@ -62,7 +62,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Exa, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Exa, TOther>.Lift(other);
     }
-    public sealed class Peta : Prefix
+    public sealed class Peta : Prefix, IScaleUp
     {
         public Peta() : base(15) { }
         public override String ToString() => "P";
@@ -70,7 +70,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Peta, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Peta, TOther>.Lift(other);
     }
-    public sealed class Tera : Prefix
+    public sealed class Tera : Prefix, IScaleUp
     {
         public Tera() : base(12) { }
         public override String ToString() => "T";
@@ -78,7 +78,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Tera, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Tera, TOther>.Lift(other);
     }
-    public sealed class Giga : Prefix
+    public sealed class Giga : Prefix, IScaleUp
     {
         public Giga() : base(9) { }
         public override String ToString() => "G";
@@ -86,7 +86,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Giga, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Giga, TOther>.Lift(other);
     }
-    public sealed class Mega : Prefix
+    public sealed class Mega : Prefix, IScaleUp
     {
         public Mega() : base(6) { }
         public override String ToString() => "M";
@@ -94,7 +94,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Mega, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Mega, TOther>.Lift(other);
     }
-    public sealed class Kilo : Prefix
+    public sealed class Kilo : Prefix, IScaleUp
     {
         public Kilo() : base(3) { }
         public override String ToString() => "K";
@@ -102,7 +102,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Kilo, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Kilo, TOther>.Lift(other);
     }
-    public sealed class Hecto : Prefix
+    public sealed class Hecto : Prefix, IScaleUp
     {
         public Hecto() : base(2) { }
         public override String ToString() => "h";
@@ -110,7 +110,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Hecto, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Hecto, TOther>.Lift(other);
     }
-    public sealed class Deca : Prefix
+    public sealed class Deca : Prefix, IScaleUp
     {
         public Deca() : base(1) { }
         public override String ToString() => "da";
@@ -119,7 +119,7 @@ namespace Quantities.Prefixes
         internal override Double Scale<TOther>(in Double other) => Scale<Deca, TOther>.Lift(other);
     }
     [System.Diagnostics.DebuggerDisplay("1")]
-    sealed class UnitPrefix : Prefix
+    sealed class UnitPrefix : Prefix, IScaleUp, IScaleDown // Since we use it by default on unit less instantiations.
     {
         public UnitPrefix() : base(0) { }
         public override String ToString() => String.Empty;
@@ -127,7 +127,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<UnitPrefix, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<UnitPrefix, TOther>.Lift(other);
     }
-    public sealed class Deci : Prefix
+    public sealed class Deci : Prefix, IScaleDown
     {
         public Deci() : base(-1) { }
         public override String ToString() => "d";
@@ -136,7 +136,7 @@ namespace Quantities.Prefixes
         internal override Double Scale<TOther>(in Double other) => Scale<Deci, TOther>.Lift(other);
 
     }
-    public sealed class Centi : Prefix
+    public sealed class Centi : Prefix, IScaleDown
     {
         public Centi() : base(-2) { }
         public override String ToString() => "c";
@@ -144,7 +144,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Centi, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Centi, TOther>.Lift(other);
     }
-    public sealed class Milli : Prefix
+    public sealed class Milli : Prefix, IScaleDown
     {
         public Milli() : base(-3) { }
         public override String ToString() => "m";
@@ -152,7 +152,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Milli, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Milli, TOther>.Lift(other);
     }
-    public sealed class Micro : Prefix
+    public sealed class Micro : Prefix, IScaleDown
     {
         public Micro() : base(-6) { }
         public override String ToString() => "μ";
@@ -160,7 +160,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Micro, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Micro, TOther>.Lift(other);
     }
-    public sealed class Nano : Prefix
+    public sealed class Nano : Prefix, IScaleDown
     {
         public Nano() : base(-9) { }
         public override String ToString() => "n";
@@ -168,7 +168,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Nano, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Nano, TOther>.Lift(other);
     }
-    public sealed class Pico : Prefix
+    public sealed class Pico : Prefix, IScaleDown
     {
         public Pico() : base(-12) { }
         public override String ToString() => "p";
@@ -176,7 +176,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Pico, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Pico, TOther>.Lift(other);
     }
-    public sealed class Femto : Prefix
+    public sealed class Femto : Prefix, IScaleDown
     {
         public Femto() : base(-15) { }
         public override String ToString() => "f";
@@ -184,7 +184,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Femto, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Femto, TOther>.Lift(other);
     }
-    public sealed class Atto : Prefix
+    public sealed class Atto : Prefix, IScaleDown
     {
         public Atto() : base(-18) { }
         public override String ToString() => "a";
@@ -192,7 +192,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Atto, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Atto, TOther>.Lift(other);
     }
-    public sealed class Zepto : Prefix
+    public sealed class Zepto : Prefix, IScaleDown
     {
         public Zepto() : base(-21) { }
         public override String ToString() => "z";
@@ -200,7 +200,7 @@ namespace Quantities.Prefixes
         internal override Prefix Divide<TDenominator>() => Divide<Zepto, TDenominator>.Result;
         internal override Double Scale<TOther>(in Double other) => Scale<Zepto, TOther>.Lift(other);
     }
-    public sealed class Yocto : Prefix
+    public sealed class Yocto : Prefix, IScaleDown
     {
         public Yocto() : base(-24) { }
         public override String ToString() => "y";

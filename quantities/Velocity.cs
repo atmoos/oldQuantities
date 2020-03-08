@@ -6,7 +6,7 @@ using Quantities.Measures;
 
 namespace Quantities
 {
-    public sealed class Velocity : IVelocity
+    public sealed class Velocity : IQuantity<IVelocity>, IVelocity
     {
         public Double Value => Quantity.Value;
         public IVelocity Dimension => Quantity.Dimension;
@@ -26,7 +26,7 @@ namespace Quantities
         public Velocity ToNonSi<TUnit>()
             where TUnit : INonSiUnit, IVelocity, new()
         {
-            return new Velocity(Quantity.ToNonSi<TUnit>());
+            return new Velocity(Quantity.ToOther<TUnit>());
         }
         public static Velocity Create<TUnit>(in Double value)
             where TUnit : SiUnit, IVelocity, new()
@@ -42,7 +42,7 @@ namespace Quantities
         public static Velocity CreateNonSi<TNonSiUnit>(Double value)
             where TNonSiUnit : INonSiUnit, IVelocity, new()
         {
-            return new Velocity(Quantity<IVelocity>.NonSi<TNonSiUnit>(in value));
+            return new Velocity(Quantity<IVelocity>.Other<TNonSiUnit>(in value));
         }
         public static Velocity operator +(Velocity left, Velocity right)
         {

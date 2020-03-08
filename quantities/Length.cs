@@ -6,7 +6,7 @@ using Quantities.Measures;
 
 namespace Quantities
 {
-    public sealed class Length : ILength
+    public sealed class Length : IQuantity<ILength>, ILength
     {
         public Double Value => Quantity.Value;
         public ILength Dimension => Quantity.Dimension;
@@ -26,7 +26,7 @@ namespace Quantities
         public Length ToNonSi<TUnit>()
             where TUnit : INonSiUnit, ILength, new()
         {
-            return new Length(Quantity.ToNonSi<TUnit>());
+            return new Length(Quantity.ToOther<TUnit>());
         }
         public static Length Create<TUnit>(in Double value)
             where TUnit : SiUnit, ILength, new()
@@ -42,7 +42,7 @@ namespace Quantities
         public static Length CreateNonSi<TNonSiUnit>(Double value)
             where TNonSiUnit : INonSiUnit, ILength, new()
         {
-            return new Length(Quantity<ILength>.NonSi<TNonSiUnit>(in value));
+            return new Length(Quantity<ILength>.Other<TNonSiUnit>(in value));
         }
         public static Length operator +(Length left, Length right)
         {

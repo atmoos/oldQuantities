@@ -9,11 +9,13 @@ namespace Quantities.Measures
         where TUnit : SiUnit, new()
     {
         private static readonly TPrefix PREFIX = Pool<TPrefix>.Item;
+        private static readonly UnitPrefix UNIT_PREFIX = Pool<UnitPrefix>.Item;
         private static readonly TUnit UNIT = Pool<TUnit>.Item;
         private static readonly String REPRESENTATION = $"{PREFIX}{UNIT}";
         public Prefix Prefix => PREFIX;
         public SiUnit Unit => UNIT;
         public Double Normalize(in Double value) => PREFIX.Scale<UnitPrefix>(in value);
+        public Double DeNormalize(in Double value) => UNIT_PREFIX.Scale<TPrefix>(in value);
         public Double Scale<TOther>(in Double other) where TOther : ISiMeasure, new()
         {
             return Pool<TOther>.Item.Prefix.Scale<TPrefix>(in other);

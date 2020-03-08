@@ -40,7 +40,7 @@ namespace Quantities.Test
         {
             var miles = Length.CreateNonSi<Mile>(1);
             var kilometres = miles.To<Kilo, Metre>();
-            Assert.Equal(1609.334, kilometres.Value, SI_PRECISION);
+            Assert.Equal(1.609334, kilometres.Value, SI_PRECISION);
         }
 
         [Fact]
@@ -66,9 +66,24 @@ namespace Quantities.Test
             var result = kilometres + metres;
             Assert.Equal(10.02, result.Value, SI_PRECISION);
         }
-
         [Fact]
-        public void SubtractKiloMetresFromMetres()
+        public void AddKilometresToMiles()
+        {
+            Length kilometres = Length.Create<Kilo, Metre>(1);
+            var miles = Length.CreateNonSi<Mile>(1);
+            var result = miles + kilometres;
+            Assert.Equal(1.62137505328, result.Value, IMPERIAL_PRECISION);
+        }
+        [Fact]
+        public void AddMilesToKilometres()
+        {
+            var kilometres = Length.Create<Kilo, Metre>(1);
+            var miles = Length.CreateNonSi<Mile>(1);
+            var result = kilometres + miles;
+            Assert.Equal(2.609334, result.Value, SI_PRECISION);
+        }
+        [Fact]
+        public void SubtractKilometresFromMetres()
         {
             var metres = Length.Create<Metre>(2000);
             var kilometres = Length.Create<Kilo, Metre>(0.5);
@@ -77,7 +92,7 @@ namespace Quantities.Test
         }
 
         [Fact]
-        public void SubtractMilesFromKiloMetres()
+        public void SubtractMilesFromKilometres()
         {
             var kilometres = Length.Create<Kilo, Metre>(2.609334);
             var miles = Length.CreateNonSi<Mile>(1);

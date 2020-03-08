@@ -10,7 +10,7 @@ namespace Quantities
     {
         public Double Value => Quantity.Value;
         public IVelocity Dimension => Quantity.Dimension;
-        private Quantity<IVelocity> Quantity { get; }
+        internal Quantity<IVelocity> Quantity { get; }
         private Velocity(Quantity<IVelocity> quantity) => Quantity = quantity;
         public Velocity To<TUnit>()
             where TUnit : SiUnit, IVelocity, new()

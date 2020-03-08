@@ -1,5 +1,6 @@
 using Xunit;
 using Quantities.Unit.Si;
+using Quantities.Unit.SiDerived;
 using Quantities.Unit.Imperial;
 using Quantities.Prefixes;
 
@@ -96,6 +97,15 @@ namespace Quantities.Test
             var miles = Length.CreateNonSi<Mile>(1);
             var result = kilometres - miles;
             Assert.Equal(1, result.Value, SiPrecision);
+        }
+
+        [Fact]
+        public void LengthByTimeIsVelocity()
+        {
+            var distance = Length.Create<Kilo, Metre>(60);
+            var duration = Time.CreateSiDerived<Hour>(2);
+            var speed = distance / duration;
+            Assert.Equal(30, speed.Value, SiPrecision);
         }
     }
 }

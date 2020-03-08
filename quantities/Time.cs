@@ -11,7 +11,7 @@ namespace Quantities
     {
         public Double Value => Quantity.Value;
         public ITime Dimension => Quantity.Dimension;
-        private Quantity<ITime> Quantity { get; }
+        internal Quantity<ITime> Quantity { get; }
         private Time(Quantity<ITime> quantity) => Quantity = quantity;
         public Time ToSeconds() => To<UnitPrefix, Second>();
         public Time To<TPrefix, TUnit>()

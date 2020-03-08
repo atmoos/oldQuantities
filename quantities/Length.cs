@@ -10,7 +10,7 @@ namespace Quantities
     {
         public Double Value => Quantity.Value;
         public ILength Dimension => Quantity.Dimension;
-        private Quantity<ILength> Quantity { get; }
+        internal Quantity<ILength> Quantity { get; }
         private Length(Quantity<ILength> quantity) => Quantity = quantity;
         public Length To<TUnit>()
             where TUnit : SiUnit, ILength, new()
@@ -51,6 +51,10 @@ namespace Quantities
         public static Length operator -(Length left, Length right)
         {
             return new Length(left.Quantity.Subtract(right.Quantity));
+        }
+        public static Length operator /(Length distance, Time duration)
+        {
+            return null;
         }
 
         public override String ToString() => Quantity.ToString();

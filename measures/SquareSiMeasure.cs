@@ -1,4 +1,5 @@
 using System;
+using Quantities.Prefixes;
 
 namespace Quantities.Measures
 {
@@ -6,6 +7,9 @@ namespace Quantities.Measures
         where TUnitSiMeasure : SiMeasure, new()
     {
         private static readonly TUnitSiMeasure UNIT = Pool<TUnitSiMeasure>.Item;
+
+        private static readonly String REPRESENTATION = $"{UNIT}²";
+        internal override Prefix Anchor => UNIT.Anchor;
         public TUnitSiMeasure UnitMeasure => UNIT;
         public override Double Normalize(in Double value)
         {
@@ -17,7 +21,9 @@ namespace Quantities.Measures
         }
         public override Double Scale<TOther>(in Double other)
         {
-            return Math.Pow(UNIT.Scale<TOther>(in other), 2);
+            return other * Math.Pow(UNIT.Scale<TOther>(1d), 2);
         }
+
+        public override String ToString() => REPRESENTATION;
     }
 }

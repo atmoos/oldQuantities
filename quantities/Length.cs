@@ -58,7 +58,7 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
-        private sealed class SiLength<TPrefix, TUnit> : UnitSiMeasure<TPrefix, TUnit>, ILength
+        internal sealed class SiLength<TPrefix, TUnit> : UnitSiMeasure<TPrefix, TUnit>, ILength
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {

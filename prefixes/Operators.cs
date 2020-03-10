@@ -2,6 +2,9 @@ using System;
 
 namespace Quantities.Prefixes
 {
+    internal class Power
+    {
+    }
     internal static class Scale<TLeft, TRight>
         where TLeft : Prefix, new()
         where TRight : Prefix, new()

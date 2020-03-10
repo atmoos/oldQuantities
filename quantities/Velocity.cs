@@ -54,7 +54,7 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
-        private sealed class SiVelocity<TPrefix, TUnit> : SiMeasure<TPrefix, TUnit>, IVelocity
+        private sealed class SiVelocity<TPrefix, TUnit> : UnitSiMeasure<TPrefix, TUnit>, IVelocity
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, IVelocity, new()
         {

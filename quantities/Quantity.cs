@@ -14,7 +14,7 @@ namespace Quantities
         public abstract TDimesion Dimension { get; }
         private Quantity(in Double value) => Value = value;
         public abstract Quantity<TDimesion> To<TSiDimesion>()
-            where TSiDimesion : ISiMeasure, IScaler<ISiMeasure>, TDimesion, new();
+            where TSiDimesion : SiMeasure, TDimesion, new();
 
         public abstract Quantity<TDimesion> ToOther<TNonSiDimesion>()
             where TNonSiDimesion : IUnit, IConvert, TDimesion, new();
@@ -40,7 +40,7 @@ namespace Quantities
         protected abstract Quantity<TDimesion> With(in Double value);
         protected abstract Quantity<TDimesion> Map(Quantity<TDimesion> other);
         public static Quantity<TDimesion> Si<TSiDimesion>(in Double value)
-            where TSiDimesion : ISiMeasure, IScaler<ISiMeasure>, TDimesion, new()
+            where TSiDimesion : SiMeasure, TDimesion, new()
         {
             return new SiQuantity<TSiDimesion>(in value);
         }
@@ -51,7 +51,7 @@ namespace Quantities
         }
 
         private sealed class SiQuantity<TSiDimesion> : Quantity<TDimesion>
-            where TSiDimesion : ISiMeasure, IScaler<ISiMeasure>, TDimesion, new()
+            where TSiDimesion : SiMeasure, TDimesion, new()
         {
             private static TSiDimesion DIMENSION = Pool<TSiDimesion>.Item;
             public override TDimesion Dimension => DIMENSION;

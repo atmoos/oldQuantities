@@ -5,21 +5,18 @@ using Quantities.Dimensions;
 namespace Quantities.Measures
 {
     public interface IMeasure : IDimension { }
-    public interface ISiMeasure : IMeasure, INormalize
+    public interface IUnitMeasure<out TUnit>
     {
-        Prefix Prefix { get; }
-        SiUnit Unit { get; }
+        TUnit Unit { get; }
     }
-    public interface ISiMeasure<out TPrefix, out TUnit> : ISiMeasure
+    public interface IUnitSiMeasure<out TPrefix, out TUnit> : IUnitMeasure<TUnit>, IMeasure
         where TPrefix : Prefix
         where TUnit : SiUnit
     {
-        new TPrefix Prefix { get; }
-        new TUnit Unit { get; }
+        TPrefix Prefix { get; }
     }
-    public interface INonSiMeasure<out TUnit> : IMeasure
+    public interface INonSiUnitMeasure<out TUnit> : IUnitMeasure<TUnit>, IMeasure
         where TUnit : INonSiUnit
     {
-        TUnit Unit { get; }
     }
 }

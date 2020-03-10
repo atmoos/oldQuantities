@@ -1,4 +1,3 @@
-using System;
 using Quantities.Unit;
 using Quantities.Prefixes;
 using Quantities.Dimensions;
@@ -6,12 +5,10 @@ using Quantities.Dimensions;
 namespace Quantities.Measures
 {
     public interface IMeasure : IDimension { }
-    public interface ISiMeasure : IMeasure
+    public interface ISiMeasure : IMeasure, INormalize
     {
         Prefix Prefix { get; }
         SiUnit Unit { get; }
-        Double Normalize(in Double value);
-        Double DeNormalize(in Double value);
     }
     public interface ISiMeasure<out TPrefix, out TUnit> : ISiMeasure
         where TPrefix : Prefix

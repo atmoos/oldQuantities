@@ -1,7 +1,5 @@
 using Xunit;
 using Quantities.Unit.Si;
-using Quantities.Unit.SiDerived;
-using Quantities.Unit.Imperial;
 using Quantities.Prefixes;
 
 using static Quantities.Test.Metrics;
@@ -17,6 +15,14 @@ namespace Quantities.Test
             var right = Area.Square<Metre>(10);
             var result = left + right;
             Assert.Equal(30d, result.Value, SiPrecision);
+        }
+        [Fact]
+        public void AddSquareHectoMetresToSquareKiloMetres()
+        {
+            var left = Area.Square<Kilo, Metre>(2);
+            var right = Area.Square<Hecto, Metre>(50);
+            var result = left + right;
+            Assert.Equal(2.5d, result.Value, SiPrecision);
         }
 
         [Fact]

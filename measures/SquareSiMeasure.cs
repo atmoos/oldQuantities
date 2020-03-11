@@ -1,28 +1,17 @@
 using System;
+using Quantities.Unit;
 using Quantities.Prefixes;
+using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Measures
 {
-    public abstract class SquareSiMeasure<TUnitSiMeasure> : SiMeasure
-        where TUnitSiMeasure : SiMeasure, new()
+    public abstract class SquareSiMeasure<TPrefix, TUnit> : SiMeasure<TPrefix, Square>
+        where TPrefix : Prefix, new()
+        where TUnit : SiUnit, new()
     {
-        private static readonly TUnitSiMeasure UNIT = Pool<TUnitSiMeasure>.Item;
-
-        private static readonly String REPRESENTATION = $"{UNIT}²";
-        internal override Prefix Anchor => UNIT.Anchor;
-        public TUnitSiMeasure UnitMeasure => UNIT;
-        public override Double Normalize(in Double value)
-        {
-            return Math.Pow(UNIT.Normalize(in value), 2);
-        }
-        public override Double DeNormalize(in Double value)
-        {
-            return Math.Pow(UNIT.DeNormalize(in value), 2);
-        }
-        public override Double Scale<TOther>(in Double other)
-        {
-            return other * Math.Pow(UNIT.Scale<TOther>(1d), 2);
-        }
+        private static readonly TUnit UNIT = Pool<TUnit>.Item;
+        private static readonly String REPRESENTATION = $"{PREFIX}{UNIT}²";
+        public TUnit Unit => UNIT;
 
         public override String ToString() => REPRESENTATION;
     }

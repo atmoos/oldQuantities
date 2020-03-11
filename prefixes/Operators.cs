@@ -1,15 +1,14 @@
 using System;
+using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Prefixes
 {
-    internal class Power
-    {
-    }
-    internal static class Scale<TLeft, TRight>
+    internal static class Scale<TLeft, TRight, TDimension>
         where TLeft : Prefix, new()
         where TRight : Prefix, new()
+        where TDimension : Dimension, new()
     {
-        private static readonly Double _scaleFactor = Math.Pow(10d, Pool<TLeft>.Item.Exponent - Pool<TRight>.Item.Exponent);
+        private static readonly Double _scaleFactor = Pool<TDimension>.Item.Factor(Pool<TLeft>.Item.Exponent - Pool<TRight>.Item.Exponent);
         public static Double Lift(in Double value) => _scaleFactor * value;
     }
     internal static class Multiply<TLeft, TRight>

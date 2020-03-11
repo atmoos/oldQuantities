@@ -59,7 +59,7 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
-        private sealed class SiArea<TPrefix, TUnit> : SquareSiMeasure<Length.SiLength<TPrefix, TUnit>>, IArea
+        private sealed class SiArea<TPrefix, TUnit> : SquareSiMeasure<TPrefix, TUnit>, IArea
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {

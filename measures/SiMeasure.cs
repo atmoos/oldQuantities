@@ -4,7 +4,7 @@ using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Measures
 {
-    public abstract class SiMeasure : IMeasure
+    public abstract class SiMeasure
     {
         private protected static readonly UnitPrefix UNIT_PREFIX = Pool<UnitPrefix>.Item;
         internal abstract Prefix Anchor { get; }

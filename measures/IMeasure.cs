@@ -4,14 +4,7 @@ using Quantities.Dimensions;
 
 namespace Quantities.Measures
 {
-    public interface IMeasure : IDimension { }
-    public interface ILinearMeasure : IMeasure { }
-    public interface ISquareMeasure<out TMeasure> : IMeasure, ISquare<TMeasure>
-        where TMeasure : ILinearMeasure
-    {
-        TMeasure LinearMeasure { get; }
-    }
-    public interface IUnitMeasure<out TUnit> : ILinearMeasure
+    public interface IUnitMeasure<out TUnit> : ILinear
     {
         TUnit Unit { get; }
     }

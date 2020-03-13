@@ -8,10 +8,4 @@ namespace Quantities.Dimensions
         where TNominator : IDimension
         where TDenominator : IDimension
     { }
-    public interface ISquare<out TDimension> : ITimes<TDimension, TDimension>
-        where TDimension : IDimension
-    { }
-    public interface ICubic<out TDimension> : ITimes<ITimes<TDimension, TDimension>, TDimension>
-        where TDimension : IDimension
-    { }
 }

@@ -2,6 +2,7 @@ using System;
 using Quantities.Unit;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
+using Quantities.Prefixes.Dimensions;
 using Quantities.Measures;
 
 namespace Quantities
@@ -21,7 +22,7 @@ namespace Quantities
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
-            return new Area(Quantity.To<SiArea<TPrefix, TUnit>>());
+            return new Area(Quantity.To<AreaMeasure<Length.SiLength<TPrefix, TUnit>>>());
         }
         public Area ToNonSi<TUnit>()
             where TUnit : INonSiUnit, IArea, new()
@@ -37,7 +38,7 @@ namespace Quantities
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
-            return new Area(Quantity<IArea>.Si<SiArea<TPrefix, TUnit>>(in value));
+            return new Area(Quantity<IArea>.Si<AreaMeasure<Length.SiLength<TPrefix, TUnit>>>(in value));
         }
         public static Area CreateNonSi<TNonSiUnit>(Double value)
             where TNonSiUnit : INonSiUnit, IArea, new()
@@ -58,13 +59,13 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
-        private sealed class SiArea<TPrefix, TUnit> : SquareSiMeasure<TPrefix, TUnit>, ISiInjector<IArea>, IArea
-            where TPrefix : Prefix, new()
-            where TUnit : SiUnit, ILength, new()
+
+        private sealed class AreaMeasure<TLength> : SquareSiMeasure<TLength>, ISiInjector<IArea>, IArea
+            where TLength : SiMeasure, ILength, new()
         {
             public void InjectInto(ISiInjectable<IArea> injectable)
             {
-                // ToDo
+                injectable.Inject<AreaMeasure<TLength>>();
             }
         }
         internal static Area Square(Quantity<ILength> left, Quantity<ILength> right)
@@ -75,20 +76,18 @@ namespace Quantities
 
         private sealed class AreaBuilder : ISiInjectable<ILength>, INonSiInjectable
         {
-            Func<Double, Area> _builder;
+            Func<Double, Quantity<IArea>> _builder;
             public Area Build(Double value)
             {
-                return _builder(value);
+                return new Area(_builder(value));
             }
 
-            public void Inject<TPrefix, TUnit>()
-                where TPrefix : Prefix, new()
-                where TUnit : SiUnit, ILength, new()
+            void ISiInjectable<ILength>.Inject<TInjectedDimension>()
             {
-                _builder = v => Square<TPrefix, TUnit>(v);
+                _builder = v => Quantity<IArea>.Si<AreaMeasure<TInjectedDimension>>(v);
             }
 
-            public void Inject<TUnit>() where TUnit : IUnit, new()
+            void INonSiInjectable.Inject<TUnit>()
             {
                 throw new NotImplementedException();
             }

@@ -62,13 +62,13 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
-        sealed class SiLength<TPrefix, TUnit> : UnitSiMeasure<TPrefix, TUnit>, ISiInjector<ILength>, ILength
+        internal sealed class SiLength<TPrefix, TUnit> : LinearSiMeasure<TPrefix, TUnit>, ISiInjector<ILength>, ILength
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
             public void InjectInto(ISiInjectable<ILength> injectable)
             {
-                injectable.Inject<TPrefix, TUnit>();
+                injectable.Inject<SiLength<TPrefix, TUnit>>();
             }
         }
     }

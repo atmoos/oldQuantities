@@ -8,7 +8,7 @@ namespace Quantities.Prefixes.Dimensions
         internal Double Factor(Int32 exponent) => Math.Pow(10d, Raise(exponent));
         private protected abstract Int32 Raise(Int32 exponent);
     }
-    public sealed class Identity : Dimension
+    public sealed class Linear : Dimension
     {
         private protected override Int32 Raise(Int32 exponent) => exponent;
     }

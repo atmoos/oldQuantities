@@ -1,17 +1,17 @@
 namespace Quantities.Dimensions
 {
-    public interface ITimes<TLeft, TRight> : IDimension
+    public interface ITimes<out TLeft, out TRight> : IDimension
         where TLeft : IDimension
         where TRight : IDimension
     { }
-    public interface IPer<TNominator, TDenominator> : IDimension
+    public interface IPer<out TNominator, out TDenominator> : IDimension
         where TNominator : IDimension
         where TDenominator : IDimension
     { }
-    public interface ISquare<TDimension> : ITimes<TDimension, TDimension>
+    public interface ISquare<out TDimension> : ITimes<TDimension, TDimension>
         where TDimension : IDimension
     { }
-    public interface ICubic<TDimension> : ITimes<ITimes<TDimension, TDimension>, TDimension>
+    public interface ICubic<out TDimension> : ITimes<ITimes<TDimension, TDimension>, TDimension>
         where TDimension : IDimension
     { }
 }

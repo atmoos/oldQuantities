@@ -99,13 +99,21 @@ namespace Quantities.Test
             Assert.Equal(1, result.Value, SiPrecision);
         }
 
-        [Fact]
         public void LengthByTimeIsVelocity()
         {
             var distance = Length.Create<Kilo, Metre>(60);
             var duration = Time.CreateSiDerived<Hour>(2);
             var speed = distance / duration;
             Assert.Equal(30, speed.Value, SiPrecision);
+        }
+
+        [Fact]
+        public void LengthByLengthIsArea()
+        {
+            var length = Length.Create<Kilo, Metre>(2);
+            var width = Length.Create<Hecto, Metre>(1);
+            var area = length * width;
+            Assert.Equal(0.2, area.Value, SiPrecision);
         }
     }
 }

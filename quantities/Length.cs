@@ -52,16 +52,24 @@ namespace Quantities
         {
             return new Length(left.Quantity.Subtract(right.Quantity));
         }
+        public static Area operator *(Length left, Length right)
+        {
+            return Area.Square(left.Quantity, right.Quantity);
+        }
         public static Length operator /(Length distance, Time duration)
         {
             return null;
         }
 
         public override String ToString() => Quantity.ToString();
-        sealed class SiLength<TPrefix, TUnit> : UnitSiMeasure<TPrefix, TUnit>, ILength
+        sealed class SiLength<TPrefix, TUnit> : UnitSiMeasure<TPrefix, TUnit>, ISiInjector<ILength>, ILength
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
+            public void InjectInto(ISiInjectable<ILength> injectable)
+            {
+                injectable.Inject<TPrefix, TUnit>();
+            }
         }
     }
 }

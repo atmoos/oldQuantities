@@ -11,7 +11,6 @@ namespace Quantities
         public Double Value => Quantity.Value;
         public IArea Dimension => Quantity.Dimension;
         internal Quantity<IArea> Quantity { get; }
-        private Area(Quantity<ILength> left, Quantity<ILength> right) => Quantity = Square(left, right);
         private Area(Quantity<IArea> quantity) => Quantity = quantity;
         public Area ToSquare<TUnit>()
             where TUnit : SiUnit, ILength, new()
@@ -59,14 +58,40 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
-        private sealed class SiArea<TPrefix, TUnit> : SquareSiMeasure<TPrefix, TUnit>, IArea
+        private sealed class SiArea<TPrefix, TUnit> : SquareSiMeasure<TPrefix, TUnit>, ISiInjector<IArea>, IArea
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
+            public void InjectInto(ISiInjectable<IArea> injectable)
+            {
+                // ToDo
+            }
         }
-        private static Quantity<IArea> Square(Quantity<ILength> left, Quantity<ILength> right)
+        internal static Area Square(Quantity<ILength> left, Quantity<ILength> right)
         {
-            return null;
+            var builder = new AreaBuilder();
+            return builder.Build(left.Multiply(right, builder, builder));
+        }
+
+        private sealed class AreaBuilder : ISiInjectable<ILength>, INonSiInjectable
+        {
+            Func<Double, Area> _builder;
+            public Area Build(Double value)
+            {
+                return _builder(value);
+            }
+
+            public void Inject<TPrefix, TUnit>()
+                where TPrefix : Prefix, new()
+                where TUnit : SiUnit, ILength, new()
+            {
+                _builder = v => Square<TPrefix, TUnit>(v);
+            }
+
+            public void Inject<TUnit>() where TUnit : IUnit, new()
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

@@ -49,10 +49,14 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
-        private sealed class SiTime<TPrefix, TUnit> : UnitSiMeasure<TPrefix, TUnit>, ITime
+        private sealed class SiTime<TPrefix, TUnit> : UnitSiMeasure<TPrefix, TUnit>, ISiInjector<ITime>, ITime
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ITime, new()
         {
+            public void InjectInto(ISiInjectable<ITime> injectable)
+            {
+                injectable.Inject<TPrefix, TUnit>();
+            }
         }
     }
 }

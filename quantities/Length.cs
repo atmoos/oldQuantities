@@ -21,7 +21,7 @@ namespace Quantities
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
-            return new Length(Quantity.To<SiLength<TPrefix, TUnit>>());
+            return new Length(Quantity.To<Length<TPrefix, TUnit>>());
         }
         public Length ToNonSi<TUnit>()
             where TUnit : INonSiUnit, ILength, new()
@@ -37,7 +37,7 @@ namespace Quantities
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
-            return new Length(Quantity<ILength>.Si<SiLength<TPrefix, TUnit>>(in value));
+            return new Length(Quantity<ILength>.Si<Length<TPrefix, TUnit>>(in value));
         }
         public static Length CreateNonSi<TNonSiUnit>(Double value)
             where TNonSiUnit : INonSiUnit, ILength, new()
@@ -62,10 +62,5 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
-        internal sealed class SiLength<TPrefix, TUnit> : LinearSiMeasure<TPrefix, TUnit>, ILength
-            where TPrefix : Prefix, new()
-            where TUnit : SiUnit, ILength, new()
-        {
-        }
     }
 }

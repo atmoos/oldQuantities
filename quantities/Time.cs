@@ -18,7 +18,7 @@ namespace Quantities
             where TPrefix : Prefix, IScaleDown, new()
             where TUnit : SiUnit, ITime, new()
         {
-            return new Time(Quantity.To<SiTime<TPrefix, TUnit>>());
+            return new Time(Quantity.To<Time<TPrefix, TUnit>>());
         }
         public Time ToSiDerived<TUnit>()
             where TUnit : SiDerivedUnit, ITime, new()
@@ -31,7 +31,7 @@ namespace Quantities
             where TPrefix : Prefix, IScaleDown, new()
             where TUnit : SiUnit, ITime, new()
         {
-            return new Time(Quantity<ITime>.Si<SiTime<TPrefix, TUnit>>(in value));
+            return new Time(Quantity<ITime>.Si<Time<TPrefix, TUnit>>(in value));
         }
         public static Time CreateSiDerived<TSiDerived>(Double value)
             where TSiDerived : SiDerivedUnit, ITime, new()
@@ -49,10 +49,5 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
-        private sealed class SiTime<TPrefix, TUnit> : LinearSiMeasure<TPrefix, TUnit>, ITime
-            where TPrefix : Prefix, new()
-            where TUnit : SiUnit, ITime, new()
-        {
-        }
     }
 }

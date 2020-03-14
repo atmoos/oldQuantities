@@ -21,7 +21,7 @@ namespace Quantities
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
-            return new Area(Quantity.To<AreaMeasure<Length.SiLength<TPrefix, TUnit>>>());
+            return new Area(Quantity.To<Area<Length<TPrefix, TUnit>>>());
         }
         public Area ToNonSi<TUnit>()
             where TUnit : INonSiUnit, IArea, new()
@@ -37,7 +37,7 @@ namespace Quantities
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {
-            return new Area(Quantity<IArea>.Si<AreaMeasure<Length.SiLength<TPrefix, TUnit>>>(in value));
+            return new Area(Quantity<IArea>.Si<Area<Length<TPrefix, TUnit>>>(in value));
         }
         public static Area CreateNonSi<TNonSiUnit>(Double value)
             where TNonSiUnit : INonSiUnit, IArea, new()
@@ -58,11 +58,6 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
-
-        private sealed class AreaMeasure<TLength> : SquareSiMeasure<TLength>, IArea
-            where TLength : SiMeasure, ILength, new()
-        {
-        }
         internal static Area Square(Quantity<ILength> left, Quantity<ILength> right)
         {
             var builder = new AreaBuilder();
@@ -79,7 +74,7 @@ namespace Quantities
 
             void ISiInjectable<ILength>.Inject<TInjectedDimension>()
             {
-                _builder = v => Quantity<IArea>.Si<AreaMeasure<TInjectedDimension>>(v);
+                _builder = v => Quantity<IArea>.Si<Area<TInjectedDimension>>(v);
             }
 
             void INonSiInjectable.Inject<TUnit>()

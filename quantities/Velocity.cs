@@ -21,7 +21,7 @@ namespace Quantities
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, IVelocity, new()
         {
-            return new Velocity(Quantity.To<SiVelocity<TPrefix, TUnit>>());
+            throw new NotImplementedException();
         }
         public Velocity ToNonSi<TUnit>()
             where TUnit : INonSiUnit, IVelocity, new()
@@ -37,7 +37,7 @@ namespace Quantities
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, IVelocity, new()
         {
-            return new Velocity(Quantity<IVelocity>.Si<SiVelocity<TPrefix, TUnit>>(in value));
+            throw new NotImplementedException();
         }
         public static Velocity CreateNonSi<TNonSiUnit>(Double value)
             where TNonSiUnit : INonSiUnit, IVelocity, new()
@@ -54,10 +54,5 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
-        private sealed class SiVelocity<TPrefix, TUnit> : LinearSiMeasure<TPrefix, TUnit>, IVelocity
-            where TPrefix : Prefix, new()
-            where TUnit : SiUnit, IVelocity, new()
-        {
-        }
     }
 }

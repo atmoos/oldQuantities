@@ -6,7 +6,7 @@ namespace Quantities.Unit.Imperial.Area
 {
     public sealed class Acre : Convertible, IImperial, IArea
     {
-        public Acre() : base(4046.9 /* m² */) { }
+        public Acre() : base(4046.8564224 /* m² */) { }
         public override String ToString() => "ac";
     }
 }

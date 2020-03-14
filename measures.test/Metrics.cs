@@ -9,7 +9,7 @@ namespace Quantities.Measures.Test
         public static Int32 NonSiPrecision => 15;
 
         public static void AssertDimensionsAreSame<TDimension>(Quantity<TDimension> expected, Quantity<TDimension> actual)
-            where TDimension : IDimension
+            where TDimension : class, IDimension
         {
             Assert.Same(expected.Dimension, actual.Dimension);
         }

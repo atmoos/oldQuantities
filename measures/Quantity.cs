@@ -20,24 +20,20 @@ namespace Quantities.Measures
 
         public Quantity<TDimesion> Add(Quantity<TDimesion> other)
         {
-            var converted = this.Map(other);
-            return With(Value + converted.Value);
+            return this.Eval(other, (self, other) => self + other);
         }
         public Quantity<TDimesion> Subtract(Quantity<TDimesion> other)
         {
-            var converted = this.Map(other);
-            return With(Value - converted.Value);
+            return this.Eval(other, (self, other) => self - other);
         }
         internal Double Multiply(Quantity<TDimesion> other, ISiInjectable<TDimesion> siInjectable, INonSiInjectable nonSiInjectable)
         {
-            var converted = this.Map(other);
             Inject(siInjectable, nonSiInjectable);
-            return Value * converted.Value;
+            return this.Eval(other, (self, other) => self * other).Value;
         }
         internal Double Divide(Quantity<TDimesion> other)
         {
-            var converted = this.Map(other);
-            return Value / converted.Value;
+            return this.Eval(other, (self, other) => self / other).Value;
         }
         internal abstract void Inject(ISiInjectable<TDimesion> siInjectable, INonSiInjectable nonSiInjectable);
 
@@ -55,8 +51,7 @@ namespace Quantities.Measures
         {
             return $"{Value.ToString(format, formatProvider)} {Dimension}";
         }
-        protected abstract Quantity<TDimesion> With(in Double value);
-        protected abstract Quantity<TDimesion> Map(Quantity<TDimesion> other);
+        protected abstract Quantity<TDimesion> Eval(Quantity<TDimesion> other, Func<Double, Double, Double> operation);
         public static Quantity<TDimesion> Si<TSiDimesion>(in Double value)
             where TSiDimesion : SiMeasure, IScaler<SiMeasure>, INormalize, TDimesion, new()
         {
@@ -84,8 +79,10 @@ namespace Quantities.Measures
                 var nonSiValue = Pool<TNonSiDimesion>.Item.FromSi(in value);
                 return new OtherQuantity<TNonSiDimesion>(in nonSiValue);
             }
-            protected override Quantity<TDimesion> With(in Double value) => new SiQuantity<TSiDimesion>(in value);
-            protected override Quantity<TDimesion> Map(Quantity<TDimesion> other) => other.To<TSiDimesion>();
+            protected override Quantity<TDimesion> Eval(Quantity<TDimesion> other, Func<Double, Double, Double> operation)
+            {
+                return new SiQuantity<TSiDimesion>(operation(Value, other.To<TSiDimesion>().Value));
+            }
             internal override void Inject(ISiInjectable<TDimesion> siInjectable, INonSiInjectable _) => siInjectable.Inject<TSiDimesion>();
         }
         private sealed class OtherQuantity<TNonSiDimesion> : Quantity<TDimesion>
@@ -106,8 +103,10 @@ namespace Quantities.Measures
                 var otherNonSiValue = Pool<TOtherNonSiDimesion>.Item.FromSi(in siValue);
                 return new OtherQuantity<TOtherNonSiDimesion>(in otherNonSiValue);
             }
-            protected override Quantity<TDimesion> With(in Double value) => new OtherQuantity<TNonSiDimesion>(in value);
-            protected override Quantity<TDimesion> Map(Quantity<TDimesion> other) => other.ToOther<TNonSiDimesion>();
+            protected override Quantity<TDimesion> Eval(Quantity<TDimesion> other, Func<Double, Double, Double> operation)
+            {
+                return new OtherQuantity<TNonSiDimesion>(operation(Value, other.ToOther<TNonSiDimesion>().Value));
+            }
             internal override void Inject(ISiInjectable<TDimesion> _, INonSiInjectable nonSiInjectable) => nonSiInjectable.Inject<TNonSiDimesion>();
         }
     }

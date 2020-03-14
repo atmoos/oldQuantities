@@ -10,7 +10,14 @@ using static Quantities.Measures.Test.Metrics;
 
 namespace Quantities.Measures.Test
 {
-    public sealed class LinearQuantitiesTest
+    public interface ILinearQuantitiesTest : IQuantitiesTest
+    {
+        void OtherQuantityToOtherQuantityScalesLinearly();
+        void OtherQuantityToSiQuantityScalesLinearly();
+        void SiQuantityToOtherQuantityScalesLinearly();
+        void SiQuantityToSiQuantityScalesLinearly();
+    }
+    public sealed class LinearQuantitiesTest : ILinearQuantitiesTest
     {
         private const Double ANY_NUMBER = 42;
         private const Double ONE_FOOT_IN_METRES = 0.3048;
@@ -251,11 +258,6 @@ namespace Quantities.Measures.Test
             var expectedDimension = Quantity<ILength>.Other<Mile>(ANY_NUMBER);
 
             AssertDimensionsAreSame(expectedDimension, operation(left, right));
-        }
-        void AssertDimensionsAreSame<TDimension>(Quantity<TDimension> expected, Quantity<TDimension> actual)
-            where TDimension : IDimension
-        {
-            Assert.Same(expected.Dimension, actual.Dimension);
         }
     }
 }

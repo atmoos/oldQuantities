@@ -6,7 +6,7 @@ using IConvert = Quantities.Unit.Conversion.IConvertible;
 
 namespace Quantities.Measures
 {
-    internal abstract class Quantity<TDimesion> : IFormattable
+    internal abstract class Quantity<TDimesion> : IEquatable<Quantity<TDimesion>>, IFormattable
         where TDimesion : IDimension
     {
         public Double Value { get; }
@@ -35,8 +35,21 @@ namespace Quantities.Measures
             Inject(nonSiInjectable);
             return Value * converted.Value;
         }
+        internal Double Divide(Quantity<TDimesion> other)
+        {
+            var converted = this.Map(other);
+            return Value / converted.Value;
+        }
         internal abstract void Inject(ISiInjectable<TDimesion> siInjectable);
         internal abstract void Inject(INonSiInjectable nonSiInjectable);
+
+        public Boolean Equals(Quantity<TDimesion> other)
+        {
+            const Double min = 1d - 2e-15;
+            const Double max = 1d + 2e-15;
+            var quotient = Divide(other);
+            return min <= quotient && quotient <= max;
+        }
 
         public override String ToString() => $"{Value:g5} {Dimension}";
 

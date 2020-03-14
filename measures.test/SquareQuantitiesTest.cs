@@ -2,7 +2,8 @@ using System;
 using System.Globalization;
 using Xunit;
 using Quantities.Unit.Si;
-using Quantities.Unit.Imperial;
+using Quantities.Unit.Imperial.Area;
+using Quantities.Unit.Imperial.Length;
 using Quantities.Prefixes;
 using Quantities.Dimensions;
 

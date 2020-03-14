@@ -1,7 +1,7 @@
 using System;
 using Quantities.Dimensions;
 
-namespace Quantities.Unit.Imperial
+namespace Quantities.Unit.Imperial.Area
 {
     public sealed class Square<TUnit> : IImperial, IArea<TUnit>
         where TUnit : IImperial, ILength, new()

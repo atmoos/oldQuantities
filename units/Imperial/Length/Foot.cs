@@ -2,7 +2,7 @@ using System;
 using Quantities.Dimensions;
 using Quantities.Unit.Conversion;
 
-namespace Quantities.Unit.Imperial
+namespace Quantities.Unit.Imperial.Length
 {
     public sealed class Foot : Convertible, IImperial, ILength
     {

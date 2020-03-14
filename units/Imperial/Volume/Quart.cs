@@ -6,7 +6,7 @@ namespace Quantities.Unit.Imperial.Volume
 {
     public sealed class Quart : Convertible, IImperial, IVolume
     {
-        public Quart() : base(1136.5225e-9 /* m³ */) { }
+        public Quart() : base(1.1365225e-3 /* m³ */) { }
         public override String ToString() => "qt";
     }
 }

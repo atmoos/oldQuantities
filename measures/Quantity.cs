@@ -5,7 +5,7 @@ using Quantities.Measures;
 
 using IConvert = Quantities.Unit.Conversion.IConvertible;
 
-namespace Quantities
+namespace Quantities.Measures
 {
     internal abstract class Quantity<TDimesion> : IFormattable
         where TDimesion : IDimension

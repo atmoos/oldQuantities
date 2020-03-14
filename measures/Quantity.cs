@@ -1,7 +1,6 @@
 using System;
 using Quantities.Unit;
 using Quantities.Dimensions;
-using Quantities.Measures;
 
 using IConvert = Quantities.Unit.Conversion.IConvertible;
 
@@ -14,7 +13,7 @@ namespace Quantities.Measures
         public abstract TDimesion Dimension { get; }
         private Quantity(in Double value) => Value = value;
         public abstract Quantity<TDimesion> To<TSiDimesion>()
-            where TSiDimesion : SiMeasure, IScaler<SiMeasure>, ISiInjector<TDimesion>, INormalize, TDimesion, new();
+            where TSiDimesion : SiMeasure, IScaler<SiMeasure>, INormalize, TDimesion, new();
 
         public abstract Quantity<TDimesion> ToOther<TNonSiDimesion>()
             where TNonSiDimesion : IUnit, IConvert, TDimesion, new();
@@ -29,7 +28,6 @@ namespace Quantities.Measures
             var converted = this.Map(other);
             return With(Value - converted.Value);
         }
-
         internal Double Multiply(Quantity<TDimesion> other, ISiInjectable<TDimesion> siInjectable, INonSiInjectable nonSiInjectable)
         {
             var converted = this.Map(other);
@@ -49,7 +47,7 @@ namespace Quantities.Measures
         protected abstract Quantity<TDimesion> With(in Double value);
         protected abstract Quantity<TDimesion> Map(Quantity<TDimesion> other);
         public static Quantity<TDimesion> Si<TSiDimesion>(in Double value)
-            where TSiDimesion : SiMeasure, IScaler<SiMeasure>, ISiInjector<TDimesion>, INormalize, TDimesion, new()
+            where TSiDimesion : SiMeasure, IScaler<SiMeasure>, INormalize, TDimesion, new()
         {
             return new SiQuantity<TSiDimesion>(in value);
         }
@@ -58,9 +56,8 @@ namespace Quantities.Measures
         {
             return new OtherQuantity<TNonSiDimesion>(in value);
         }
-
         private sealed class SiQuantity<TSiDimesion> : Quantity<TDimesion>
-            where TSiDimesion : SiMeasure, IScaler<SiMeasure>, ISiInjector<TDimesion>, INormalize, TDimesion, new()
+            where TSiDimesion : SiMeasure, IScaler<SiMeasure>, INormalize, TDimesion, new()
         {
             private static TSiDimesion DIMENSION = Pool<TSiDimesion>.Item;
             public override TDimesion Dimension => DIMENSION;
@@ -81,7 +78,7 @@ namespace Quantities.Measures
             {
                 return other.To<TSiDimesion>();
             }
-            internal override void Inject(ISiInjectable<TDimesion> siInjectable) => DIMENSION.InjectInto(siInjectable);
+            internal override void Inject(ISiInjectable<TDimesion> siInjectable) => siInjectable.Inject<TSiDimesion>();
             internal override void Inject(INonSiInjectable nonSiInjectable) { }
         }
         private sealed class OtherQuantity<TNonSiDimesion> : Quantity<TDimesion>

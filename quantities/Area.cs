@@ -2,7 +2,6 @@ using System;
 using Quantities.Unit;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
-using Quantities.Prefixes.Dimensions;
 using Quantities.Measures;
 
 namespace Quantities
@@ -60,13 +59,9 @@ namespace Quantities
 
         public override String ToString() => Quantity.ToString();
 
-        private sealed class AreaMeasure<TLength> : SquareSiMeasure<TLength>, ISiInjector<IArea>, IArea
+        private sealed class AreaMeasure<TLength> : SquareSiMeasure<TLength>, IArea
             where TLength : SiMeasure, ILength, new()
         {
-            public void InjectInto(ISiInjectable<IArea> injectable)
-            {
-                injectable.Inject<AreaMeasure<TLength>>();
-            }
         }
         internal static Area Square(Quantity<ILength> left, Quantity<ILength> right)
         {

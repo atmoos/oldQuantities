@@ -4,6 +4,7 @@ using Quantities.Unit.Si;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
+using Quantities.Measures.Si;
 
 namespace Quantities
 {

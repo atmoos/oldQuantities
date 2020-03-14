@@ -5,6 +5,7 @@ using Quantities.Unit.Si;
 using Quantities.Unit.Imperial.Area;
 using Quantities.Unit.Imperial.Length;
 using Quantities.Prefixes;
+using Quantities.Measures.Si;
 using Quantities.Dimensions;
 
 using static Quantities.Measures.Test.Metrics;

@@ -2,10 +2,9 @@ using System;
 using System.Globalization;
 using Xunit;
 using Quantities.Unit.Si;
-using Quantities.Unit.SiDerived;
-using Quantities.Unit.Imperial.Length;
 using Quantities.Unit.Imperial.Volume;
 using Quantities.Prefixes;
+using Quantities.Measures.Si;
 using Quantities.Dimensions;
 
 using static Quantities.Measures.Test.Metrics;
@@ -243,6 +242,7 @@ namespace Quantities.Measures.Test
 
             Assert.Equal(1d, qa.Divide(qb), NonSiPrecision);
         }
+
         void CheckSiAssociativity(Func<Quantity<IVolume>, Quantity<IVolume>, Quantity<IVolume>> operation)
         {
             var left = Quantity<IVolume>.Si<Volume<Length<Micro, Metre>>>(2);

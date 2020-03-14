@@ -71,12 +71,10 @@ namespace Quantities
             {
                 return new Area(_builder(value));
             }
-
             void ISiInjectable<ILength>.Inject<TInjectedDimension>()
             {
                 _builder = v => Quantity<IArea>.Si<Area<TInjectedDimension>>(v);
             }
-
             void INonSiInjectable.Inject<TUnit>()
             {
                 throw new NotImplementedException();

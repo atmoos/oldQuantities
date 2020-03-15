@@ -35,15 +35,16 @@ namespace Quantities.Measures
         {
             return new Quantity<TDimesion>(Kernel, Value - Kernel.Map(other));
         }
-        internal Double Multiply(Quantity<TDimesion> other, ISiInjectable<TDimesion> siInjectable, INonSiInjectable nonSiInjectable)
+        internal void Multiply(Quantity<TDimesion> other, ISiInjectable<TDimesion> siInjectable, INonSiInjectable nonSiInjectable)
         {
-            Kernel.Inject(siInjectable, nonSiInjectable);
-            return Value * Kernel.Map(other);
+            Kernel.Inject(Value * Kernel.Map(other), siInjectable, nonSiInjectable);
         }
         internal Double Divide(Quantity<TDimesion> other)
         {
             return Value / Kernel.Map(other);
         }
+        internal void Inject(ISiInjectable<TDimesion> siInjectable, INonSiInjectable nonSiInjectable) => Kernel.Inject(Value, siInjectable, nonSiInjectable);
+
         public Boolean Equals(Quantity<TDimesion> other)
         {
             const Double min = 1d - 2e-15;

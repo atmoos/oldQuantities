@@ -62,21 +62,22 @@ namespace Quantities
         internal static Area Square(Quantity<ILength> left, Quantity<ILength> right)
         {
             var builder = new AreaBuilder();
-            return builder.Build(left.Multiply(right, builder, builder));
+            left.Multiply(right, builder, builder);
+            return new Area(builder.Build());
         }
 
-        private sealed class AreaBuilder : ISiInjectable<ILength>, INonSiInjectable
+        private sealed class AreaBuilder : IBuilder<IArea>, ISiInjectable<ILength>, INonSiInjectable
         {
-            Func<Double, Quantity<IArea>> _builder;
-            public Area Build(Double value)
+            Quantity<IArea> _area;
+            public Quantity<IArea> Build()
             {
-                return new Area(_builder(value));
+                return _area;
             }
-            void ISiInjectable<ILength>.Inject<TInjectedDimension>()
+            void ISiInjectable<ILength>.Inject<TInjectedDimension>(in Double value)
             {
-                _builder = v => Quantity<IArea>.Si<Area<TInjectedDimension>>(v);
+                _area = Quantity<IArea>.Si<Area<TInjectedDimension>>(value);
             }
-            void INonSiInjectable.Inject<TUnit>()
+            void INonSiInjectable.Inject<TUnit>(in Double value)
             {
                 throw new NotImplementedException();
             }

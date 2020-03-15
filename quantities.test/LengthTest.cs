@@ -98,15 +98,14 @@ namespace Quantities.Test
             var result = kilometres - miles;
             Assert.Equal(1, result.Value, SiPrecision);
         }
-
+        [Fact]
         public void LengthByTimeIsVelocity()
         {
-            var distance = Length.Create<Kilo, Metre>(60);
-            var duration = Time.CreateSiDerived<Hour>(2);
+            var distance = Length.Create<Milli, Metre>(100);
+            var duration = Time.Seconds(20);
             var speed = distance / duration;
-            Assert.Equal(30, speed.Value, SiPrecision);
+            Assert.Equal(5, speed.Value, SiPrecision);
         }
-
         [Fact]
         public void LengthByLengthIsArea()
         {

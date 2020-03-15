@@ -57,9 +57,9 @@ namespace Quantities
         {
             return Area.Square(left.Quantity, right.Quantity);
         }
-        public static Length operator /(Length distance, Time duration)
+        public static Velocity operator /(Length distance, Time duration)
         {
-            return null;
+            return Velocity.Create(distance, duration);
         }
 
         public override String ToString() => Quantity.ToString();

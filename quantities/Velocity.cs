@@ -3,6 +3,7 @@ using Quantities.Unit;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
+using Quantities.Measures.Si;
 
 namespace Quantities
 {
@@ -54,5 +55,13 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
+        internal static Velocity Create(Length length, Time time)
+        {
+            var builder = new VelocityBuilder();
+            length.Quantity.Inject(builder, builder);
+            var (si, nonSi) = builder.Per;
+            time.Quantity.Inject(si, nonSi);
+            return new Velocity(builder.Build());
+        }
     }
 }

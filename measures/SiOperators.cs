@@ -4,32 +4,34 @@ using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Measures
 {
-    public abstract class SiTimes<TLeftOperand, TRightOperand> : SiMeasure, IScaler<SiMeasure>, INormalize
+    public abstract class SiDivide<TNominator, TDenominator> : SiMeasure<Linear>
+        where TNominator : SiMeasure, new()
+        where TDenominator : SiMeasure, new()
     {
-        internal override Prefix Anchor => throw new NotImplementedException();
-        public Double Normalize(in Double value)
+        private static readonly TNominator Nominator = Pool<TNominator>.Item;
+        private static readonly TDenominator Denominator = Pool<TDenominator>.Item;
+        private static readonly String REPRESENTATION = $"{Nominator}/{Denominator}";
+        private static readonly Operation Operation = OperatorPool.Get(Nominator.Anchor.Exponent - Denominator.Anchor.Exponent);
+        internal override Prefix Anchor => Operation.Prefix;
+
+        public override String ToString() => REPRESENTATION;
+        internal override Double DeNormalize<TDim>(in Double value)
         {
-            throw new NotImplementedException();
-        }
-        public Double DeNormalize(in Double value)
-        {
-            throw new NotImplementedException();
-        }
-        public Double Scale<TOther>(in Double other) where TOther : SiMeasure, new()
-        {
-            throw new NotImplementedException();
+            var nominator = Nominator.DeNormalize<TDim>(in value);
+            var denominator = Denominator.DeNormalize<TDim>(in value);
+            return nominator / denominator;
         }
         internal override Double Normalize<TDim>(in Double value)
         {
-            throw new NotImplementedException();
-        }
-        internal override Double DeNormalize<TDim>(in Double value)
-        {
-            throw new NotImplementedException();
+            var nominator = Nominator.Normalize<TDim>(in value);
+            var denominator = Denominator.Normalize<TDim>(in value);
+            return nominator / denominator;
         }
         internal override Double Scale<TOther, TDim>(in Double value)
         {
-            throw new NotImplementedException();
+            var nominator = Nominator.Scale<TOther, TDim>(in value);
+            var denominator = Denominator.Scale<TOther, TDim>(in value);
+            return nominator / denominator;
         }
     }
 }

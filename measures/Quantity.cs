@@ -18,7 +18,7 @@ namespace Quantities.Measures
             Kernel = kernel;
         }
         public Quantity<TDimesion> To<TSiDimesion>()
-            where TSiDimesion : SiMeasure, IScaler<SiMeasure>, INormalize, TDimesion, new()
+            where TSiDimesion : SiMeasure, ISiMeasure, TDimesion, new()
         {
             return Si<TSiDimesion>(Kernel.To<TSiDimesion>(Value));
         }
@@ -58,7 +58,7 @@ namespace Quantities.Measures
             return $"{Value.ToString(format, formatProvider)} {Dimension}";
         }
         public static Quantity<TDimesion> Si<TSiDimesion>(in Double value)
-            where TSiDimesion : SiMeasure, IScaler<SiMeasure>, INormalize, TDimesion, new()
+            where TSiDimesion : SiMeasure, ISiMeasure, TDimesion, new()
         {
             return new Quantity<TDimesion>(Kernel<TDimesion>.Si<TSiDimesion>(), value);
         }

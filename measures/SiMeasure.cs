@@ -4,6 +4,10 @@ using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Measures
 {
+    public interface ISiMeasure : INormalize
+    {
+        Double Scale<TOther>(in Double other) where TOther : SiMeasure, new();
+    }
     public abstract class SiMeasure
     {
         private protected static readonly UnitPrefix UNIT_PREFIX = Pool<UnitPrefix>.Item;
@@ -14,8 +18,7 @@ namespace Quantities.Measures
             where TOther : SiMeasure, new()
             where TDim : Dimension, new();
     }
-
-    public abstract class SiMeasure<TDimension> : SiMeasure, IScaler<SiMeasure>, INormalize
+    public abstract class SiMeasure<TDimension> : SiMeasure, ISiMeasure
         where TDimension : Dimension, new()
     {
         public Double Normalize(in Double value) => Normalize<TDimension>(in value);

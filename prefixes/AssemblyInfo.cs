@@ -4,3 +4,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleToAttribute("measures")]
 [assembly: InternalsVisibleToAttribute("measures.test")]
 [assembly: InternalsVisibleToAttribute("quantities")]
+[assembly: InternalsVisibleToAttribute("prefixes.test")]

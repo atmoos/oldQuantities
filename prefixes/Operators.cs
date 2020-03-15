@@ -11,6 +11,36 @@ namespace Quantities.Prefixes
         private static readonly Double _scaleFactor = Pool<TDimension>.Item.Factor(Pool<TLeft>.Item.Exponent - Pool<TRight>.Item.Exponent);
         public static Double Lift(in Double value) => _scaleFactor * value;
     }
+
+    public abstract class Operator
+    {
+        public abstract Double Execute(in Double value);
+    }
+
+    public sealed class NoOp : Operator
+    {
+        public override Double Execute(in Double value) => value;
+    }
+    public sealed class Multiply : Operator
+    {
+        private readonly Double _factor;
+        internal Multiply(in Double factor) => _factor = factor;
+        public override Double Execute(in Double value) => value * _factor;
+    }
+    public sealed class Operation
+    {
+        public Operator Op { get; }
+        public Prefix Prefix { get; }
+
+        public Operation(Operator op, Prefix prefix) => (Op, Prefix) = (op, prefix);
+    }
+    public sealed class Divide : Operator
+    {
+        private readonly Double _divisor;
+        internal Divide(in Double divisor) => _divisor = divisor;
+        public override Double Execute(in Double value) => value / _divisor;
+    }
+
     internal static class Multiply<TLeft, TRight>
         where TLeft : Prefix, new()
         where TRight : Prefix, new()

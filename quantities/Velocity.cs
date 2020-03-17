@@ -7,38 +7,46 @@ using Quantities.Measures.Si;
 
 namespace Quantities
 {
-    public sealed class Velocity : IQuantity<IVelocity>, IVelocity
+    public interface IVelocityBuilder
+    {
+        Velocity Per<TTimeUnit>()
+            where TTimeUnit : SiUnit, ITime, new() => Per<UnitPrefix, TTimeUnit>();
+        Velocity Per<TTimePrefix, TTimeUnit>()
+            where TTimePrefix : Prefix, new()
+            where TTimeUnit : SiUnit, ITime, new();
+    }
+    public sealed class Velocity : IEquatable<Velocity>, IQuantity<IVelocity>, IVelocity
     {
         public Double Value => Quantity.Value;
         public IVelocity Dimension => Quantity.Dimension;
         internal Quantity<IVelocity> Quantity { get; }
         private Velocity(Quantity<IVelocity> quantity) => Quantity = quantity;
-        public Velocity To<TUnit>()
-            where TUnit : SiUnit, IVelocity, new()
+        public IVelocityBuilder To<TUnit>()
+            where TUnit : SiUnit, ILength, new()
         {
             return To<UnitPrefix, TUnit>();
         }
-        public Velocity To<TPrefix, TUnit>()
+        public IVelocityBuilder To<TPrefix, TUnit>()
             where TPrefix : Prefix, new()
-            where TUnit : SiUnit, IVelocity, new()
+            where TUnit : SiUnit, ILength, new()
         {
-            throw new NotImplementedException();
+            return new Transformer<TPrefix, TUnit>(Quantity);
         }
         public Velocity ToNonSi<TUnit>()
             where TUnit : INonSiUnit, IVelocity, new()
         {
             return new Velocity(Quantity.ToOther<TUnit>());
         }
-        public static Velocity Create<TUnit>(in Double value)
-            where TUnit : SiUnit, IVelocity, new()
+        public static IVelocityBuilder Create<TUnit>(in Double velocity)
+            where TUnit : SiUnit, ILength, new()
         {
-            return Create<UnitPrefix, TUnit>(in value);
+            return Create<UnitPrefix, TUnit>(in velocity);
         }
-        public static Velocity Create<TPrefix, TUnit>(in Double value)
+        public static IVelocityBuilder Create<TPrefix, TUnit>(in Double velocity)
             where TPrefix : Prefix, new()
-            where TUnit : SiUnit, IVelocity, new()
+            where TUnit : SiUnit, ILength, new()
         {
-            throw new NotImplementedException();
+            return new Builder<TPrefix, TUnit>(in velocity);
         }
         public static Velocity CreateNonSi<TNonSiUnit>(Double value)
             where TNonSiUnit : INonSiUnit, IVelocity, new()
@@ -54,6 +62,8 @@ namespace Quantities
             return new Velocity(left.Quantity.Subtract(right.Quantity));
         }
 
+        public Boolean Equals(Velocity other) => Quantity.Equals(other.Quantity);
+
         public override String ToString() => Quantity.ToString();
         internal static Velocity Create(Length length, Time time)
         {
@@ -62,6 +72,31 @@ namespace Quantities
             var (si, nonSi) = builder.Per;
             time.Quantity.Inject(si, nonSi);
             return new Velocity(builder.Build());
+        }
+
+        private sealed class Builder<TLengthPrefix, TLengthUnit> : IVelocityBuilder
+            where TLengthPrefix : Prefix, new()
+            where TLengthUnit : SiUnit, ILength, new()
+        {
+            private readonly Double _velocity;
+            public Builder(in Double velocity) => _velocity = velocity;
+            public Velocity Per<TTimePrefix, TTimeUnit>()
+                where TTimePrefix : Prefix, new()
+                where TTimeUnit : SiUnit, ITime, new()
+            {
+                return new Velocity(Quantity<IVelocity>.Si<Velocity<Length<TLengthPrefix, TLengthUnit>, Time<TTimePrefix, TTimeUnit>>>(_velocity));
+            }
+        }
+        private sealed class Transformer<TLengthPrefix, TLengthUnit> : IVelocityBuilder
+            where TLengthPrefix : Prefix, new()
+            where TLengthUnit : SiUnit, ILength, new()
+        {
+            private readonly Quantity<IVelocity> _other;
+            public Transformer(Quantity<IVelocity> other) => _other = other;
+            Velocity IVelocityBuilder.Per<TTimePrefix, TTimeUnit>()
+            {
+                return new Velocity(_other.To<Velocity<Length<TLengthPrefix, TLengthUnit>, Time<TTimePrefix, TTimeUnit>>>());
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 using Xunit;
 using Quantities.Unit.Si;
-using Quantities.Unit.SiDerived;
 using Quantities.Unit.Imperial.Length;
 using Quantities.Prefixes;
 

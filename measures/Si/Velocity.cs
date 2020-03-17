@@ -24,7 +24,7 @@ namespace Quantities.Measures.Si
         {
             return _velocity;
         }
-        void ISiInjectable<ITime>.Inject<TInjectedDimension>(in Double time)
+        public void Inject<TInjectedDimension>(in Double time) where TInjectedDimension : SiMeasure, ITime, new()
         {
             _velocity = Quantity<IVelocity>.Si<Velocity<TLength, TInjectedDimension>>(_length / time);
         }

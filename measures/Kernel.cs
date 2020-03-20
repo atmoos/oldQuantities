@@ -11,13 +11,13 @@ namespace Quantities.Measures
     {
         public abstract TDimesion Dimension { get; }
         public abstract Double To<TSiDimesion>(in Double value)
-            where TSiDimesion : SiMeasure, ISiMeasure, TDimesion, new();
+            where TSiDimesion : SiMeasure, TDimesion, new();
         public abstract Double ToOther<TNonSiDimesion>(in Double value)
             where TNonSiDimesion : IUnit, IConvert, TDimesion, new();
         public abstract Double Map(Quantity<TDimesion> other);
         public abstract void Inject(in Double value, ISiInjectable<TDimesion> siInjectable, INonSiInjectable nonSiInjectable);
         public static Kernel<TDimesion> Si<TSiDimesion>()
-            where TSiDimesion : SiMeasure, ISiMeasure, TDimesion, new()
+            where TSiDimesion : SiMeasure, TDimesion, new()
         {
             return Pool<SiKernel<TSiDimesion>>.Item;
         }
@@ -27,7 +27,7 @@ namespace Quantities.Measures
             return Pool<OtherKernel<TNonSiDimesion>>.Item;
         }
         private sealed class SiKernel<TSiDimesion> : Kernel<TDimesion>
-            where TSiDimesion : SiMeasure, ISiMeasure, TDimesion, new()
+            where TSiDimesion : SiMeasure, TDimesion, new()
         {
             private static TSiDimesion DIMENSION = Pool<TSiDimesion>.Item;
             public override TDimesion Dimension => DIMENSION;
@@ -37,7 +37,7 @@ namespace Quantities.Measures
             }
             public override Double ToOther<TNonSiDimesion>(in Double value)
             {
-                var normalizedSiValue = DIMENSION.Normalize(in value);
+                var normalizedSiValue = DIMENSION.Normalise(in value);
                 return Pool<TNonSiDimesion>.Item.FromSi(in normalizedSiValue);
             }
             public override Double Map(Quantity<TDimesion> other) => other.Kernel.To<TSiDimesion>(other.Value);
@@ -51,7 +51,7 @@ namespace Quantities.Measures
             public override Double To<TSiDimesion>(in Double value)
             {
                 var siValue = DIMENSION.ToSi(in value);
-                return Pool<TSiDimesion>.Item.DeNormalize(in siValue);
+                return Pool<TSiDimesion>.Item.Renormalise(in siValue);
             }
             public override Double ToOther<TOtherNonSiDimesion>(in Double value)
             {

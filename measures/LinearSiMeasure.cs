@@ -11,7 +11,7 @@ namespace Quantities.Measures
     {
         private static readonly TPrefix PREFIX = Pool<TPrefix>.Item;
         private static readonly TUnit UNIT = Pool<TUnit>.Item;
-        private static readonly Normaliser<Linear> NORMALISER = OperatorPool<Linear>.Get(PREFIX.Exponent);
+        private static readonly Normaliser<Linear> NORMALISER = Normalisers<Linear>.Get(PREFIX.Exponent);
         private static readonly String REPRESENTATION = $"{PREFIX}{UNIT}";
         public TPrefix Prefix => PREFIX;
         public TUnit Unit => UNIT;

@@ -1,25 +1,23 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Prefixes
 {
-    internal static class OperatorPool<TDimension>
+    internal static class Normalisers<TDimension>
         where TDimension : Dimension, new()
     {
         internal static Normaliser<TDimension> Largest { get; } = Normaliser<TDimension>.Create<Yotta>();
         internal static Normaliser<TDimension> Smallest { get; } = Normaliser<TDimension>.Create<Yocto>();
-        internal static IEnumerable<Prefix> All { get; } = BaseNormalisers().Select(n => n.Prefix);
         private static readonly Dictionary<Int32, Normaliser<TDimension>> _pool = CreatePool(BaseNormalisers());
         public static Normaliser<TDimension> Get(Int32 exponent)
         {
-            if(exponent > Largest.Prefix.Exponent) {
-                Double factor = Math.Pow(10, exponent - Largest.Prefix.Exponent);
+            if(exponent > Largest.Exponent) {
+                Double factor = Math.Pow(10, exponent - Largest.Exponent);
                 return Largest.With(new Multiply(factor), new Divide(factor));
             }
-            if(exponent < Smallest.Prefix.Exponent) {
-                Double divisor = Math.Pow(10, Smallest.Prefix.Exponent - exponent);
+            if(exponent < Smallest.Exponent) {
+                Double divisor = Math.Pow(10, Smallest.Exponent - exponent);
                 return Smallest.With(new Divide(divisor), new Multiply(divisor));
             }
             return _pool[exponent];
@@ -31,13 +29,13 @@ namespace Quantities.Prefixes
             for(Int32 index = 0; index < baseNormalisers.Length - 1; ++index) {
                 larger = baseNormalisers[index + 1];
                 Normaliser<TDimension> baseNormaliser = baseNormalisers[index];
-                pool.Add(baseNormaliser.Prefix.Exponent, baseNormaliser);
-                for(Int32 exponent = baseNormaliser.Prefix.Exponent + 1; exponent < larger.Prefix.Exponent; ++exponent) {
-                    Double factor = Math.Pow(10, larger.Prefix.Exponent - baseNormaliser.Prefix.Exponent);
+                pool.Add(baseNormaliser.Exponent, baseNormaliser);
+                for(Int32 exponent = baseNormaliser.Exponent + 1; exponent < larger.Exponent; ++exponent) {
+                    Double factor = Math.Pow(10, larger.Exponent - baseNormaliser.Exponent);
                     pool.Add(exponent, baseNormaliser.With(new Multiply(factor), new Divide(factor)));
                 }
             }
-            pool.Add(larger.Prefix.Exponent, larger);
+            pool.Add(larger.Exponent, larger);
             return pool;
         }
         private static Normaliser<TDimension>[] BaseNormalisers()

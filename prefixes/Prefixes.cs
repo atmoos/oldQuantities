@@ -1,16 +1,14 @@
-using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Quantities.Prefixes
 {
-    internal static class PrefixPool
+    internal static class Prefixes
     {
-        private static readonly Dictionary<Int32, Prefix> _pool;
-        public static Prefix Get(Int32 exponent) => _pool[exponent];
-        static PrefixPool()
+        private static readonly Prefix[] _allPrefixes = CreateAll();
+        public static IEnumerable<Prefix> All => _allPrefixes;
+        private static Prefix[] CreateAll()
         {
-            var prefixes = new Prefix[]{
+            return new Prefix[]{
                 Pool<Yotta>.Item,
                 Pool<Zetta>.Item,
                 Pool<Exa>.Item,
@@ -33,7 +31,6 @@ namespace Quantities.Prefixes
                 Pool<Zepto>.Item,
                 Pool<Yocto>.Item
             };
-            _pool = prefixes.ToDictionary(p => p.Exponent);
         }
     }
 }

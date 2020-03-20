@@ -12,7 +12,7 @@ namespace Quantities.Measures
         private static readonly TNominator Nominator = Pool<TNominator>.Item;
         private static readonly TDenominator Denominator = Pool<TDenominator>.Item;
         private static readonly String REPRESENTATION = $"{Nominator}/{Denominator}";
-        private static readonly Normaliser<TDimension> NORMALISER = OperatorPool<TDimension>.Get(Nominator.Anchor.Prefix.Exponent - Denominator.Anchor.Prefix.Exponent);
+        private static readonly Normaliser<TDimension> NORMALISER = Normalisers<TDimension>.Get(Nominator.Anchor.Exponent - Denominator.Anchor.Exponent);
         internal override Normaliser Anchor => NORMALISER;
 
         public override String ToString() => REPRESENTATION;

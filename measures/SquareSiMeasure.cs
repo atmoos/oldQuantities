@@ -10,7 +10,7 @@ namespace Quantities.Measures
     {
         private static readonly TLinearMeasure LINEAR_MEASURE = Pool<TLinearMeasure>.Item;
         private static readonly String REPRESENTATION = $"{LINEAR_MEASURE}²";
-        private static readonly Normaliser NORMALISER = OperatorPool<Square>.Get(LINEAR_MEASURE.Anchor.Prefix.Exponent);
+        private static readonly Normaliser NORMALISER = Normalisers<Square>.Get(LINEAR_MEASURE.Anchor.Exponent);
         internal override Normaliser Anchor => NORMALISER;
         public TLinearMeasure LinearDimension => LINEAR_MEASURE;
 

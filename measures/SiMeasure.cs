@@ -3,16 +3,11 @@ using Quantities.Prefixes;
 
 namespace Quantities.Measures
 {
-    public interface ISiMeasure : INormalize
+    public abstract class SiMeasure : INormalise
     {
-        Double Scale<TOther>(in Double other) where TOther : SiMeasure, new();
-    }
-    public abstract class SiMeasure : ISiMeasure
-    {
-        private protected static readonly UnitPrefix UNIT_PREFIX = Pool<UnitPrefix>.Item;
         internal abstract Normaliser Anchor { get; }
-        public Double DeNormalize(in Double value) => Anchor.DeNormalize(in value);
-        public Double Normalize(in Double value) => Anchor.Normalize(in value);
+        public Double Renormalise(in Double value) => Anchor.Renormalise(in value);
+        public Double Normalise(in Double value) => Anchor.Normalise(in value);
         public Double Scale<TOther>(in Double other) where TOther : SiMeasure, new() => Anchor.Scale(Pool<TOther>.Item.Anchor, in other);
     }
 }

@@ -17,5 +17,6 @@ namespace Quantities.Measures
         internal override Double Normalize<TDim>(in Double value) => LINEAR_MEASURE.Normalize<TDim>(in value);
         internal override Double DeNormalize<TDim>(in Double value) => LINEAR_MEASURE.DeNormalize<TDim>(in value);
         internal override Double Scale<TOther, TDim>(in Double value) => LINEAR_MEASURE.Scale<TOther, TDim>(in value);
+        internal override void InjectPrefix(IPrefixInjectable injectable) => LINEAR_MEASURE.InjectPrefix(injectable);
     }
 }

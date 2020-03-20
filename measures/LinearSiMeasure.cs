@@ -20,5 +20,6 @@ namespace Quantities.Measures
         internal override Double Normalize<TDim>(in Double value) => PREFIX.Scale<UnitPrefix, TDim>(in value);
         internal override Double DeNormalize<TDim>(in Double value) => UNIT_PREFIX.Scale<TPrefix, TDim>(in value);
         internal override Double Scale<TOther, TDim>(in Double value) => Pool<TOther>.Item.Anchor.Scale<TPrefix, TDim>(in value);
+        internal override void InjectPrefix(IPrefixInjectable injectable) => injectable.Inject<TPrefix>();
     }
 }

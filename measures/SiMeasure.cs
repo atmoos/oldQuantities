@@ -12,6 +12,7 @@ namespace Quantities.Measures
     {
         private protected static readonly UnitPrefix UNIT_PREFIX = Pool<UnitPrefix>.Item;
         internal abstract Prefix Anchor { get; }
+        internal abstract void InjectPrefix(IPrefixInjectable injectable);
         internal abstract Double Normalize<TDim>(in Double value) where TDim : Dimension, new();
         internal abstract Double DeNormalize<TDim>(in Double value) where TDim : Dimension, new();
         internal abstract Double Scale<TOther, TDim>(in Double value)

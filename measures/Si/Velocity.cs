@@ -1,9 +1,10 @@
 using System;
 using Quantities.Dimensions;
+using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Measures.Si
 {
-    internal sealed class Velocity<TLength, TTime> : SiDivide<TLength, TTime>, IVelocity<TLength, TTime>
+    internal sealed class Velocity<TLength, TTime> : SiDivide<TLength, Linear, TTime>, IVelocity<TLength, TTime>
         where TLength : SiMeasure, ILength, new()
         where TTime : SiMeasure, ITime, new()
     {

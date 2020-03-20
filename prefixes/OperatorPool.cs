@@ -1,67 +1,69 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Prefixes
 {
-    internal static class OperatorPool
+    internal static class OperatorPool<TDimension>
+        where TDimension : Dimension, new()
     {
-        internal static Yotta Largest { get; } = Pool<Yotta>.Item;
-        internal static Yocto Smallest { get; } = Pool<Yocto>.Item;
-
-        internal static IEnumerable<Prefix> All { get; } = AllPrefixes();
-        private static readonly Dictionary<Int32, Operation> _pool = CreatePool(AllPrefixes());
-        public static Operation Get(Int32 exponent)
+        internal static Normaliser<TDimension> Largest { get; } = Normaliser<TDimension>.Create<Yotta>();
+        internal static Normaliser<TDimension> Smallest { get; } = Normaliser<TDimension>.Create<Yocto>();
+        internal static IEnumerable<Prefix> All { get; } = BaseNormalisers().Select(n => n.Prefix);
+        private static readonly Dictionary<Int32, Normaliser<TDimension>> _pool = CreatePool(BaseNormalisers());
+        public static Normaliser<TDimension> Get(Int32 exponent)
         {
-            if(exponent > Largest.Exponent) {
-                Double factor = Math.Pow(10, exponent - Largest.Exponent);
-                return new Operation(new Multiply(factor), Largest);
+            if(exponent > Largest.Prefix.Exponent) {
+                Double factor = Math.Pow(10, exponent - Largest.Prefix.Exponent);
+                return Largest.With(new Multiply(factor), new Divide(factor));
             }
-            if(exponent < Smallest.Exponent) {
-                Double divisor = Math.Pow(10, Smallest.Exponent - exponent);
-                return new Operation(new Divide(divisor), Smallest);
+            if(exponent < Smallest.Prefix.Exponent) {
+                Double divisor = Math.Pow(10, Smallest.Prefix.Exponent - exponent);
+                return Smallest.With(new Divide(divisor), new Multiply(divisor));
             }
             return _pool[exponent];
         }
-        private static Dictionary<Int32, Operation> CreatePool(Prefix[] prefixes)
+        private static Dictionary<Int32, Normaliser<TDimension>> CreatePool(Normaliser<TDimension>[] baseNormalisers)
         {
-            Prefix larger = null;
-            var pool = new Dictionary<Int32, Operation>();
-            for(Int32 index = 0; index < prefixes.Length - 1; ++index) {
-                larger = prefixes[index + 1];
-                Prefix smaller = prefixes[index];
-                pool.Add(smaller.Exponent, new Operation(new NoOp(), smaller));
-                for(Int32 exponent = smaller.Exponent + 1; exponent < larger.Exponent; ++exponent) {
-                    Double factor = Math.Pow(10, larger.Exponent - smaller.Exponent);
-                    pool.Add(exponent, new Operation(new Multiply(factor), smaller));
+            Normaliser<TDimension> larger = null;
+            var pool = new Dictionary<Int32, Normaliser<TDimension>>();
+            for(Int32 index = 0; index < baseNormalisers.Length - 1; ++index) {
+                larger = baseNormalisers[index + 1];
+                Normaliser<TDimension> baseNormaliser = baseNormalisers[index];
+                pool.Add(baseNormaliser.Prefix.Exponent, baseNormaliser);
+                for(Int32 exponent = baseNormaliser.Prefix.Exponent + 1; exponent < larger.Prefix.Exponent; ++exponent) {
+                    Double factor = Math.Pow(10, larger.Prefix.Exponent - baseNormaliser.Prefix.Exponent);
+                    pool.Add(exponent, baseNormaliser.With(new Multiply(factor), new Divide(factor)));
                 }
             }
-            pool.Add(larger.Exponent, new Operation(new NoOp(), larger));
+            pool.Add(larger.Prefix.Exponent, larger);
             return pool;
         }
-        private static Prefix[] AllPrefixes()
+        private static Normaliser<TDimension>[] BaseNormalisers()
         {
-            return new Prefix[]{
-                Pool<Yocto>.Item,
-                Pool<Zepto>.Item,
-                Pool<Atto>.Item,
-                Pool<Femto>.Item,
-                Pool<Pico>.Item,
-                Pool<Nano>.Item,
-                Pool<Micro>.Item,
-                Pool<Milli>.Item,
-                Pool<Centi>.Item,
-                Pool<Deci>.Item,
-                Pool<UnitPrefix>.Item,
-                Pool<Deca >.Item,
-                Pool<Hecto>.Item,
-                Pool<Kilo>.Item,
-                Pool<Mega>.Item,
-                Pool<Giga>.Item,
-                Pool<Tera>.Item,
-                Pool<Peta>.Item,
-                Pool<Exa>.Item,
-                Pool<Zetta>.Item,
-                Pool<Yotta>.Item
+            return new Normaliser<TDimension>[]{
+                Smallest,
+                Normaliser<TDimension>.Create<Zepto>(),
+                Normaliser<TDimension>.Create<Atto>(),
+                Normaliser<TDimension>.Create<Femto>(),
+                Normaliser<TDimension>.Create<Pico>(),
+                Normaliser<TDimension>.Create<Nano>(),
+                Normaliser<TDimension>.Create<Micro>(),
+                Normaliser<TDimension>.Create<Milli>(),
+                Normaliser<TDimension>.Create<Centi>(),
+                Normaliser<TDimension>.Create<Deci>(),
+                Normaliser<TDimension>.Create<UnitPrefix>(),
+                Normaliser<TDimension>.Create<Deca >(),
+                Normaliser<TDimension>.Create<Hecto>(),
+                Normaliser<TDimension>.Create<Kilo>(),
+                Normaliser<TDimension>.Create<Mega>(),
+                Normaliser<TDimension>.Create<Giga>(),
+                Normaliser<TDimension>.Create<Tera>(),
+                Normaliser<TDimension>.Create<Peta>(),
+                Normaliser<TDimension>.Create<Exa>(),
+                Normaliser<TDimension>.Create<Zetta>(),
+                Largest
             };
         }
     }

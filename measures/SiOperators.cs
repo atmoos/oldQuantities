@@ -4,34 +4,24 @@ using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Measures
 {
-    public abstract class SiDivide<TNominator, TDenominator> : SiMeasure<Linear>
+    public class SiDivide<TNominator, TDimension, TDenominator> : SiMeasure<TDimension>
         where TNominator : SiMeasure, new()
+        where TDimension : Dimension, new()
         where TDenominator : SiMeasure, new()
     {
         private static readonly TNominator Nominator = Pool<TNominator>.Item;
         private static readonly TDenominator Denominator = Pool<TDenominator>.Item;
         private static readonly String REPRESENTATION = $"{Nominator}/{Denominator}";
-        private static readonly Operation Operation = OperatorPool.Get(Nominator.Anchor.Exponent - Denominator.Anchor.Exponent);
-        internal override Prefix Anchor => Operation.Prefix;
+        private static readonly Normaliser<TDimension> Normaliser = OperatorPool<TDimension>.Get(Nominator.Anchor.Exponent - Denominator.Anchor.Exponent);
+        internal override Prefix Anchor => Normaliser.Prefix;
 
         public override String ToString() => REPRESENTATION;
-        internal override Double DeNormalize<TDim>(in Double value)
-        {
-            var nominator = Nominator.DeNormalize<TDim>(in value);
-            var denominator = Denominator.DeNormalize<TDim>(1d);
-            return nominator / denominator;
-        }
-        internal override Double Normalize<TDim>(in Double value)
-        {
-            var nominator = Nominator.Normalize<TDim>(in value);
-            var denominator = Denominator.Normalize<TDim>(1d);
-            return nominator / denominator;
-        }
+        internal override Double DeNormalize<TDim>(in Double value) => Normaliser.DeNormalize(in value);
+        internal override Double Normalize<TDim>(in Double value) => Normaliser.Normalize(in value);
+        internal override void InjectPrefix(IPrefixInjectable injectable) => Normaliser.Inject(injectable);
         internal override Double Scale<TOther, TDim>(in Double value)
         {
-            var nominator = Nominator.Scale<TOther, TDim>(in value);
-            var denominator = Denominator.Scale<TOther, TDim>(1d);
-            return Operation.Op.Execute(nominator / denominator);
+            return 0;
         }
     }
 }

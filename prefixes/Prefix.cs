@@ -30,6 +30,7 @@ namespace Quantities.Prefixes
     {
         internal Int32 Exponent { get; }
         protected internal Prefix(Int32 exponent) => Exponent = exponent;
+        internal void Inject(IPrefixInjectable injectable) { }
         internal abstract Prefix Multiply<TRight>()
             where TRight : Prefix, new();
         internal abstract Prefix Divide<TDenominator>()

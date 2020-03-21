@@ -1,6 +1,5 @@
 using System;
 using Quantities.Dimensions;
-using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Measures.Si
 {

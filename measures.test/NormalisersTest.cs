@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using Quantities.Prefixes;
-using Quantities.Prefixes.Dimensions;
 
 
-namespace Quantities.Test
+namespace Quantities.Measures.Test
 {
     public sealed class NormalisersTest
     {

@@ -1,5 +1,4 @@
 using System;
-using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Prefixes
 {

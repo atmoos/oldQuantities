@@ -1,6 +1,6 @@
 using System;
 
-namespace Quantities.Prefixes.Dimensions
+namespace Quantities.Measures
 {
     public abstract class Dimension
     {

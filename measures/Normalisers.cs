@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Quantities.Prefixes.Dimensions;
+using Quantities.Prefixes;
 
-namespace Quantities.Prefixes
+namespace Quantities.Measures
 {
     internal static class Normalisers<TDimension>
         where TDimension : Dimension, new()

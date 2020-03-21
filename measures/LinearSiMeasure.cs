@@ -1,7 +1,6 @@
 using System;
 using Quantities.Unit;
 using Quantities.Prefixes;
-using Quantities.Prefixes.Dimensions;
 
 namespace Quantities.Measures
 {

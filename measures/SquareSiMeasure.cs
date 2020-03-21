@@ -1,6 +1,4 @@
 using System;
-using Quantities.Prefixes;
-using Quantities.Prefixes.Dimensions;
 using Quantities.Dimensions;
 
 namespace Quantities.Measures

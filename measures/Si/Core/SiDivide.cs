@@ -1,9 +1,10 @@
 using System;
+using Quantities.Measures.Core;
 using Quantities.Measures.Normalisation;
 
-namespace Quantities.Measures
+namespace Quantities.Measures.Si.Core
 {
-    public abstract class SiDivide<TNominator, TDimension, TDenominator> : SiMeasure
+    internal abstract class SiDivide<TNominator, TDimension, TDenominator> : SiMeasure
         where TNominator : SiMeasure, new()
         where TDimension : Dimension, new()
         where TDenominator : SiMeasure, new()

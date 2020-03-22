@@ -1,6 +1,7 @@
 using System;
 using Quantities.Unit;
 using Quantities.Dimensions;
+using Quantities.Measures.Core;
 
 using IConvert = Quantities.Unit.Conversion.IConvertible;
 

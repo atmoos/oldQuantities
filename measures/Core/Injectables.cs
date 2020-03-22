@@ -2,7 +2,7 @@ using System;
 using Quantities.Unit;
 using Quantities.Dimensions;
 
-namespace Quantities.Measures
+namespace Quantities.Measures.Core
 {
     internal interface ISiInjectable<in TDimension>
         where TDimension : IDimension

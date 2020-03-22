@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using Quantities.Prefixes;
+using Quantities.Measures.Core;
 using Quantities.Measures.Normalisation;
 
 

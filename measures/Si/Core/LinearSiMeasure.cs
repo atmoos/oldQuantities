@@ -1,11 +1,12 @@
 using System;
 using Quantities.Unit;
 using Quantities.Prefixes;
+using Quantities.Measures.Core;
 using Quantities.Measures.Normalisation;
 
-namespace Quantities.Measures
+namespace Quantities.Measures.Si.Core
 {
-    public abstract class LinearSiMeasure<TPrefix, TUnit> : SiMeasure, IUnitSiMeasure<TPrefix, TUnit>
+    internal abstract class LinearSiMeasure<TPrefix, TUnit> : SiMeasure, IUnitSiMeasure<TPrefix, TUnit>
         where TPrefix : Prefix, new()
         where TUnit : SiUnit, new()
     {

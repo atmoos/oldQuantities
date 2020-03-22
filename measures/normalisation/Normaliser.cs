@@ -1,5 +1,6 @@
 using System;
 using Quantities.Prefixes;
+using Quantities.Measures.Core;
 
 namespace Quantities.Measures.Normalisation
 {
@@ -20,8 +21,7 @@ namespace Quantities.Measures.Normalisation
         public static Normaliser<TDimension> Create<TPrefix>()
             where TPrefix : Prefix, new()
         {
-            var noOp = new NoOp();
-            return new NormaliserImpl<TPrefix>(noOp, noOp);
+            return Pool<NormaliserImpl<TPrefix>>.Item;
         }
         private sealed class NormaliserImpl<TPrefix> : Normaliser<TDimension>
             where TPrefix : Prefix, new()

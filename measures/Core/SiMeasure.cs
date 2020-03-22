@@ -1,7 +1,7 @@
 using System;
 using Quantities.Measures.Normalisation;
 
-namespace Quantities.Measures
+namespace Quantities.Measures.Core
 {
     public abstract class SiMeasure : INormalise
     {

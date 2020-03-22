@@ -3,6 +3,7 @@ using Quantities.Unit;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
+using Quantities.Measures.Core;
 using Quantities.Measures.Si;
 
 namespace Quantities

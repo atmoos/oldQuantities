@@ -4,7 +4,7 @@ using Quantities.Dimensions;
 
 using IConvert = Quantities.Unit.Conversion.IConvertible;
 
-namespace Quantities.Measures
+namespace Quantities.Measures.Core
 {
     internal abstract class Kernel<TDimesion>
         where TDimesion : IDimension

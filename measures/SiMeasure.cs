@@ -1,5 +1,5 @@
 using System;
-using Quantities.Prefixes;
+using Quantities.Measures.Normalisation;
 
 namespace Quantities.Measures
 {

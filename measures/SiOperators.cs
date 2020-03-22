@@ -1,4 +1,5 @@
 using System;
+using Quantities.Measures.Normalisation;
 
 namespace Quantities.Measures
 {

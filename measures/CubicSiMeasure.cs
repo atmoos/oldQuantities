@@ -1,5 +1,6 @@
 using System;
 using Quantities.Dimensions;
+using Quantities.Measures.Normalisation;
 
 namespace Quantities.Measures
 {

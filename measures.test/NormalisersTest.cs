@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using Quantities.Prefixes;
+using Quantities.Measures.Normalisation;
 
 
 namespace Quantities.Measures.Test

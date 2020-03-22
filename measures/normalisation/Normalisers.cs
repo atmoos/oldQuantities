@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Quantities.Prefixes;
 
-namespace Quantities.Measures
+namespace Quantities.Measures.Normalisation
 {
     internal static class Normalisers<TDimension>
         where TDimension : Dimension, new()

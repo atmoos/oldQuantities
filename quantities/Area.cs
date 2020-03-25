@@ -8,7 +8,7 @@ using Quantities.Measures.Si;
 
 namespace Quantities
 {
-    public sealed class Area : IQuantity<IArea>, IArea
+    public sealed class Area : IQuantity<IArea>, IArea, IEquatable<Area>
     {
         public Double Value => Quantity.Value;
         public IArea Dimension => Quantity.Dimension;
@@ -41,7 +41,7 @@ namespace Quantities
         {
             return new Area(Quantity<IArea>.Si<Area<Length<TPrefix, TUnit>>>(in value));
         }
-        public static Area CreateNonSi<TNonSiUnit>(Double value)
+        public static Area Create<TNonSiUnit>(Double value)
             where TNonSiUnit : INonSiUnit, IArea, new()
         {
             return new Area(Quantity<IArea>.Other<TNonSiUnit>(in value));
@@ -60,6 +60,8 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
+
+        public Boolean Equals(Area other) => Quantity.Equals(other.Quantity);
         internal static Area Square(Quantity<ILength> left, Quantity<ILength> right)
         {
             var builder = new AreaBuilder();
@@ -70,10 +72,7 @@ namespace Quantities
         private sealed class AreaBuilder : IBuilder<IArea>, ISiInjectable<ILength>, INonSiInjectable
         {
             Quantity<IArea> _area;
-            public Quantity<IArea> Build()
-            {
-                return _area;
-            }
+            public Quantity<IArea> Build() => _area;
             void ISiInjectable<ILength>.Inject<TInjectedDimension>(in Double value)
             {
                 _area = Quantity<IArea>.Si<Area<TInjectedDimension>>(value);

@@ -7,7 +7,7 @@ using Quantities.Measures.Si;
 
 namespace Quantities
 {
-    public sealed class Length : IQuantity<ILength>, ILength
+    public sealed class Length : IQuantity<ILength>, ILength, IEquatable<Length>, IFormattable
     {
         public Double Value => Quantity.Value;
         public ILength Dimension => Quantity.Dimension;
@@ -63,5 +63,9 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
+
+        public String ToString(String format, IFormatProvider formatProvider) => Quantity.ToString(format, formatProvider);
+
+        public Boolean Equals(Length other) => Quantity.Equals(other.Quantity);
     }
 }

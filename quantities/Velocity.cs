@@ -15,7 +15,7 @@ namespace Quantities
             where TTimePrefix : Prefix, new()
             where TTimeUnit : SiUnit, ITime, new();
     }
-    public sealed class Velocity : IEquatable<Velocity>, IQuantity<IVelocity>, IVelocity
+    public sealed class Velocity : IQuantity<IVelocity>, IVelocity, IEquatable<Velocity>, IFormattable
     {
         public Double Value => Quantity.Value;
         public IVelocity Dimension => Quantity.Dimension;
@@ -62,9 +62,11 @@ namespace Quantities
             return new Velocity(left.Quantity.Subtract(right.Quantity));
         }
 
-        public Boolean Equals(Velocity other) => Quantity.Equals(other.Quantity);
-
         public override String ToString() => Quantity.ToString();
+
+        public String ToString(String format, IFormatProvider formatProvider) => Quantity.ToString(format, formatProvider);
+
+        public Boolean Equals(Velocity other) => Quantity.Equals(other.Quantity);
         internal static Velocity Create(Length length, Time time)
         {
             var builder = new VelocityBuilder();

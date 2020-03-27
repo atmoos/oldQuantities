@@ -8,7 +8,7 @@ using Quantities.Measures.Si;
 
 namespace Quantities
 {
-    public sealed class Volume : IQuantity<IVolume>, IVolume, IEquatable<Volume>
+    public sealed class Volume : IQuantity<IVolume>, IVolume, IEquatable<Volume>, IFormattable
     {
         public Double Value => Quantity.Value;
         public IVolume Dimension => Quantity.Dimension;
@@ -70,6 +70,8 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
+
+        public String ToString(String format, IFormatProvider formatProvider) => Quantity.ToString(format, formatProvider);
 
         public Boolean Equals(Volume other) => Quantity.Equals(other.Quantity);
         internal static Volume Square(Quantity<ILength> left, Quantity<ILength> right)

@@ -8,7 +8,7 @@ using Quantities.Measures.Si;
 
 namespace Quantities
 {
-    public sealed class Area : IQuantity<IArea>, IArea, IEquatable<Area>
+    public sealed class Area : IQuantity<IArea>, IArea, IEquatable<Area>, IFormattable
     {
         public Double Value => Quantity.Value;
         public IArea Dimension => Quantity.Dimension;
@@ -60,6 +60,8 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
+
+        public String ToString(String format, IFormatProvider formatProvider) => Quantity.ToString(format, formatProvider);
 
         public Boolean Equals(Area other) => Quantity.Equals(other.Quantity);
         internal static Area Square(Quantity<ILength> left, Quantity<ILength> right)

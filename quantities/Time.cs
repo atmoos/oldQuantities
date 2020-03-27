@@ -8,7 +8,7 @@ using Quantities.Measures.Si;
 
 namespace Quantities
 {
-    public sealed class Time : IQuantity<ITime>, ITime
+    public sealed class Time : IQuantity<ITime>, ITime, IEquatable<Time>, IFormattable
     {
         public Double Value => Quantity.Value;
         public ITime Dimension => Quantity.Dimension;
@@ -50,5 +50,9 @@ namespace Quantities
         }
 
         public override String ToString() => Quantity.ToString();
+
+        public String ToString(String format, IFormatProvider formatProvider) => Quantity.ToString(format, formatProvider);
+
+        public Boolean Equals(Time other) => Quantity.Equals(other.Quantity);
     }
 }

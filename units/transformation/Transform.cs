@@ -1,12 +1,12 @@
 using System;
 
-namespace Quantities.Unit.Conversion
+namespace Quantities.Unit.Transformation
 {
-    public abstract class Convertible : IConvertible
+    public class Transform : ITransform
     {
         private readonly Double _asSiUnit;
         private readonly Double _fromSiUnit;
-        internal Convertible(Double asSiUnit)
+        private protected Transform(Double asSiUnit)
         {
             _asSiUnit = asSiUnit;
             _fromSiUnit = 1d / asSiUnit;

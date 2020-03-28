@@ -3,7 +3,7 @@ using Quantities.Unit;
 using Quantities.Dimensions;
 using Quantities.Measures.Core;
 
-using IConvert = Quantities.Unit.Conversion.IConvertible;
+using IConvert = Quantities.Unit.Transformation.ITransform;
 
 namespace Quantities.Measures
 {

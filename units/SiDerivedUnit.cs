@@ -1,8 +1,9 @@
 using System;
+using Quantities.Unit.Transformation;
 
 namespace Quantities.Unit
 {
-    public abstract class SiDerivedUnit : SiUnit, Conversion.IConvertible
+    public abstract class SiDerivedUnit : SiUnit, ITransform
     {
         private readonly Double _asSiUnit;
         private readonly Double _fromSiUnit;

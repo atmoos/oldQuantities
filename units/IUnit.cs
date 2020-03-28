@@ -1,7 +1,4 @@
 namespace Quantities.Unit
 {
-    public interface IUnit
-    {
-
-    }
+    public interface IUnit { /* marker interface */ }
 }

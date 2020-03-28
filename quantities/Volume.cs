@@ -1,10 +1,13 @@
 using System;
 using Quantities.Unit;
+using Quantities.Unit.Imperial;
+using Quantities.Unit.Imperial.Volume;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
 using Quantities.Measures.Core;
 using Quantities.Measures.Si;
+using Quantities.Measures.Other;
 
 namespace Quantities
 {
@@ -30,10 +33,21 @@ namespace Quantities
         {
             return new Volume(Quantity.ToOther<TUnit>());
         }
-        public Volume ToNonSi<TUnit>()
-            where TUnit : INonSiUnit, IVolume, new()
+        public Volume ToSi<TPrefix, TUnit>()
+            where TPrefix : Prefix, new()
+            where TUnit : SiDerivedUnit, IVolume, new()
+        {
+            return new Volume(Quantity.ToOther<Volume<TPrefix, TUnit>>());
+        }
+        public Volume ToImperial<TUnit>()
+            where TUnit : IImperial, IVolume, new()
         {
             return new Volume(Quantity.ToOther<TUnit>());
+        }
+        public Volume ToCubicImperial<TImperialUnit>()
+            where TImperialUnit : IImperial, ILength, new()
+        {
+            return new Volume(Quantity.ToOther<Cubic<TImperialUnit>>());
         }
         public static Volume Cubic<TUnit>(in Double value)
             where TUnit : SiUnit, ILength, new()
@@ -51,10 +65,21 @@ namespace Quantities
         {
             return new Volume(Quantity<IVolume>.Other<TSiDerived>(in value));
         }
-        public static Volume Create<TNonSiUnit>(Double value)
-            where TNonSiUnit : INonSiUnit, IVolume, new()
+        public static Volume Si<TPrefix, TSiDerived>(Double value)
+            where TPrefix : Prefix, new()
+            where TSiDerived : SiDerivedUnit, IVolume, new()
         {
-            return new Volume(Quantity<IVolume>.Other<TNonSiUnit>(in value));
+            return new Volume(Quantity<IVolume>.Other<Volume<TPrefix, TSiDerived>>(in value));
+        }
+        public static Volume Imperial<TImperialUnit>(Double value)
+            where TImperialUnit : IImperial, IVolume, new()
+        {
+            return new Volume(Quantity<IVolume>.Other<TImperialUnit>(in value));
+        }
+        public static Volume CubicImperial<TImperialUnit>(Double value)
+            where TImperialUnit : IImperial, ILength, new()
+        {
+            return new Volume(Quantity<IVolume>.Other<Cubic<TImperialUnit>>(in value));
         }
         public static Volume operator +(Volume left, Volume right)
         {

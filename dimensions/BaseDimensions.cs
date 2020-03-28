@@ -1,10 +1,10 @@
 namespace Quantities.Dimensions
 {
-    public interface ITime : ILinear { }
-    public interface ILength : ILinear { }
-    public interface IMass : ILinear { }
-    public interface IElectricCurrent : ILinear { }
-    public interface ITemperature : ILinear { }
-    public interface IAmountOfSubstance : ILinear { }
-    public interface ILuminousIntensity : ILinear { }
+    public interface ITime : ILinear { /* marker interface */ }
+    public interface ILength : ILinear { /* marker interface */ }
+    public interface IMass : ILinear { /* marker interface */ }
+    public interface IElectricCurrent : ILinear { /* marker interface */ }
+    public interface ITemperature : ILinear { /* marker interface */ }
+    public interface IAmountOfSubstance : ILinear { /* marker interface */ }
+    public interface ILuminousIntensity : ILinear { /* marker interface */ }
 }

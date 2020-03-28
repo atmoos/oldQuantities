@@ -1,7 +1,7 @@
 namespace Quantities.Dimensions
 {
-    public interface IDimension { }
-    public interface ILinear : IDimension { }
+    public interface IDimension { /* marker interface */ }
+    public interface ILinear : IDimension { /* marker interface */ }
     public interface ISquare<out TDimension> : ITimes<TDimension, TDimension>
     where TDimension : ILinear
     {

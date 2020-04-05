@@ -7,7 +7,6 @@ using Quantities.Prefixes;
 using Quantities.Measures;
 using Quantities.Measures.Si;
 using Quantities.Measures.Other;
-using Quantities.Measures.Other.Core;
 
 namespace Quantities
 {
@@ -97,7 +96,7 @@ namespace Quantities
             }
             Velocity IVelocityBuilder.Per<TTimeUnit>()
             {
-                throw new NotImplementedException();
+                return new Velocity(Quantity<IVelocity>.Other<SiVelocityOf<Length<TLengthPrefix, TLengthUnit>, TTimeUnit>>(_velocity));
             }
         }
         private sealed class Transformer<TLengthPrefix, TLengthUnit> : IVelocityBuilder
@@ -113,7 +112,7 @@ namespace Quantities
 
             Velocity IVelocityBuilder.Per<TTimeUnit>()
             {
-                throw new NotImplementedException();
+                return new Velocity(_self.ToOther<SiVelocityOf<Length<TLengthPrefix, TLengthUnit>, TTimeUnit>>());
             }
         }
         private sealed class Transformer<TImperialLength> : IVelocityBuilder

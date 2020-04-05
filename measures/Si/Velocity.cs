@@ -10,12 +10,6 @@ namespace Quantities.Measures.Si
         where TTime : SiMeasure, ITime, new()
     {
     }
-
-    internal interface IBuilder<TDimension>
-        where TDimension : IDimension
-    {
-        Quantity<TDimension> Build();
-    }
     internal sealed class SiVelocityBuilder<TLength> : IBuilder<IVelocity>, ISiInjectable<ITime>
         where TLength : SiMeasure, ILength, new()
     {

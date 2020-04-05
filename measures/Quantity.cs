@@ -30,19 +30,19 @@ namespace Quantities.Measures
         }
         public Quantity<TDimesion> Add(Quantity<TDimesion> other)
         {
-            return new Quantity<TDimesion>(Kernel, Value + Kernel.Map(other));
+            return new Quantity<TDimesion>(Kernel, Value + Map(other));
         }
         public Quantity<TDimesion> Subtract(Quantity<TDimesion> other)
         {
-            return new Quantity<TDimesion>(Kernel, Value - Kernel.Map(other));
+            return new Quantity<TDimesion>(Kernel, Value - Map(other));
         }
         internal void Multiply(Quantity<TDimesion> other, ISiInjectable<TDimesion> siInjectable, INonSiInjectable nonSiInjectable)
         {
-            Kernel.Inject(Value * Kernel.Map(other), siInjectable, nonSiInjectable);
+            Kernel.Inject(Value * Map(other), siInjectable, nonSiInjectable);
         }
         internal Double Divide(Quantity<TDimesion> other)
         {
-            return Value / Kernel.Map(other);
+            return Value / Map(other);
         }
         internal void Inject(ISiInjectable<TDimesion> siInjectable, INonSiInjectable nonSiInjectable) => Kernel.Inject(Value, siInjectable, nonSiInjectable);
 
@@ -54,6 +54,8 @@ namespace Quantities.Measures
             return min <= quotient && quotient <= max;
         }
         public override String ToString() => $"{Value:g5} {Dimension}";
+
+        private Double Map(Quantity<TDimesion> other) => Kernel.Map(other.Kernel, other.Value);
 
         public String ToString(String format, IFormatProvider formatProvider)
         {

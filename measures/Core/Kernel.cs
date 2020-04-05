@@ -1,8 +1,7 @@
 using System;
 using Quantities.Unit;
+using Quantities.Unit.Transformation;
 using Quantities.Dimensions;
-
-using IConvert = Quantities.Unit.Transformation.ITransform;
 
 namespace Quantities.Measures.Core
 {
@@ -13,8 +12,8 @@ namespace Quantities.Measures.Core
         public abstract Double To<TSiDimesion>(in Double value)
             where TSiDimesion : SiMeasure, TDimesion, new();
         public abstract Double ToOther<TNonSiDimesion>(in Double value)
-            where TNonSiDimesion : IUnit, IConvert, TDimesion, new();
-        public abstract Double Map(Quantity<TDimesion> other);
+            where TNonSiDimesion : IUnit, ITransform, TDimesion, new();
+        public abstract Double Map(Kernel<TDimesion> other, in Double value);
         public abstract void Inject(in Double value, ISiInjectable<TDimesion> siInjectable, INonSiInjectable nonSiInjectable);
         public static Kernel<TDimesion> Si<TSiDimesion>()
             where TSiDimesion : SiMeasure, TDimesion, new()
@@ -22,7 +21,7 @@ namespace Quantities.Measures.Core
             return Pool<SiKernel<TSiDimesion>>.Item;
         }
         public static Kernel<TDimesion> Other<TNonSiDimesion>()
-            where TNonSiDimesion : IUnit, IConvert, TDimesion, new()
+            where TNonSiDimesion : IUnit, ITransform, TDimesion, new()
         {
             return Pool<OtherKernel<TNonSiDimesion>>.Item;
         }
@@ -40,11 +39,11 @@ namespace Quantities.Measures.Core
                 var normalizedSiValue = DIMENSION.Normalise(in value);
                 return Pool<TNonSiDimesion>.Item.FromSi(in normalizedSiValue);
             }
-            public override Double Map(Quantity<TDimesion> other) => other.Kernel.To<TSiDimesion>(other.Value);
+            public override Double Map(Kernel<TDimesion> other, in Double value) => other.To<TSiDimesion>(in value);
             public override void Inject(in Double value, ISiInjectable<TDimesion> siInjectable, INonSiInjectable _) => siInjectable.Inject<TSiDimesion>(in value);
         }
         private sealed class OtherKernel<TNonSiDimesion> : Kernel<TDimesion>
-            where TNonSiDimesion : IUnit, IConvert, TDimesion, new()
+            where TNonSiDimesion : IUnit, ITransform, TDimesion, new()
         {
             private static TNonSiDimesion DIMENSION = Pool<TNonSiDimesion>.Item;
             public override TDimesion Dimension => DIMENSION;
@@ -58,7 +57,7 @@ namespace Quantities.Measures.Core
                 var siValue = DIMENSION.ToSi(value);
                 return Pool<TOtherNonSiDimesion>.Item.FromSi(in siValue);
             }
-            public override Double Map(Quantity<TDimesion> other) => other.Kernel.ToOther<TNonSiDimesion>(other.Value);
+            public override Double Map(Kernel<TDimesion> other, in Double value) => other.ToOther<TNonSiDimesion>(in value);
             public override void Inject(in Double value, ISiInjectable<TDimesion> _, INonSiInjectable nonSiInjectable) => nonSiInjectable.Inject<TNonSiDimesion>(in value);
         }
     }

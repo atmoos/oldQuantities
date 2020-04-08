@@ -102,10 +102,10 @@ namespace Quantities
         internal static Volume Square(Quantity<ILength> left, Quantity<ILength> right)
         {
             var builder = new VolumeBuilder();
-            left.Multiply(right, builder, builder);
+            left.Multiply(right, builder);
             return new Volume(builder.Build());
         }
-        private sealed class VolumeBuilder : IBuilder<IVolume>, ISiInjectable<ILength>, INonSiInjectable<ILength>
+        private sealed class VolumeBuilder : IBuilder<IVolume>, IInjectable<ILength>
         {
             Quantity<IVolume> _volume;
             public Quantity<IVolume> Build() => _volume;

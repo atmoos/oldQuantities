@@ -80,9 +80,8 @@ namespace Quantities
         internal static Velocity Create(Length length, Time time)
         {
             var builder = new VelocityBuilder();
-            length.Quantity.Inject(builder, builder);
-            var (si, nonSi) = builder.Per;
-            time.Quantity.Inject(si, nonSi);
+            length.Quantity.Inject(builder);
+            time.Quantity.Inject(builder.Per);
             return new Velocity(builder.Build());
         }
         private sealed class Builder<TLengthPrefix, TLengthUnit> : IVelocityBuilder

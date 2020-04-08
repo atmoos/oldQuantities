@@ -67,11 +67,11 @@ namespace Quantities
         internal static Area Square(Quantity<ILength> left, Quantity<ILength> right)
         {
             var builder = new AreaBuilder();
-            left.Multiply(right, builder, builder);
+            left.Multiply(right, builder);
             return new Area(builder.Build());
         }
 
-        private sealed class AreaBuilder : IBuilder<IArea>, ISiInjectable<ILength>, INonSiInjectable<ILength>
+        private sealed class AreaBuilder : IBuilder<IArea>, IInjectable<ILength>
         {
             Quantity<IArea> _area;
             public Quantity<IArea> Build() => _area;

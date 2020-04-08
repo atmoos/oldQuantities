@@ -105,7 +105,7 @@ namespace Quantities
             left.Multiply(right, builder, builder);
             return new Volume(builder.Build());
         }
-        private sealed class VolumeBuilder : IBuilder<IVolume>, ISiInjectable<ILength>, INonSiInjectable
+        private sealed class VolumeBuilder : IBuilder<IVolume>, ISiInjectable<ILength>, INonSiInjectable<ILength>
         {
             Quantity<IVolume> _volume;
             public Quantity<IVolume> Build() => _volume;
@@ -113,7 +113,7 @@ namespace Quantities
             {
                 _volume = Quantity<IVolume>.Si<Volume<TInjectedDimension>>(value);
             }
-            void INonSiInjectable.Inject<TUnit>(in Double value)
+            void INonSiInjectable<ILength>.Inject<TUnit>(in Double value)
             {
                 throw new NotImplementedException();
             }

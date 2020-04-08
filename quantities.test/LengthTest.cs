@@ -1,6 +1,7 @@
 using Xunit;
 using Quantities.Unit.Si;
 using Quantities.Unit.Imperial.Length;
+using Quantities.Unit.SiDerived;
 using Quantities.Prefixes;
 
 using static Quantities.Test.Metrics;
@@ -98,12 +99,48 @@ namespace Quantities.Test
             Assert.Equal(1, result.Value, SiPrecision);
         }
         [Fact]
-        public void LengthByTimeIsVelocity()
+        public void SiLengthBySiTimeIsVelocity()
         {
             var distance = Length.Create<Milli, Metre>(100);
             var duration = Time.Seconds(20);
-            var speed = distance / duration;
-            Assert.Equal(5, speed.Value, SiPrecision);
+            var expected = Velocity.Si<Milli, Metre>(5).PerSecond();
+
+            var actual = distance / duration;
+
+            actual.Matches(expected);
+        }
+        [Fact]
+        public void SiLengthByOtherTimeIsVelocity()
+        {
+            var distance = Length.Create<Kilo, Metre>(120);
+            var duration = Time.CreateSiDerived<Hour>(10);
+            var expected = Velocity.Si<Kilo, Metre>(12).Per<Hour>();
+
+            var actual = distance / duration;
+
+            actual.Matches(expected);
+        }
+        [Fact]
+        public void OtherLengthByTimeIsVelocity()
+        {
+            var distance = Length.CreateNonSi<Mile>(70);
+            var duration = Time.CreateSiDerived<Hour>(2);
+            var expected = Velocity.Imperial<Mile>(35).Per<Hour>();
+
+            var actual = distance / duration;
+
+            actual.Matches(expected);
+        }
+        [Fact]
+        public void OtherLengthBySiTimeIsVelocity()
+        {
+            var distance = Length.CreateNonSi<Mile>(4);
+            var duration = Time.Seconds(2);
+            var expected = Velocity.Imperial<Mile>(2).PerSecond();
+
+            var actual = distance / duration;
+
+            actual.Matches(expected);
         }
         [Fact]
         public void LengthByLengthIsArea()

@@ -7,6 +7,7 @@ using Quantities.Prefixes;
 using Quantities.Measures;
 using Quantities.Measures.Si;
 using Quantities.Measures.Other;
+using Quantities.Measures.Builder;
 
 namespace Quantities
 {

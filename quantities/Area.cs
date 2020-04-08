@@ -71,7 +71,7 @@ namespace Quantities
             return new Area(builder.Build());
         }
 
-        private sealed class AreaBuilder : IBuilder<IArea>, ISiInjectable<ILength>, INonSiInjectable
+        private sealed class AreaBuilder : IBuilder<IArea>, ISiInjectable<ILength>, INonSiInjectable<ILength>
         {
             Quantity<IArea> _area;
             public Quantity<IArea> Build() => _area;
@@ -79,7 +79,7 @@ namespace Quantities
             {
                 _area = Quantity<IArea>.Si<Area<TInjectedDimension>>(value);
             }
-            void INonSiInjectable.Inject<TUnit>(in Double value)
+            void INonSiInjectable<ILength>.Inject<TUnit>(in Double value)
             {
                 throw new NotImplementedException();
             }

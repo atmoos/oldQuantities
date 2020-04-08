@@ -1,5 +1,6 @@
 using System;
 using Quantities.Unit;
+using Quantities.Unit.Transformation;
 using Quantities.Dimensions;
 
 namespace Quantities.Measures.Core
@@ -11,8 +12,9 @@ namespace Quantities.Measures.Core
             where TInjectedDimension : SiMeasure, TDimension, new();
     }
 
-    internal interface INonSiInjectable
+    internal interface INonSiInjectable<in TDimension>
+        where TDimension : IDimension
     {
-        void Inject<TUnit>(in Double value) where TUnit : IUnit, new();
+        void Inject<TUnit>(in Double value) where TUnit : TDimension, IUnit, ITransform, new();
     }
 }

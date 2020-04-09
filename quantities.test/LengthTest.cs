@@ -143,12 +143,27 @@ namespace Quantities.Test
             actual.Matches(expected);
         }
         [Fact]
-        public void LengthByLengthIsArea()
+        public void SiLengthBySiLengthIsSiArea()
         {
             var length = Length.Create<Kilo, Metre>(2);
             var width = Length.Create<Hecto, Metre>(1);
-            var area = length * width;
-            Assert.Equal(0.2, area.Value, SiPrecision);
+            var expected = Area.Square<Kilo, Metre>(0.2);
+
+            var actual = length * width;
+
+            actual.Matches(expected);
+        }
+
+        [Fact]
+        public void OtherLengthByOtherLengthIsOtherArea()
+        {
+            var length = Length.CreateNonSi<Mile>(2);
+            var width = Length.CreateNonSi<Yard>(1760 / 2);
+            var expected = Area.SquareImperial<Mile>(1);
+
+            var actual = length * width;
+
+            actual.Matches(expected, CatastrophicPrecision);
         }
     }
 }

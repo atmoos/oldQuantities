@@ -1,5 +1,8 @@
 using System;
 using Quantities.Unit;
+using Quantities.Unit.Imperial;
+using Quantities.Unit.Imperial.Area;
+using Quantities.Unit.Imperial.Length;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
@@ -41,6 +44,11 @@ namespace Quantities
         {
             return new Area(Quantity<IArea>.Si<Area<Length<TPrefix, TUnit>>>(in value));
         }
+        public static Area SquareImperial<TLength>(Double value)
+            where TLength : IImperial, ILength, new()
+        {
+            return new Area(Quantity<IArea>.Other<Square<TLength>>(in value));
+        }
         public static Area Create<TNonSiUnit>(Double value)
             where TNonSiUnit : INonSiUnit, IArea, new()
         {
@@ -81,7 +89,7 @@ namespace Quantities
             }
             void INonSiInjectable<ILength>.Inject<TUnit>(in Double value)
             {
-                throw new NotImplementedException();
+                _area = Quantity<IArea>.Other<Square<TUnit>>(value);
             }
         }
     }

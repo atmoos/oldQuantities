@@ -69,8 +69,7 @@ namespace Quantities.Test
 
             var actual = speed.ToImperial<Mile>().Per<Hour>();
 
-            // ToDo: Improve precision!
-            actual.Matches(expected, 4);
+            actual.Matches(expected, CatastrophicPrecision);
         }
     }
 }

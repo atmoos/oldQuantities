@@ -99,10 +99,11 @@ namespace Quantities
         public String ToString(String format, IFormatProvider formatProvider) => Quantity.ToString(format, formatProvider);
 
         public Boolean Equals(Volume other) => Quantity.Equals(other.Quantity);
-        internal static Volume Square(Quantity<ILength> left, Quantity<ILength> right)
+        internal static Volume Multiply(Quantity<IArea> left, Quantity<ILength> right)
         {
             var builder = new VolumeBuilder();
-            left.Multiply(right, builder);
+            // ToDo: Enable multiplication square and cubic dimensions.
+            // left.Multiply(right, builder);
             return new Volume(builder.Build());
         }
         private sealed class VolumeBuilder : IBuilder<IVolume>, IInjectable<ILength>

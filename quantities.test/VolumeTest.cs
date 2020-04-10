@@ -109,5 +109,27 @@ namespace Quantities.Test
             var actual = si.ToImperial<FluidOunce>();
             Assert.Equal(expected, actual);
         }
+        [Fact]
+        public void DivideCubicMetreByMetre()
+        {
+            var volume = Volume.Cubic<Metre>(81);
+            var length = Length.Si<Metre>(3);
+            var expected = Area.Square<Metre>(27);
+
+            var actual = volume / length;
+
+            actual.Matches(expected);
+        }
+        [Fact]
+        public void DividePureVolumeByLength()
+        {
+            var volume = Volume.Si<Hecto, Litre>(300);
+            var length = Length.Si<Metre>(5);
+            var expected = Area.Square<Metre>(6);
+
+            var actual = volume / length;
+
+            actual.Matches(expected);
+        }
     }
 }

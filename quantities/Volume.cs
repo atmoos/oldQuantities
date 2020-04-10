@@ -92,7 +92,9 @@ namespace Quantities
         }
         public static Area operator /(Volume volume, Length length)
         {
-            return null;
+            var division = new Division(volume.Quantity);
+            length.Quantity.Inject(division);
+            return new Area(division.Build());
         }
 
         public override String ToString() => Quantity.ToString();
@@ -134,6 +136,23 @@ namespace Quantities
             {
                 var area = _area.ToOther<Square<TUnit>>();
                 _volume = Quantity<IVolume>.Other<Cubic<TUnit>>(area.Value * length);
+            }
+        }
+        private sealed class Division : IBuilder<IArea>, IInjectable<ILength>
+        {
+            readonly Quantity<IVolume> _volume;
+            Quantity<IArea> _area;
+            public Division(Quantity<IVolume> volume) => _volume = volume;
+            public Quantity<IArea> Build() => _area;
+            void ISiInjectable<ILength>.Inject<TInjectedDimension>(in Double length)
+            {
+                var volume = _volume.To<Volume<TInjectedDimension>>();
+                _area = Quantity<IArea>.Si<Area<TInjectedDimension>>(volume.Value / length);
+            }
+            void INonSiInjectable<ILength>.Inject<TUnit>(in Double length)
+            {
+                var volume = _volume.ToOther<Cubic<TUnit>>();
+                _area = Quantity<IArea>.Other<Square<TUnit>>(volume.Value / length);
             }
         }
     }

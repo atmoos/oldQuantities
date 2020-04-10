@@ -15,7 +15,7 @@ namespace Quantities
         public Double Value => Quantity.Value;
         public IArea Dimension => Quantity.Dimension;
         internal Quantity<IArea> Quantity { get; }
-        private Area(Quantity<IArea> quantity) => Quantity = quantity;
+        internal Area(Quantity<IArea> quantity) => Quantity = quantity;
         public Area ToSquare<TUnit>()
             where TUnit : SiUnit, ILength, new()
         {

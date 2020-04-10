@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 using Quantities.Unit.Si;
 using Quantities.Unit.Imperial.Length;
@@ -10,6 +11,7 @@ namespace Quantities.Test
 {
     public sealed class LengthTest
     {
+        private const Double KILOMETRE_IN_MILES = 1d / 1.609344d;
         [Fact]
         public void MetreToKilometre()
         {
@@ -39,22 +41,23 @@ namespace Quantities.Test
         {
             var miles = Length.Imperial<Mile>(1);
             var kilometres = miles.To<Kilo, Metre>();
-            Assert.Equal(1.609334, kilometres.Value, SiPrecision);
+            Assert.Equal(1.609344, kilometres.Value, SiPrecision);
         }
 
         [Fact]
         public void KilometreToMile()
         {
-            var kilometres = Length.Si<Kilo, Metre>(1.609334);
+            var kilometres = Length.Si<Kilo, Metre>(1.609344);
             var miles = kilometres.ToImperial<Mile>();
             Assert.Equal(1, miles.Value, SiPrecision);
         }
         [Fact]
         public void FootToMile()
         {
-            var feet = Length.Imperial<Foot>(5279.967192);
-            var miles = feet.ToImperial<Mile>();
-            Assert.Equal(1, miles.Value, ImperialPrecision);
+            var feet = Length.Imperial<Foot>(5280);
+            var expected = Length.Imperial<Mile>(1);
+            var actual = feet.ToImperial<Mile>();
+            actual.Matches(expected);
         }
 
         [Fact]
@@ -71,7 +74,7 @@ namespace Quantities.Test
             Length kilometres = Length.Si<Kilo, Metre>(1);
             var miles = Length.Imperial<Mile>(1);
             var result = miles + kilometres;
-            Assert.Equal(1.62137505328, result.Value, ImperialPrecision);
+            Assert.Equal(1 + KILOMETRE_IN_MILES, result.Value, SiPrecision);
         }
         [Fact]
         public void AddMilesToKilometres()
@@ -79,7 +82,7 @@ namespace Quantities.Test
             var kilometres = Length.Si<Kilo, Metre>(1);
             var miles = Length.Imperial<Mile>(1);
             var result = kilometres + miles;
-            Assert.Equal(2.609334, result.Value, SiPrecision);
+            Assert.Equal(2.609344, result.Value, SiPrecision);
         }
         [Fact]
         public void SubtractKilometresFromMetres()
@@ -93,7 +96,7 @@ namespace Quantities.Test
         [Fact]
         public void SubtractMilesFromKilometres()
         {
-            var kilometres = Length.Si<Kilo, Metre>(2.609334);
+            var kilometres = Length.Si<Kilo, Metre>(2.609344);
             var miles = Length.Imperial<Mile>(1);
             var result = kilometres - miles;
             Assert.Equal(1, result.Value, SiPrecision);
@@ -163,7 +166,17 @@ namespace Quantities.Test
 
             var actual = length * width;
 
-            actual.Matches(expected, CatastrophicPrecision);
+            actual.Matches(expected, ImperialPrecision);
+        }
+        [Fact]
+        public void OneMileInYards()
+        {
+            var length = Length.Imperial<Mile>(1);
+            var expected = Length.Imperial<Yard>(1760);
+
+            var actual = length.ToImperial<Yard>();
+
+            actual.Matches(expected, ImperialPrecision);
         }
     }
 }

@@ -22,8 +22,8 @@ namespace Quantities.Measures.Test
     {
         private const Double ANY_NUMBER = 42;
         private const Double ONE_FOOT_IN_METRES = 0.3048;
-        private const Double ONE_MILE_IN_METRES = 1609.334;
-        private const Double ONE_MILE_IN_KILOMETRES = 1.609334;
+        private const Double ONE_MILE_IN_METRES = 1609.344;
+        private const Double ONE_MILE_IN_KILOMETRES = 1.609344;
         private const Double ONE_MILE_IN_FEET = ONE_MILE_IN_METRES / ONE_FOOT_IN_METRES;
 
         [Fact]

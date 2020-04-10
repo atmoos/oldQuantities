@@ -56,7 +56,7 @@ namespace Quantities.Test
         public void MilesPerHourToKilometresPerHour()
         {
             var speed = Velocity.Imperial<Mile>(4).Per<Hour>();
-            var expected = Velocity.Si<Kilo, Metre>(4 * 1.609334).Per<Hour>();
+            var expected = Velocity.Si<Kilo, Metre>(4 * 1.609344).Per<Hour>();
 
             var actual = speed.To<Kilo, Metre>().Per<Hour>();
             Assert.Equal(expected, actual);
@@ -69,7 +69,7 @@ namespace Quantities.Test
 
             var actual = speed.ToImperial<Mile>().Per<Hour>();
 
-            actual.Matches(expected, CatastrophicPrecision);
+            actual.Matches(expected);
         }
     }
 }

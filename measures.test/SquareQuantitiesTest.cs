@@ -24,7 +24,7 @@ namespace Quantities.Measures.Test
         private const Double ANY_NUMBER = 42;
         private const Double ONE_ACRE_IN_SQUARE_METRES = 4046.8564224;
         private const Double ONE_ACRE_IN_SQUARE_KILOMETRES = 0.0040468564224;
-        private const Double ONE_ACRE_IN_SQUARE_MILES = ONE_ACRE_IN_SQUARE_KILOMETRES / (1.609334 * 1.609334);
+        private const Double ONE_ACRE_IN_SQUARE_MILES = ONE_ACRE_IN_SQUARE_KILOMETRES / (1.609344 * 1.609344);
 
 
         [Fact]

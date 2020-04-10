@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using Xunit;
 using Quantities.Dimensions;
 
@@ -8,7 +9,6 @@ namespace Quantities.Test
     {
         public static Int32 SiPrecision => 15;
         public static Int32 ImperialPrecision => 14;
-
         public static void Matches<TDimension>(this IQuantity<TDimension> actual, IQuantity<TDimension> expected)
             where TDimension : class, IDimension
         {
@@ -26,6 +26,14 @@ namespace Quantities.Test
             where TDimension : class, IDimension
         {
             actual.Matches(expected, ImperialPrecision);
+        }
+        public static void FormattingMatches(Func<Double, IFormattable> formatterFactory, String unit)
+        {
+            const String format = "f8";
+            const Double value = Math.PI;
+            var formattable = formatterFactory(value);
+            var formatProvider = CultureInfo.CurrentCulture;
+            Assert.Equal(formattable.ToString(format, formatProvider), $"{value.ToString(format, formatProvider)} {unit}");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Quantities
         public Double Value => Quantity.Value;
         public ILength Dimension => Quantity.Dimension;
         internal Quantity<ILength> Quantity { get; }
-        private Length(Quantity<ILength> quantity) => Quantity = quantity;
+        internal Length(Quantity<ILength> quantity) => Quantity = quantity;
         public Length To<TUnit>()
             where TUnit : SiUnit, ILength, new()
         {
@@ -68,6 +68,5 @@ namespace Quantities
         public String ToString(String format, IFormatProvider formatProvider) => Quantity.ToString(format, formatProvider);
 
         public Boolean Equals(Length other) => Quantity.Equals(other.Quantity);
-        internal static Length Create(Quantity<ILength> length) => new Length(length);
     }
 }

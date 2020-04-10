@@ -57,7 +57,6 @@ namespace Quantities.Test
 
             actual.Matches(expected, ImperialPrecision);
         }
-
         [Fact]
         public void SquareMetresDividedByMetre()
         {
@@ -69,7 +68,6 @@ namespace Quantities.Test
 
             actual.Matches(expected);
         }
-
         [Fact]
         public void PureArealDimensionDividedByLength()
         {
@@ -81,7 +79,6 @@ namespace Quantities.Test
 
             actual.Matches(expected, ImperialPrecision);
         }
-
         [Fact]
         public void SquareYardsDividedByFeet()
         {
@@ -92,6 +89,28 @@ namespace Quantities.Test
             var actual = area / length;
 
             actual.Matches(expected);
+        }
+        [Fact]
+        public void SquareMetersTimesMetres()
+        {
+            var area = Area.Square<Metre>(27);
+            var length = Length.Si<Metre>(3);
+            var expected = Volume.Cubic<Metre>(81);
+
+            var actual = area * length;
+
+            actual.Matches(expected);
+        }
+        [Fact]
+        public void SquareFeetTimesYards()
+        {
+            var area = Area.SquareImperial<Foot>(27);
+            var length = Length.Imperial<Yard>(2);
+            var expected = Volume.CubicImperial<Yard>(6);
+
+            var actual = area * length;
+
+            actual.Matches(expected, ImperialPrecision);
         }
     }
 }

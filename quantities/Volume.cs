@@ -1,6 +1,7 @@
 using System;
 using Quantities.Unit;
 using Quantities.Unit.Imperial;
+using Quantities.Unit.Imperial.Area;
 using Quantities.Unit.Imperial.Volume;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
@@ -99,14 +100,13 @@ namespace Quantities
         public String ToString(String format, IFormatProvider formatProvider) => Quantity.ToString(format, formatProvider);
 
         public Boolean Equals(Volume other) => Quantity.Equals(other.Quantity);
-        internal static Volume Multiply(Quantity<IArea> left, Quantity<ILength> right)
+        internal static Volume Multiply(Quantity<IArea> area, Quantity<ILength> length)
         {
-            var builder = new VolumeBuilder();
-            // ToDo: Enable multiplication square and cubic dimensions.
-            // left.Multiply(right, builder);
+            var builder = new Multiplication(area);
+            length.Inject(builder);
             return new Volume(builder.Build());
         }
-        private sealed class VolumeBuilder : IBuilder<IVolume>, IInjectable<ILength>
+        private sealed class Builder : IBuilder<IVolume>, IInjectable<ILength>
         {
             Quantity<IVolume> _volume;
             public Quantity<IVolume> Build() => _volume;
@@ -116,7 +116,24 @@ namespace Quantities
             }
             void INonSiInjectable<ILength>.Inject<TUnit>(in Double value)
             {
-                throw new NotImplementedException();
+                _volume = Quantity<IVolume>.Other<Cubic<TUnit>>(in value);
+            }
+        }
+        private sealed class Multiplication : IBuilder<IVolume>, IInjectable<ILength>
+        {
+            readonly Quantity<IArea> _area;
+            Quantity<IVolume> _volume;
+            public Multiplication(Quantity<IArea> area) => _area = area;
+            public Quantity<IVolume> Build() => _volume;
+            void ISiInjectable<ILength>.Inject<TInjectedDimension>(in Double length)
+            {
+                var area = _area.To<Area<TInjectedDimension>>();
+                _volume = Quantity<IVolume>.Si<Volume<TInjectedDimension>>(area.Value * length);
+            }
+            void INonSiInjectable<ILength>.Inject<TUnit>(in Double length)
+            {
+                var area = _area.ToOther<Square<TUnit>>();
+                _volume = Quantity<IVolume>.Other<Cubic<TUnit>>(area.Value * length);
             }
         }
     }

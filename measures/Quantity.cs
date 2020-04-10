@@ -43,7 +43,7 @@ namespace Quantities.Measures
             return Value / Map(other);
         }
         internal void Inject(IInjectable<TDimesion> injectable) => Kernel.Inject(Value, injectable);
-        internal Double Map(Quantity<TDimesion> other) => Kernel.Map(other.Kernel, other.Value);
+        private Double Map(Quantity<TDimesion> other) => Kernel.Map(other.Kernel, other.Value);
 
         public Boolean Equals(Quantity<TDimesion> other)
         {

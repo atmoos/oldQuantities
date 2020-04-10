@@ -68,13 +68,11 @@ namespace Quantities
         }
         public static Length operator /(Area area, Length length)
         {
-            var builder = new AreaBuilder();
+            var builder = new Division(area.Quantity);
             length.Quantity.Inject(builder);
-            var squareLength = builder.Build();
-            var lengthBuilder = new QuantityBuilder<ILength>(squareLength.Map(area.Quantity), (a, l) => a / l);
-            length.Quantity.Inject(lengthBuilder);
-            return Length.Create(lengthBuilder.Build());
+            return new Length(builder.Build());
         }
+        public static Volume operator *(Area area, Length length) => Volume.Multiply(area.Quantity, length.Quantity);
 
         public override String ToString() => Quantity.ToString();
 
@@ -83,12 +81,12 @@ namespace Quantities
         public Boolean Equals(Area other) => Quantity.Equals(other.Quantity);
         internal static Area Square(Quantity<ILength> left, Quantity<ILength> right)
         {
-            var builder = new AreaBuilder();
+            var builder = new Builder();
             left.Multiply(right, builder);
             return new Area(builder.Build());
         }
 
-        private sealed class AreaBuilder : IBuilder<IArea>, IInjectable<ILength>
+        private sealed class Builder : IBuilder<IArea>, IInjectable<ILength>
         {
             Quantity<IArea> _area;
             public Quantity<IArea> Build() => _area;
@@ -99,6 +97,24 @@ namespace Quantities
             void INonSiInjectable<ILength>.Inject<TUnit>(in Double value)
             {
                 _area = Quantity<IArea>.Other<Square<TUnit>>(value);
+            }
+        }
+
+        private sealed class Division : IBuilder<ILength>, IInjectable<ILength>
+        {
+            readonly Quantity<IArea> _area;
+            Quantity<ILength> _length;
+            public Division(Quantity<IArea> area) => _area = area;
+            public Quantity<ILength> Build() => _length;
+            void ISiInjectable<ILength>.Inject<TInjectedDimension>(in Double length)
+            {
+                var area = _area.To<Area<TInjectedDimension>>();
+                _length = Quantity<ILength>.Si<TInjectedDimension>(area.Value / length);
+            }
+            void INonSiInjectable<ILength>.Inject<TUnit>(in Double length)
+            {
+                var area = _area.ToOther<Square<TUnit>>();
+                _length = Quantity<ILength>.Other<TUnit>(area.Value / length);
             }
         }
     }

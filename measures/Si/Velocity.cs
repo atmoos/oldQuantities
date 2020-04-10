@@ -1,4 +1,3 @@
-using System;
 using Quantities.Dimensions;
 using Quantities.Measures.Core;
 using Quantities.Measures.Si.Core;

@@ -3,8 +3,9 @@ using Quantities.Dimensions;
 
 namespace Quantities.Unit.Imperial.Volume
 {
+    // ToDo: Add IImperial to generic constraints again.
     public sealed class Cubic<TUnit> : IImperial, IVolume<TUnit>
-        where TUnit : IImperial, ILength, new()
+        where TUnit : IUnit, ITransform, ILength, new()
     {
         private static readonly TUnit LINEAR_UNIT = Pool<TUnit>.Item;
         private static readonly Double TO_SI = Math.Pow(LINEAR_UNIT.ToSi(1d), 3);

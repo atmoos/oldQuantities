@@ -7,7 +7,7 @@ namespace Quantities.Test
     internal static class Metrics
     {
         public static Int32 SiPrecision => 15;
-        public static Int32 ImperialPrecision => SiPrecision;
+        public static Int32 ImperialPrecision => 14;
 
         public static void Matches<TDimension>(this IQuantity<TDimension> actual, IQuantity<TDimension> expected)
             where TDimension : class, IDimension

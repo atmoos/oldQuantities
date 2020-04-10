@@ -1,5 +1,6 @@
 using System;
 using Quantities.Unit;
+using Quantities.Unit.Imperial;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
@@ -24,8 +25,8 @@ namespace Quantities
         {
             return new Length(Quantity.To<Length<TPrefix, TUnit>>());
         }
-        public Length ToNonSi<TUnit>()
-            where TUnit : INonSiUnit, ILength, new()
+        public Length ToImperial<TUnit>()
+            where TUnit : IImperial, ILength, new()
         {
             return new Length(Quantity.ToOther<TUnit>());
         }
@@ -40,8 +41,8 @@ namespace Quantities
         {
             return new Length(Quantity<ILength>.Si<Length<TPrefix, TUnit>>(in value));
         }
-        public static Length CreateNonSi<TNonSiUnit>(Double value)
-            where TNonSiUnit : INonSiUnit, ILength, new()
+        public static Length Imperial<TNonSiUnit>(Double value)
+            where TNonSiUnit : IImperial, ILength, new()
         {
             return new Length(Quantity<ILength>.Other<TNonSiUnit>(in value));
         }

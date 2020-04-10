@@ -14,13 +14,13 @@ namespace Quantities.Test
         public void SecondsToMinutes()
         {
             var seconds = Time.Seconds(12);
-            var minutes = seconds.ToSiDerived<Minute>();
+            var minutes = seconds.To<Minute>();
             Assert.Equal(12d / 60, minutes.Value, SiPrecision);
         }
         [Fact]
         public void MinutesToHours()
         {
-            var seconds = Time.CreateSiDerived<Minute>(12);
+            var seconds = Time.SiDerived<Minute>(12);
             var hours = seconds.ToSeconds();
             Assert.Equal(12d * 60, hours.Value, SiPrecision);
         }
@@ -36,14 +36,14 @@ namespace Quantities.Test
         [Fact]
         public void WeekToHours()
         {
-            var seconds = Time.CreateSiDerived<Week>(2);
-            var microSeconds = seconds.ToSiDerived<Hour>();
+            var seconds = Time.SiDerived<Week>(2);
+            var microSeconds = seconds.To<Hour>();
             Assert.Equal(2 * 7 * 24, microSeconds.Value, SiPrecision);
         }
         [Fact]
         public void MinuteToMilliSecond()
         {
-            var seconds = Time.CreateSiDerived<Minute>(4);
+            var seconds = Time.SiDerived<Minute>(4);
             var microSeconds = seconds.To<Milli, Second>();
             Assert.Equal(4 * 60 * 1e3, microSeconds.Value, SiPrecision);
         }

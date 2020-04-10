@@ -58,11 +58,6 @@ namespace Quantities
         {
             return new Builder<TUnit>(in velocity);
         }
-        public static Velocity CreateNonSi<TNonSiUnit>(Double value)
-            where TNonSiUnit : INonSiUnit, IVelocity, new()
-        {
-            return new Velocity(Quantity<IVelocity>.Other<TNonSiUnit>(in value));
-        }
         public static Velocity operator +(Velocity left, Velocity right)
         {
             return new Velocity(left.Quantity.Add(right.Quantity));

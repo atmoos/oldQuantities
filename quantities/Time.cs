@@ -21,20 +21,20 @@ namespace Quantities
         {
             return new Time(Quantity.To<Time<TPrefix, TUnit>>());
         }
-        public Time ToSiDerived<TUnit>()
+        public Time To<TUnit>()
             where TUnit : SiDerivedUnit, ITime, new()
         {
             return new Time(Quantity.ToOther<TUnit>());
         }
         public TimeSpan ToTimeSpan() => TimeSpan.FromSeconds(ToSeconds().Value);
-        public static Time Seconds(in Double value) => Create<UnitPrefix, Second>(in value);
-        public static Time Create<TPrefix, TUnit>(in Double value)
+        public static Time Seconds(in Double value) => Si<UnitPrefix, Second>(in value);
+        public static Time Si<TPrefix, TUnit>(in Double value)
             where TPrefix : Prefix, IScaleDown, new()
             where TUnit : SiUnit, ITime, new()
         {
             return new Time(Quantity<ITime>.Si<Time<TPrefix, TUnit>>(in value));
         }
-        public static Time CreateSiDerived<TSiDerived>(Double value)
+        public static Time SiDerived<TSiDerived>(Double value)
             where TSiDerived : SiDerivedUnit, ITime, new()
         {
             return new Time(Quantity<ITime>.Other<TSiDerived>(in value));

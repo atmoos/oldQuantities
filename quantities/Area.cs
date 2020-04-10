@@ -2,7 +2,6 @@ using System;
 using Quantities.Unit;
 using Quantities.Unit.Imperial;
 using Quantities.Unit.Imperial.Area;
-using Quantities.Unit.Imperial.Length;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
@@ -28,10 +27,15 @@ namespace Quantities
         {
             return new Area(Quantity.To<Area<Length<TPrefix, TUnit>>>());
         }
-        public Area ToNonSi<TUnit>()
-            where TUnit : INonSiUnit, IArea, new()
+        public Area ToImperial<TUnit>()
+            where TUnit : IImperial, IArea, new()
         {
             return new Area(Quantity.ToOther<TUnit>());
+        }
+        public Area ToSquareImperial<TLength>()
+            where TLength : IImperial, ILength, new()
+        {
+            return new Area(Quantity.ToOther<Square<TLength>>());
         }
         public static Area Square<TUnit>(in Double value)
             where TUnit : SiUnit, ILength, new()
@@ -49,8 +53,8 @@ namespace Quantities
         {
             return new Area(Quantity<IArea>.Other<Square<TLength>>(in value));
         }
-        public static Area Create<TNonSiUnit>(Double value)
-            where TNonSiUnit : INonSiUnit, IArea, new()
+        public static Area Imperial<TNonSiUnit>(Double value)
+            where TNonSiUnit : IImperial, IArea, new()
         {
             return new Area(Quantity<IArea>.Other<TNonSiUnit>(in value));
         }

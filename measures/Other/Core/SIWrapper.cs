@@ -1,6 +1,5 @@
 using System;
 using Quantities.Unit;
-using Quantities.Unit.Transformation;
 using Quantities.Measures.Core;
 
 // ToDo: Merger INormalise and ITransform?

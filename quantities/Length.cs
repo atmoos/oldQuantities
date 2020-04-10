@@ -29,12 +29,12 @@ namespace Quantities
         {
             return new Length(Quantity.ToOther<TUnit>());
         }
-        public static Length Create<TUnit>(in Double value)
+        public static Length Si<TUnit>(in Double value)
             where TUnit : SiUnit, ILength, new()
         {
-            return Create<UnitPrefix, TUnit>(in value);
+            return Si<UnitPrefix, TUnit>(in value);
         }
-        public static Length Create<TPrefix, TUnit>(in Double value)
+        public static Length Si<TPrefix, TUnit>(in Double value)
             where TPrefix : Prefix, new()
             where TUnit : SiUnit, ILength, new()
         {

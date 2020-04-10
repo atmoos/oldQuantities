@@ -3,8 +3,6 @@ using Quantities.Unit;
 using Quantities.Dimensions;
 using Quantities.Measures.Core;
 
-using IConvert = Quantities.Unit.Transformation.ITransform;
-
 namespace Quantities.Measures
 {
     public sealed class Quantity<TDimesion> : IEquatable<Quantity<TDimesion>>, IFormattable
@@ -24,7 +22,7 @@ namespace Quantities.Measures
             return Si<TSiDimesion>(Kernel.To<TSiDimesion>(Value));
         }
         public Quantity<TDimesion> ToOther<TNonSiDimesion>()
-            where TNonSiDimesion : IUnit, IConvert, TDimesion, new()
+            where TNonSiDimesion : IUnit, ITransform, TDimesion, new()
         {
             return Other<TNonSiDimesion>(Kernel.ToOther<TNonSiDimesion>(Value));
         }
@@ -67,7 +65,7 @@ namespace Quantities.Measures
             return new Quantity<TDimesion>(Kernel<TDimesion>.Si<TSiDimesion>(), value);
         }
         public static Quantity<TDimesion> Other<TNonSiDimesion>(in Double value)
-            where TNonSiDimesion : IUnit, IConvert, TDimesion, new()
+            where TNonSiDimesion : IUnit, ITransform, TDimesion, new()
         {
             return new Quantity<TDimesion>(Kernel<TDimesion>.Other<TNonSiDimesion>(), value);
         }

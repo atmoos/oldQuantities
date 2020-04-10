@@ -1,6 +1,6 @@
 using System;
 
-namespace Quantities.Unit.Transformation
+namespace Quantities
 {
     public interface ITransform
     {

@@ -1,7 +1,6 @@
 namespace Quantities.Unit.Imperial
 {
-    public interface IImperial : INonSiUnit
+    public interface IImperial : IUnit, ITransform
     {
-
     }
 }

@@ -14,8 +14,4 @@ namespace Quantities.Measures
     {
         TPrefix Prefix { get; }
     }
-    public interface INonSiUnitMeasure<out TUnit> : IUnitMeasure<TUnit>
-        where TUnit : INonSiUnit
-    {
-    }
 }

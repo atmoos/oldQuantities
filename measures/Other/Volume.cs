@@ -1,5 +1,4 @@
 using Quantities.Unit;
-using Quantities.Unit.Transformation;
 using Quantities.Prefixes;
 using Quantities.Dimensions;
 using Quantities.Measures.Other.Core;

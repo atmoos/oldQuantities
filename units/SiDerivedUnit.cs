@@ -1,5 +1,4 @@
 using System;
-using Quantities.Unit.Transformation;
 
 namespace Quantities.Unit
 {

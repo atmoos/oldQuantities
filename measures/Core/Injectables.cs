@@ -1,6 +1,5 @@
 using System;
 using Quantities.Unit;
-using Quantities.Unit.Transformation;
 using Quantities.Dimensions;
 
 namespace Quantities.Measures.Core

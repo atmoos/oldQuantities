@@ -1,5 +1,4 @@
 using System;
-using Quantities.Unit.Transformation;
 using Quantities.Dimensions;
 
 namespace Quantities.Unit.Imperial.Area

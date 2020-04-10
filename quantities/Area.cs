@@ -68,7 +68,12 @@ namespace Quantities
         }
         public static Length operator /(Area area, Length length)
         {
-            return null;
+            var builder = new AreaBuilder();
+            length.Quantity.Inject(builder);
+            var squareLength = builder.Build();
+            var lengthBuilder = new QuantityBuilder<ILength>(squareLength.Map(area.Quantity), (a, l) => a / l);
+            length.Quantity.Inject(lengthBuilder);
+            return Length.Create(lengthBuilder.Build());
         }
 
         public override String ToString() => Quantity.ToString();

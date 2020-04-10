@@ -17,6 +17,7 @@ namespace Quantities.Test
         public static void Matches<TDimension>(this IQuantity<TDimension> actual, IQuantity<TDimension> expected, Int32 precision)
             where TDimension : class, IDimension
         {
+            Assert.NotNull(actual);
             Assert.Same(expected.Dimension, actual.Dimension);
             Assert.Equal(expected.Value, actual.Value, precision);
         }

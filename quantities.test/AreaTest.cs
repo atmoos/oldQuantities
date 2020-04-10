@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 using Quantities.Unit.Si;
+using Quantities.Unit.Imperial.Area;
 using Quantities.Unit.Imperial.Length;
 using Quantities.Prefixes;
 
@@ -11,6 +12,7 @@ namespace Quantities.Test
     public sealed class AreaTest
     {
         private const Double SQUARE_MILE_IN_SQUARE_KILOMETRES = (Double)(1.609344m * 1.609344m);
+
         [Fact]
         public void AddSquareMetres()
         {
@@ -54,6 +56,42 @@ namespace Quantities.Test
             var actual = squareYards.ToSquareImperial<Foot>();
 
             actual.Matches(expected, ImperialPrecision);
+        }
+
+        [Fact]
+        public void SquareMetresDividedByMetre()
+        {
+            var area = Area.Square<Deca, Metre>(48.40);
+            var length = Length.Si<Metre>(605);
+            var expected = Length.Si<Metre>(8);
+
+            var actual = area / length;
+
+            actual.Matches(expected);
+        }
+
+        [Fact]
+        public void PureArealDimensionDividedByLength()
+        {
+            var area = Area.Imperial<Acre>(1);
+            var length = Length.Imperial<Yard>(605);
+            var expected = Length.Imperial<Yard>(8);
+
+            var actual = area / length;
+
+            actual.Matches(expected, ImperialPrecision);
+        }
+
+        [Fact]
+        public void SquareYardsDividedByFeet()
+        {
+            var area = Area.SquareImperial<Foot>(27);
+            var length = Length.Imperial<Yard>(1);
+            var expected = Length.Imperial<Yard>(3);
+
+            var actual = area / length;
+
+            actual.Matches(expected);
         }
     }
 }

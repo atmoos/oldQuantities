@@ -242,6 +242,22 @@ namespace Quantities.Measures.Test
 
             Assert.Equal(1d, qa.Divide(qb), NonSiPrecision);
         }
+        [Fact]
+        public void ScalarMultiplication()
+        {
+            var qa = Quantity<IVolume>.Si<Volume<Length<Centi, Metre>>>(7);
+            var expected = Quantity<IVolume>.Si<Volume<Length<Centi, Metre>>>(42);
+
+            Assert.Equal(expected, qa.Multiply(6));
+        }
+        [Fact]
+        public void ScalarDivision()
+        {
+            var qa = Quantity<IVolume>.Si<Volume<Length<Kilo, Metre>>>(9);
+            var expected = Quantity<IVolume>.Si<Volume<Length<Kilo, Metre>>>(-4.5);
+
+            Assert.Equal(expected, qa.Divide(-2));
+        }
 
         void CheckSiAssociativity(Func<Quantity<IVolume>, Quantity<IVolume>, Quantity<IVolume>> operation)
         {

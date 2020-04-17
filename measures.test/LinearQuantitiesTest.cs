@@ -234,7 +234,6 @@ namespace Quantities.Measures.Test
 
             Assert.Equal(expected, qa.Divide(qb));
         }
-
         [Fact]
         public void DivisionOfOtherQuantityWithOtherOtherQuantity()
         {
@@ -244,6 +243,23 @@ namespace Quantities.Measures.Test
 
             Assert.Equal(expected, qa.Divide(qb), NonSiPrecision);
         }
+        [Fact]
+        public void ScalarMultiplication()
+        {
+            var qa = Quantity<ILength>.Si<Length<Deci, Metre>>(3);
+            var expected = Quantity<ILength>.Si<Length<Deci, Metre>>(15);
+
+            Assert.Equal(expected, qa.Multiply(5));
+        }
+        [Fact]
+        public void ScalarDivision()
+        {
+            var qa = Quantity<ILength>.Si<Length<Deci, Metre>>(81);
+            var expected = Quantity<ILength>.Si<Length<Deci, Metre>>(27);
+
+            Assert.Equal(expected, qa.Divide(3));
+        }
+
         void CheckSiAssociativity(Func<Quantity<ITime>, Quantity<ITime>, Quantity<ITime>> operation)
         {
             var left = Quantity<ITime>.Si<Time<Micro, Second>>(2);

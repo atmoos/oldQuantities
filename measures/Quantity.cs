@@ -34,9 +34,17 @@ namespace Quantities.Measures
         {
             return new Quantity<TDimesion>(Kernel, Value - Map(other));
         }
+        public Quantity<TDimesion> Multiply(in Double scalar)
+        {
+            return new Quantity<TDimesion>(Kernel, scalar * Value);
+        }
         internal void Multiply(Quantity<TDimesion> other, IInjectable<TDimesion> injectable)
         {
             Kernel.Inject(Value * Map(other), injectable);
+        }
+        public Quantity<TDimesion> Divide(in Double scalar)
+        {
+            return new Quantity<TDimesion>(Kernel, Value / scalar);
         }
         internal Double Divide(Quantity<TDimesion> other)
         {

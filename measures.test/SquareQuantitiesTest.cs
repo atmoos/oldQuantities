@@ -260,5 +260,21 @@ namespace Quantities.Measures.Test
 
             AssertDimensionsAreSame(expectedDimension, operation(left, right));
         }
+        [Fact]
+        public void ScalarMultiplication()
+        {
+            var qa = Quantity<IArea>.Si<Area<Length<Femto, Metre>>>(2);
+            var expected = Quantity<IArea>.Si<Area<Length<Femto, Metre>>>(8);
+
+            Assert.Equal(expected, qa.Multiply(4));
+        }
+        [Fact]
+        public void ScalarDivision()
+        {
+            var qa = Quantity<IArea>.Si<Area<Length<Tera, Metre>>>(27);
+            var expected = Quantity<IArea>.Si<Area<Length<Tera, Metre>>>(9);
+
+            Assert.Equal(expected, qa.Divide(3));
+        }
     }
 }

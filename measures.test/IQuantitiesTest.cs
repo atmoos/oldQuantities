@@ -26,5 +26,7 @@ namespace Quantities.Measures.Test
         void TwoSiQuantitiesOfDifferentMeasureAreEqual();
         void TwoSiQuantitiesOfSameMeasureAreEqual();
         void TwoSiQuantitiesOfSlightlyDifferentValueAreNotEqual();
+        void ScalarMultiplication();
+        void ScalarDivision();
     }
 }

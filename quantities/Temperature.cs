@@ -1,5 +1,6 @@
 using System;
 using Quantities.Unit;
+using Quantities.Unit.Other;
 using Quantities.Unit.Imperial;
 using Quantities.Unit.SiDerived;
 using Quantities.Dimensions;
@@ -32,6 +33,11 @@ namespace Quantities
         {
             return new Temperature(Quantity.ToOther<TUnit>());
         }
+        public Temperature ToOther<TUnit>()
+            where TUnit : IOther, ITemperature, new()
+        {
+            return new Temperature(Quantity.ToOther<TUnit>());
+        }
         public static Temperature Si<TUnit>(in Double value)
             where TUnit : SiUnit, ITemperature, new()
         {
@@ -49,6 +55,11 @@ namespace Quantities
         }
         public static Temperature Imperial<TUnit>(Double value)
             where TUnit : IImperial, ITemperature, new()
+        {
+            return new Temperature(Quantity<ITemperature>.Other<TUnit>(in value));
+        }
+        public static Temperature Other<TUnit>(Double value)
+            where TUnit : IOther, ITemperature, new()
         {
             return new Temperature(Quantity<ITemperature>.Other<TUnit>(in value));
         }

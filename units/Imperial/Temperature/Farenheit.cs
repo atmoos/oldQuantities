@@ -3,6 +3,8 @@ using Quantities.Dimensions;
 
 namespace Quantities.Unit.Imperial.Temperature
 {
+    // [K] ≡ ([°F] + 459.67) × ​5⁄9
+    // See: https://en.wikipedia.org/wiki/Conversion_of_units#Temperature
     public sealed class Fahrenheit : IImperial, ITemperature
     {
         private const Decimal KELVIN_OFFSET = 459.67m;

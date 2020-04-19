@@ -1,5 +1,5 @@
 using System;
-using Quantities.Unit;
+using Quantities.Unit.Si;
 using Quantities.Prefixes;
 using Quantities.Measures.Core;
 using Quantities.Measures.Normalisation;
@@ -8,7 +8,7 @@ namespace Quantities.Measures.Si.Core
 {
     internal abstract class LinearSiMeasure<TPrefix, TUnit> : SiMeasure, IUnitSiMeasure<TPrefix, TUnit>
         where TPrefix : Prefix, new()
-        where TUnit : SiUnit, new()
+        where TUnit : ISiUnit, new()
     {
         private static readonly TPrefix PREFIX = Pool<TPrefix>.Item;
         private static readonly TUnit UNIT = Pool<TUnit>.Item;

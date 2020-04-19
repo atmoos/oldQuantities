@@ -1,7 +1,6 @@
 using Xunit;
 using Quantities.Unit.Si;
-using Quantities.Unit.SiDerived;
-using Quantities.Unit.Imperial;
+using Quantities.Unit.Si.Accepted;
 using Quantities.Prefixes;
 
 using static Quantities.Test.Metrics;
@@ -20,7 +19,7 @@ namespace Quantities.Test
         [Fact]
         public void MinutesToHours()
         {
-            var seconds = Time.SiDerived<Minute>(12);
+            var seconds = Time.SiAccepted<Minute>(12);
             var hours = seconds.ToSeconds();
             Assert.Equal(12d * 60, hours.Value, SiPrecision);
         }
@@ -36,14 +35,14 @@ namespace Quantities.Test
         [Fact]
         public void WeekToHours()
         {
-            var seconds = Time.SiDerived<Week>(2);
+            var seconds = Time.SiAccepted<Week>(2);
             var microSeconds = seconds.To<Hour>();
             Assert.Equal(2 * 7 * 24, microSeconds.Value, SiPrecision);
         }
         [Fact]
         public void MinuteToMilliSecond()
         {
-            var seconds = Time.SiDerived<Minute>(4);
+            var seconds = Time.SiAccepted<Minute>(4);
             var microSeconds = seconds.To<Milli, Second>();
             Assert.Equal(4 * 60 * 1e3, microSeconds.Value, SiPrecision);
         }

@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using Quantities.Unit.Si;
 using Quantities.Unit.Imperial.Length;
-using Quantities.Unit.SiDerived;
+using Quantities.Unit.Si.Accepted;
 using Quantities.Prefixes;
 
 using static Quantities.Test.Metrics;
@@ -116,7 +116,7 @@ namespace Quantities.Test
         public void SiLengthByOtherTimeIsVelocity()
         {
             var distance = Length.Si<Kilo, Metre>(120);
-            var duration = Time.SiDerived<Hour>(10);
+            var duration = Time.SiAccepted<Hour>(10);
             var expected = Velocity.Si<Kilo, Metre>(12).Per<Hour>();
 
             var actual = distance / duration;
@@ -127,7 +127,7 @@ namespace Quantities.Test
         public void OtherLengthByTimeIsVelocity()
         {
             var distance = Length.Imperial<Mile>(70);
-            var duration = Time.SiDerived<Hour>(2);
+            var duration = Time.SiAccepted<Hour>(2);
             var expected = Velocity.Imperial<Mile>(35).Per<Hour>();
 
             var actual = distance / duration;

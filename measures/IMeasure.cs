@@ -1,4 +1,4 @@
-using Quantities.Unit;
+using Quantities.Unit.Si;
 using Quantities.Prefixes;
 using Quantities.Dimensions;
 
@@ -10,7 +10,7 @@ namespace Quantities.Measures
     }
     public interface IUnitSiMeasure<out TPrefix, out TUnit> : IUnitMeasure<TUnit>
         where TPrefix : Prefix
-        where TUnit : SiUnit
+        where TUnit : ISiUnit
     {
         TPrefix Prefix { get; }
     }

@@ -1,5 +1,5 @@
 using System;
-using Quantities.Unit;
+using Quantities.Unit.Si;
 using Quantities.Unit.Imperial;
 using Quantities.Unit.Imperial.Area;
 using Quantities.Unit.Imperial.Volume;
@@ -19,24 +19,24 @@ namespace Quantities
         internal Quantity<IVolume> Quantity { get; }
         private Volume(Quantity<IVolume> quantity) => Quantity = quantity;
         public Volume ToCubic<TUnit>()
-            where TUnit : SiUnit, ILength, new()
+            where TUnit : ISiUnit, ILength, new()
         {
             return ToCubic<UnitPrefix, TUnit>();
         }
         public Volume ToCubic<TPrefix, TUnit>()
             where TPrefix : Prefix, new()
-            where TUnit : SiUnit, ILength, new()
+            where TUnit : ISiUnit, ILength, new()
         {
             return new Volume(Quantity.To<Volume<Length<TPrefix, TUnit>>>());
         }
         public Volume ToSi<TUnit>()
-            where TUnit : SiDerivedUnit, IVolume, new()
+            where TUnit : ISiAcceptedUnit, ITransform, IVolume, new()
         {
             return new Volume(Quantity.ToOther<TUnit>());
         }
         public Volume ToSi<TPrefix, TUnit>()
             where TPrefix : Prefix, new()
-            where TUnit : SiDerivedUnit, IVolume, new()
+            where TUnit : ISiAcceptedUnit, ITransform, IVolume, new()
         {
             return new Volume(Quantity.ToOther<Volume<TPrefix, TUnit>>());
         }
@@ -51,24 +51,24 @@ namespace Quantities
             return new Volume(Quantity.ToOther<Cubic<TImperialUnit>>());
         }
         public static Volume Cubic<TUnit>(in Double value)
-            where TUnit : SiUnit, ILength, new()
+            where TUnit : ISiUnit, ILength, new()
         {
             return Cubic<UnitPrefix, TUnit>(in value);
         }
         public static Volume Cubic<TPrefix, TUnit>(in Double value)
             where TPrefix : Prefix, new()
-            where TUnit : SiUnit, ILength, new()
+            where TUnit : ISiUnit, ILength, new()
         {
             return new Volume(Quantity<IVolume>.Si<Volume<Length<TPrefix, TUnit>>>(in value));
         }
         public static Volume Si<TSiDerived>(Double value)
-            where TSiDerived : SiDerivedUnit, IVolume, new()
+            where TSiDerived : ISiAcceptedUnit, ITransform, IVolume, new()
         {
             return new Volume(Quantity<IVolume>.Other<TSiDerived>(in value));
         }
         public static Volume Si<TPrefix, TSiDerived>(Double value)
             where TPrefix : Prefix, new()
-            where TSiDerived : SiDerivedUnit, IVolume, new()
+            where TSiDerived : ISiAcceptedUnit, ITransform, IVolume, new()
         {
             return new Volume(Quantity<IVolume>.Other<Volume<TPrefix, TSiDerived>>(in value));
         }

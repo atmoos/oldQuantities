@@ -15,13 +15,13 @@ namespace Quantities
         internal Quantity<ILength> Quantity { get; }
         internal Length(Quantity<ILength> quantity) => Quantity = quantity;
         public Length To<TUnit>()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return To<UnitPrefix, TUnit>();
         }
         public Length To<TPrefix, TUnit>()
             where TPrefix : Prefix, new()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return new Length(Quantity.To<Length<TPrefix, TUnit>>());
         }
@@ -31,13 +31,13 @@ namespace Quantities
             return new Length(Quantity.ToOther<TUnit>());
         }
         public static Length Si<TUnit>(in Double value)
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return Si<UnitPrefix, TUnit>(in value);
         }
         public static Length Si<TPrefix, TUnit>(in Double value)
             where TPrefix : Prefix, new()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return new Length(Quantity<ILength>.Si<Length<TPrefix, TUnit>>(in value));
         }

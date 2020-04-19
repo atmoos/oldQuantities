@@ -5,7 +5,7 @@ namespace Quantities.Unit.Si.Derived
 {
     // [K] ≡ [°C] + 273.15
     // Celsius is officially an SI derived unit.
-    public sealed class Celsius : ISiDerivedUnit, ITransform, ITemperature
+    public sealed class Celsius : SiDerived, ITransform, ITemperature
     {
         private const Decimal KELVIN_OFFSET = 273.15m;
         public Double ToSi(in Double nonSiValue) => (Double)((Decimal)nonSiValue + KELVIN_OFFSET);

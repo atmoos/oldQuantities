@@ -7,7 +7,7 @@ namespace Quantities.Measures.Si
 {
     internal sealed class Temperature<TPrefix, TUnit> : LinearSiMeasure<TPrefix, TUnit>, ITemperature
         where TPrefix : Prefix, new()
-        where TUnit : ISiUnit, ITemperature, new()
+        where TUnit : SiUnit, ITemperature, new()
     {
     }
 }

@@ -10,7 +10,7 @@ namespace Quantities.Measures
     }
     public interface IUnitSiMeasure<out TPrefix, out TUnit> : IUnitMeasure<TUnit>
         where TPrefix : Prefix
-        where TUnit : ISiUnit
+        where TUnit : SiUnit
     {
         TPrefix Prefix { get; }
     }

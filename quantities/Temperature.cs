@@ -17,13 +17,13 @@ namespace Quantities
         internal Quantity<ITemperature> Quantity { get; }
         private Temperature(Quantity<ITemperature> quantity) => Quantity = quantity;
         public Temperature To<TUnit>()
-            where TUnit : ISiUnit, ITemperature, new()
+            where TUnit : SiUnit, ITemperature, new()
         {
             return To<UnitPrefix, TUnit>();
         }
         public Temperature To<TPrefix, TUnit>()
             where TPrefix : Prefix, new()
-            where TUnit : ISiUnit, ITemperature, new()
+            where TUnit : SiUnit, ITemperature, new()
         {
             return new Temperature(Quantity.To<Temperature<TPrefix, TUnit>>());
         }
@@ -39,13 +39,13 @@ namespace Quantities
             return new Temperature(Quantity.ToOther<TUnit>());
         }
         public static Temperature Si<TUnit>(in Double value)
-            where TUnit : ISiUnit, ITemperature, new()
+            where TUnit : SiUnit, ITemperature, new()
         {
             return Si<UnitPrefix, TUnit>(in value);
         }
         public static Temperature Si<TPrefix, TUnit>(in Double value)
             where TPrefix : Prefix, new()
-            where TUnit : ISiUnit, ITemperature, new()
+            where TUnit : SiUnit, ITemperature, new()
         {
             return new Temperature(Quantity<ITemperature>.Si<Temperature<TPrefix, TUnit>>(in value));
         }

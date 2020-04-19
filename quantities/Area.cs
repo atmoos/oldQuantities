@@ -17,13 +17,13 @@ namespace Quantities
         internal Quantity<IArea> Quantity { get; }
         internal Area(Quantity<IArea> quantity) => Quantity = quantity;
         public Area ToSquare<TUnit>()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return ToSquare<UnitPrefix, TUnit>();
         }
         public Area ToSquare<TPrefix, TUnit>()
             where TPrefix : Prefix, new()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return new Area(Quantity.To<Area<Length<TPrefix, TUnit>>>());
         }
@@ -38,13 +38,13 @@ namespace Quantities
             return new Area(Quantity.ToOther<Square<TLength>>());
         }
         public static Area Square<TUnit>(in Double value)
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return Square<UnitPrefix, TUnit>(in value);
         }
         public static Area Square<TPrefix, TUnit>(in Double value)
             where TPrefix : Prefix, new()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return new Area(Quantity<IArea>.Si<Area<Length<TPrefix, TUnit>>>(in value));
         }

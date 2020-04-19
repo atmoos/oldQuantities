@@ -19,13 +19,13 @@ namespace Quantities
         internal Quantity<IVolume> Quantity { get; }
         private Volume(Quantity<IVolume> quantity) => Quantity = quantity;
         public Volume ToCubic<TUnit>()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return ToCubic<UnitPrefix, TUnit>();
         }
         public Volume ToCubic<TPrefix, TUnit>()
             where TPrefix : Prefix, new()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return new Volume(Quantity.To<Volume<Length<TPrefix, TUnit>>>());
         }
@@ -51,13 +51,13 @@ namespace Quantities
             return new Volume(Quantity.ToOther<Cubic<TImperialUnit>>());
         }
         public static Volume Cubic<TUnit>(in Double value)
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return Cubic<UnitPrefix, TUnit>(in value);
         }
         public static Volume Cubic<TPrefix, TUnit>(in Double value)
             where TPrefix : Prefix, new()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return new Volume(Quantity<IVolume>.Si<Volume<Length<TPrefix, TUnit>>>(in value));
         }

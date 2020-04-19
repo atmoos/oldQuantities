@@ -16,7 +16,7 @@ namespace Quantities
             where TTimeUnit : ISiAcceptedUnit, ITransform, ITime, new();
         Velocity Per<TTimePrefix, TTimeUnit>()
             where TTimePrefix : Prefix, new()
-            where TTimeUnit : ISiUnit, ITime, new();
+            where TTimeUnit : SiUnit, ITime, new();
         Velocity PerSecond() => Per<UnitPrefix, Second>();
     }
     public sealed class Velocity : IQuantity<IVelocity>, IVelocity, IEquatable<Velocity>, IFormattable
@@ -26,13 +26,13 @@ namespace Quantities
         internal Quantity<IVelocity> Quantity { get; }
         private Velocity(Quantity<IVelocity> quantity) => Quantity = quantity;
         public IVelocityBuilder To<TUnit>()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return To<UnitPrefix, TUnit>();
         }
         public IVelocityBuilder To<TPrefix, TUnit>()
             where TPrefix : Prefix, new()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return new Transformer<TPrefix, TUnit>(Quantity);
         }
@@ -42,13 +42,13 @@ namespace Quantities
             return new Transformer<TImperialLength>(Quantity);
         }
         public static IVelocityBuilder Si<TUnit>(in Double velocity)
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return Si<UnitPrefix, TUnit>(in velocity);
         }
         public static IVelocityBuilder Si<TPrefix, TUnit>(in Double velocity)
             where TPrefix : Prefix, new()
-            where TUnit : ISiUnit, ILength, new()
+            where TUnit : SiUnit, ILength, new()
         {
             return new Builder<TPrefix, TUnit>(in velocity);
         }
@@ -80,7 +80,7 @@ namespace Quantities
         }
         private sealed class Builder<TLengthPrefix, TLengthUnit> : IVelocityBuilder
             where TLengthPrefix : Prefix, new()
-            where TLengthUnit : ISiUnit, ILength, new()
+            where TLengthUnit : SiUnit, ILength, new()
         {
             private readonly Double _velocity;
             public Builder(in Double velocity) => _velocity = velocity;
@@ -95,7 +95,7 @@ namespace Quantities
         }
         private sealed class Transformer<TLengthPrefix, TLengthUnit> : IVelocityBuilder
             where TLengthPrefix : Prefix, new()
-            where TLengthUnit : ISiUnit, ILength, new()
+            where TLengthUnit : SiUnit, ILength, new()
         {
             private readonly Quantity<IVelocity> _self;
             public Transformer(Quantity<IVelocity> self) => _self = self;

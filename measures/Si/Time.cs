@@ -7,7 +7,7 @@ namespace Quantities.Measures.Si
 {
     internal sealed class Time<TPrefix, TUnit> : LinearSiMeasure<TPrefix, TUnit>, ITime
         where TPrefix : Prefix, new()
-        where TUnit : ISiUnit, ITime, new()
+        where TUnit : SiUnit, ITime, new()
     {
     }
 }

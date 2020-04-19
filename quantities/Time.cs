@@ -16,7 +16,7 @@ namespace Quantities
         public Time ToSeconds() => To<UnitPrefix, Second>();
         public Time To<TPrefix, TUnit>()
             where TPrefix : Prefix, IScaleDown, new()
-            where TUnit : ISiUnit, ITime, new()
+            where TUnit : SiUnit, ITime, new()
         {
             return new Time(Quantity.To<Time<TPrefix, TUnit>>());
         }
@@ -29,7 +29,7 @@ namespace Quantities
         public static Time Seconds(in Double value) => Si<UnitPrefix, Second>(in value);
         public static Time Si<TPrefix, TUnit>(in Double value)
             where TPrefix : Prefix, IScaleDown, new()
-            where TUnit : ISiUnit, ITime, new()
+            where TUnit : SiUnit, ITime, new()
         {
             return new Time(Quantity<ITime>.Si<Time<TPrefix, TUnit>>(in value));
         }

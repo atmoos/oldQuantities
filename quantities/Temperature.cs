@@ -1,8 +1,8 @@
 using System;
-using Quantities.Unit;
+using Quantities.Unit.Si;
+using Quantities.Unit.Si.Derived;
 using Quantities.Unit.Other;
 using Quantities.Unit.Imperial;
-using Quantities.Unit.SiDerived;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
@@ -17,13 +17,13 @@ namespace Quantities
         internal Quantity<ITemperature> Quantity { get; }
         private Temperature(Quantity<ITemperature> quantity) => Quantity = quantity;
         public Temperature To<TUnit>()
-            where TUnit : SiUnit, ITemperature, new()
+            where TUnit : ISiUnit, ITemperature, new()
         {
             return To<UnitPrefix, TUnit>();
         }
         public Temperature To<TPrefix, TUnit>()
             where TPrefix : Prefix, new()
-            where TUnit : SiUnit, ITemperature, new()
+            where TUnit : ISiUnit, ITemperature, new()
         {
             return new Temperature(Quantity.To<Temperature<TPrefix, TUnit>>());
         }
@@ -39,13 +39,13 @@ namespace Quantities
             return new Temperature(Quantity.ToOther<TUnit>());
         }
         public static Temperature Si<TUnit>(in Double value)
-            where TUnit : SiUnit, ITemperature, new()
+            where TUnit : ISiUnit, ITemperature, new()
         {
             return Si<UnitPrefix, TUnit>(in value);
         }
         public static Temperature Si<TPrefix, TUnit>(in Double value)
             where TPrefix : Prefix, new()
-            where TUnit : SiUnit, ITemperature, new()
+            where TUnit : ISiUnit, ITemperature, new()
         {
             return new Temperature(Quantity<ITemperature>.Si<Temperature<TPrefix, TUnit>>(in value));
         }

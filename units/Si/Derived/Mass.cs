@@ -8,4 +8,8 @@ namespace Quantities.Unit.Si.Derived
     {
         public override String ToString() => "g";
     }
+    public sealed class Tonne : SiAlias<Kilo, Kilogram>, IMass
+    {
+        public override String ToString() => "t";
+    }
 }

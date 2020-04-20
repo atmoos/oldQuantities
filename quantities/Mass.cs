@@ -1,5 +1,4 @@
 using System;
-using Quantities.Unit;
 using Quantities.Unit.Si;
 using Quantities.Unit.Imperial;
 using Quantities.Dimensions;
@@ -21,7 +20,7 @@ namespace Quantities
             return new Mass(Quantity.To<Mass<UnitPrefix, TUnit>>());
         }
         public Mass To<TPrefix, TUnit>()
-            where TPrefix : Prefix, IScaleDown, new()
+            where TPrefix : Prefix, new()
             where TUnit : SiDerivedUnit, IMass, new()
         {
             return new Mass(Quantity.To<Mass<TPrefix, TUnit>>());
@@ -37,7 +36,7 @@ namespace Quantities
             return new Mass(Quantity<IMass>.Si<Mass<UnitPrefix, TUnit>>(in value));
         }
         public static Mass Si<TPrefix, TUnit>(in Double value)
-            where TPrefix : Prefix, IScaleDown, new()
+            where TPrefix : Prefix, new()
             where TUnit : SiDerivedUnit, IMass, new()
         {
             return new Mass(Quantity<IMass>.Si<Mass<TPrefix, TUnit>>(in value));

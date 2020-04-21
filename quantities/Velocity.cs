@@ -5,6 +5,7 @@ using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
 using Quantities.Measures.Si;
+using Quantities.Measures.Core;
 using Quantities.Measures.Other;
 using Quantities.Measures.Builder;
 
@@ -21,6 +22,7 @@ namespace Quantities
     }
     public sealed class Velocity : IQuantity<IVelocity>, IVelocity, IEquatable<Velocity>, IFormattable
     {
+        private static readonly VelocityBuilder _velocityFactory = new VelocityBuilder();
         public Double Value => Quantity.Value;
         public IVelocity Dimension => Quantity.Dimension;
         internal Quantity<IVelocity> Quantity { get; }
@@ -73,10 +75,27 @@ namespace Quantities
         public Boolean Equals(Velocity other) => Quantity.Equals(other.Quantity);
         internal static Velocity Create(Length length, Time time)
         {
-            var builder = new VelocityBuilder();
-            length.Quantity.Inject(builder);
-            time.Quantity.Inject(builder.Per);
-            return new Velocity(builder.Build());
+            var builder = new CompoundBuilder<ILength, ITime, IVelocity>(_velocityFactory);
+            return new Velocity(builder.Build(length.Quantity, time.Quantity));
+        }
+        private sealed class VelocityBuilder : ICompoundFactory<ILength, ITime, IVelocity>
+        {
+            Quantity<IVelocity> ICompoundFactory<ILength, ITime, IVelocity>.CreateOther<TOtherA, TOtherB>(in Double a, in Double b)
+            {
+                return Quantity<IVelocity>.Other<VelocityOf<TOtherA, TOtherB>>(a / b);
+            }
+            Quantity<IVelocity> ICompoundFactory<ILength, ITime, IVelocity>.CreateOtherSi<TOtherA, TSiB>(in Double a, in Double b)
+            {
+                return Quantity<IVelocity>.Other<VelocityOfSi<TOtherA, TSiB>>(a / b);
+            }
+            Quantity<IVelocity> ICompoundFactory<ILength, ITime, IVelocity>.CreateSi<TSiA, TSiB>(in Double a, in Double b)
+            {
+                return Quantity<IVelocity>.Si<Velocity<TSiA, TSiB>>(a / b);
+            }
+            Quantity<IVelocity> ICompoundFactory<ILength, ITime, IVelocity>.CreateSiOther<TSiA, TOtherB>(in Double a, in Double b)
+            {
+                return Quantity<IVelocity>.Other<SiVelocityOf<TSiA, TOtherB>>(a / b);
+            }
         }
         private sealed class Builder<TLengthPrefix, TLengthUnit> : IVelocityBuilder
             where TLengthPrefix : Prefix, new()

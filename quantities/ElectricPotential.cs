@@ -45,11 +45,11 @@ namespace Quantities
         }
         public static ElectricCurrent operator /(ElectricPotential potential, ElectricalResistance resistance)
         {
-            throw new NotImplementedException();
+            return ElectricCurrent.Create(potential, resistance);
         }
         public static ElectricalResistance operator /(ElectricPotential potential, ElectricCurrent current)
         {
-            throw new NotImplementedException();
+            return ElectricalResistance.Create(potential, current);
         }
 
         public override String ToString() => Quantity.ToString();

@@ -7,7 +7,8 @@ namespace Quantities.Measures.Normalisation
     internal abstract class Normaliser : INormalise
     {
         private protected static NoOp NO_OP = new NoOp();
-        public abstract Int32 Exponent { get; }
+        public Int32 Exponent => Prefix.Exponent;
+        public abstract Prefix Prefix { get; }
         private protected Normaliser() { }
         public abstract Double Normalise(in Double value);
         public abstract Double Renormalise(in Double value);
@@ -29,7 +30,7 @@ namespace Quantities.Measures.Normalisation
             private static readonly TPrefix PREFIX = Pool<TPrefix>.Item;
             private readonly Operator _normalise;
             private readonly Operator _renormalise;
-            public override Int32 Exponent => PREFIX.Exponent;
+            public override Prefix Prefix => PREFIX;
             public NormaliserImpl()
             {
                 _normalise = NO_OP;

@@ -53,5 +53,9 @@ namespace Quantities
         public String ToString(String format, IFormatProvider formatProvider) => Quantity.ToString(format, formatProvider);
 
         public Boolean Equals(ElectricCurrent other) => Quantity.Equals(other.Quantity);
+        internal static ElectricCurrent Create(ElectricPotential potential, ElectricalResistance resistance)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

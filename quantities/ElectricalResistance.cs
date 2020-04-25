@@ -1,14 +1,20 @@
 using System;
 using Quantities.Unit.Si;
+using Quantities.Unit.Si.Derived;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
+using Quantities.Measures.Core;
+using Quantities.Measures.Si.Core;
+using Quantities.Measures.Builder;
+using Quantities.Measures.Normalisation;
 using Quantities.Measures.Si;
 
 namespace Quantities
 {
     public sealed class ElectricalResistance : IQuantity<IElectricalResistance>, IElectricalResistance, IEquatable<ElectricalResistance>, IFormattable
     {
+        private static ResistanceFactory _resistanceFactory = new ResistanceFactory();
         public Double Value => Quantity.Value;
         public IElectricalResistance Dimension => Quantity.Dimension;
         internal Quantity<IElectricalResistance> Quantity { get; }
@@ -53,5 +59,40 @@ namespace Quantities
         public String ToString(String format, IFormatProvider formatProvider) => Quantity.ToString(format, formatProvider);
 
         public Boolean Equals(ElectricalResistance other) => Quantity.Equals(other.Quantity);
+
+        internal static ElectricalResistance Create(ElectricPotential potential, ElectricCurrent current)
+        {
+            var builder = new CompoundBuilder<IElectricPotential, IElectricCurrent, IElectricalResistance>(_resistanceFactory);
+            return new ElectricalResistance(builder.Build(potential.Quantity, current.Quantity));
+        }
+
+        private sealed class ResistanceFactory : ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>
+        {
+            Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateOther<TOtherA, TOtherB>(in double a, in double b)
+            {
+                throw new NotImplementedException();
+            }
+
+            Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateOtherSi<TOtherA, TSiB>(in double a, in double b)
+            {
+                throw new NotImplementedException();
+            }
+
+            Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateSi<TSiA, TSiB>(in double a, in double b)
+            {
+                return Quantity<IElectricalResistance>.Si<DivOhm<TSiA, TSiB>>(a / b);
+            }
+
+            Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateSiOther<TSiA, TOtherB>(in double a, in double b)
+            {
+                throw new NotImplementedException();
+            }
+            private sealed class DivOhm<TPotential, TCurrent> : SiDivide<TPotential, Linear, TCurrent, Ohm>, IElectricalResistance
+            where TPotential : SiMeasure, IElectricPotential, new()
+            where TCurrent : SiMeasure, IElectricCurrent, new()
+            {
+
+            }
+        }
     }
 }

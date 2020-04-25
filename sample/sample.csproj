@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\dimensions\dimensions.csproj" />
+    <ProjectReference Include="..\units\units.csproj" />
+    <ProjectReference Include="..\prefixes\prefixes.csproj" />
+    <ProjectReference Include="..\quantities\quantities.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+</Project>

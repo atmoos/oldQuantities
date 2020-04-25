@@ -12,5 +12,7 @@ namespace Quantities.Measures.Other.Core
         private static readonly TSiMeasure SI_MEASURE = Pool<TSiMeasure>.Item;
         public Double FromSi(in Double siValue) => SI_MEASURE.Renormalise(in siValue);
         public Double ToSi(in Double nonSiValue) => SI_MEASURE.Normalise(in nonSiValue);
+
+        public override String ToString() => SI_MEASURE.ToString();
     }
 }

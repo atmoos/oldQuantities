@@ -22,9 +22,9 @@ namespace Quantities.Test
         [Fact]
         public void OhmsLawInPrefixedUnits()
         {
-            var ohm = ElectricalResistance.Si<Mega, Ohm>(7);
-            var ampere = ElectricCurrent.Si<Milli, Ampere>(3);
-            var expected = ElectricPotential.Si<Kilo, Volt>(21);
+            var ohm = ElectricalResistance.Si<Kilo, Ohm>(7);
+            var ampere = ElectricCurrent.Si<Micro, Ampere>(3);
+            var expected = ElectricPotential.Si<Milli, Volt>(21);
 
             var potential = ohm * ampere;
 

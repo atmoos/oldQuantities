@@ -2,6 +2,7 @@
 A library to safely handle various types of quantities, typically physical quantities.
 
 # Sample
+The following sample exists as an executable [program](sample/Program.cs).
 ```csharp
 using Quantities;
 using Quantities.Unit.Si;
@@ -48,8 +49,10 @@ Console.WriteLine($"{velInKmph} and {velInMiph} are equal velocities");
 ```
 
 # Project Goals
+
 ## A Generic API 
-This is primarily a project that lets me explore how far one can push C#'s generics in an API. The goal is to create "some" api where generics apply naturally and enhance readability. On the flip side, some implementation details in this library are plain out scary and weird, but heaps of fun to explore.
+This is primarily a project that lets me explore how far one can push C#'s generics in an API. The goal is to create an api where generics apply naturally and enhance readability. The provided [sample](sample/Program.cs) (above) attempts to illustrate that.
+On the flip side, some implementation details in this library are plain out scary and weird, but heaps of fun to explore.
 
 ## Why Physical Quantities?
 Using physical quantities as test subject seemed appropriate, as there are a limited number of units and SI-prefixes. Using generics, these prefixes and units can be combined neatly to create all sorts of representations of quantities. The generic constraints then allow for the API to restrict the prefixes and units to a subset that actually make sense on a particular quantity.
@@ -62,11 +65,11 @@ Just to give you a pointer to some weirdness: Check out type injection on the [I
 
 So currently I'd advise **not** to use this library. But if you would like to collaborate, send me an email :-)
 
-# To Do
+# ToDo
   * Add more quantities and units
-  * Benchmark and improve memory efficiency
-  * Benchmark and improve (computational) efficiency without sacrificing precision
+  * Without sacrificing precision, benchmark and improve
+    * memory efficiency
+    * computational efficiency
   * Investigate serialisation and de-serialisation
-
-# See Also
-<other projects>
+  * Simplify the implementation
+  * Support units that use [binary prefixes](https://en.wikipedia.org/wiki/Binary_prefix), such as the [Kibibyte](https://en.wikipedia.org/wiki/Kibibyte)

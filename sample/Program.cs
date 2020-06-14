@@ -10,7 +10,8 @@ namespace sample
     class Program
     {
         static void Main(string[] args)
-        {            /* a) Easy creation of and operation on quantities */
+        {
+            /* a) Easy creation of and operation on quantities */
             Length macroscopic = Length.Si<Kilo, Metre>(6378.16);
             Length microscopic = Length.Si<Micro, Metre>(0.89);
             Length nonSiUnit = Length.Imperial<Foot>(1737.1);

@@ -50,7 +50,7 @@ namespace Quantities
         }
         public static ElectricPotential operator *(ElectricalResistance resistance, ElectricCurrent current)
         {
-            return ElectricPotential.Create(current, resistance);
+            return ElectricPotential.Create(resistance, current);
         }
 
         public override String ToString() => Quantity.ToString();

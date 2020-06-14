@@ -4,8 +4,6 @@ using Quantities.Unit.Si;
 using Quantities.Unit.Si.Derived;
 using Quantities.Prefixes;
 
-using static Quantities.Test.Metrics;
-
 namespace Quantities.Test
 {
     public sealed class ElectricPotentialTest
@@ -13,24 +11,24 @@ namespace Quantities.Test
         [Fact]
         public void OhmsLawInBaseUnits()
         {
-            var volts = ElectricPotential.Si<Volt>(12);
+            var ohm = ElectricalResistance.Si<Ohm>(7);
             var ampere = ElectricCurrent.Si<Ampere>(3);
-            var expected = ElectricalResistance.Si<Ohm>(4);
+            var expected = ElectricPotential.Si<Volt>(21);
 
-            var resistance = volts / ampere;
+            var potential = ohm * ampere;
 
-            resistance.Matches(expected);
+            potential.Matches(expected);
         }
         [Fact]
         public void OhmsLawInPrefixedUnits()
         {
-            var volts = ElectricPotential.Si<Milli, Volt>(12);
-            var ampere = ElectricCurrent.Si<Micro, Ampere>(3);
-            var expected = ElectricalResistance.Si<Kilo, Ohm>(4);
+            var ohm = ElectricalResistance.Si<Mega, Ohm>(7);
+            var ampere = ElectricCurrent.Si<Milli, Ampere>(3);
+            var expected = ElectricPotential.Si<Kilo, Volt>(21);
 
-            var resistance = volts / ampere;
+            var potential = ohm * ampere;
 
-            resistance.Matches(expected);
+            potential.Matches(expected);
         }
     }
 }

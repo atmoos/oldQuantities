@@ -71,21 +71,20 @@ namespace Quantities
             {
                 return Quantity<IElectricalResistance>.Si<ElectricalResistance<TPrefix, Ohm>>(in value);
             }
-
             Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateOther<TOtherA, TOtherB>(in Double a, in Double b)
             {
                 throw new NotImplementedException();
             }
-
             Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateOtherSi<TOtherA, TSiB>(in Double a, in Double b)
             {
                 throw new NotImplementedException();
             }
             Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
-                return SiDivisor<TSiA, Linear, TSiB>.Divide(this, a / b);
+                var builder = new InjectableBuilder<IElectricalResistance>(this, a / b);
+                SiDivide<TSiA, Linear, TSiB>.Inject(builder);
+                return builder.Build();
             }
-
             Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateSiOther<TSiA, TOtherB>(in Double a, in Double b)
             {
                 throw new NotImplementedException();

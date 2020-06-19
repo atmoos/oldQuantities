@@ -71,34 +71,17 @@ namespace Quantities
         {
             return null;
         }
-
-        private sealed class CurrentFactory : ICompoundFactory<IElectricPotential, IElectricalResistance, IElectricCurrent>, ISiQuantityBuilder<IElectricCurrent>
+        private sealed class CurrentFactory : SiFactory<IElectricPotential, IElectricalResistance, IElectricCurrent>
         {
-            Quantity<IElectricCurrent> ISiQuantityBuilder<IElectricCurrent>.Create<TPrefix>(in Double value)
+            public override Quantity<IElectricCurrent> Create<TPrefix>(in Double value)
             {
                 return Quantity<IElectricCurrent>.Si<ElectricCurrent<TPrefix, Ampere>>(in value);
             }
-
-            Quantity<IElectricCurrent> ICompoundFactory<IElectricPotential, IElectricalResistance, IElectricCurrent>.CreateOther<TOtherA, TOtherB>(in Double a, in Double b)
-            {
-                throw new NotImplementedException();
-            }
-
-            Quantity<IElectricCurrent> ICompoundFactory<IElectricPotential, IElectricalResistance, IElectricCurrent>.CreateOtherSi<TOtherA, TSiB>(in Double a, in Double b)
-            {
-                throw new NotImplementedException();
-            }
-
-            Quantity<IElectricCurrent> ICompoundFactory<IElectricPotential, IElectricalResistance, IElectricCurrent>.CreateSi<TSiA, TSiB>(in Double a, in Double b)
+            public override Quantity<IElectricCurrent> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IElectricCurrent>(this, a / b);
                 SiDivide<TSiA, Linear, TSiB>.Inject(builder);
                 return builder.Build();
-            }
-
-            Quantity<IElectricCurrent> ICompoundFactory<IElectricPotential, IElectricalResistance, IElectricCurrent>.CreateSiOther<TSiA, TOtherB>(in Double a, in Double b)
-            {
-                throw new NotImplementedException();
             }
         }
     }

@@ -75,29 +75,17 @@ namespace Quantities
         {
             return null;
         }
-        private sealed class PotentialFactory : ICompoundFactory<IElectricalResistance, IElectricCurrent, IElectricPotential>, ISiQuantityBuilder<IElectricPotential>
+        private sealed class PotentialFactory : SiFactory<IElectricalResistance, IElectricCurrent, IElectricPotential>, ISiQuantityBuilder<IElectricPotential>
         {
-            Quantity<IElectricPotential> ISiQuantityBuilder<IElectricPotential>.Create<TPrefix>(in Double value)
+            public override Quantity<IElectricPotential> Create<TPrefix>(in Double value)
             {
                 return Quantity<IElectricPotential>.Si<ElectricPotential<TPrefix, Volt>>(in value);
             }
-            Quantity<IElectricPotential> ICompoundFactory<IElectricalResistance, IElectricCurrent, IElectricPotential>.CreateOther<TOtherA, TOtherB>(in Double a, in Double b)
-            {
-                throw new NotImplementedException();
-            }
-            Quantity<IElectricPotential> ICompoundFactory<IElectricalResistance, IElectricCurrent, IElectricPotential>.CreateOtherSi<TOtherA, TSiB>(in Double a, in Double b)
-            {
-                throw new NotImplementedException();
-            }
-            Quantity<IElectricPotential> ICompoundFactory<IElectricalResistance, IElectricCurrent, IElectricPotential>.CreateSi<TSiA, TSiB>(in Double a, in Double b)
+            public override Quantity<IElectricPotential> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IElectricPotential>(this, a * b);
                 SiMultiply<TSiA, Linear, TSiB>.Inject(builder);
                 return builder.Build();
-            }
-            Quantity<IElectricPotential> ICompoundFactory<IElectricalResistance, IElectricCurrent, IElectricPotential>.CreateSiOther<TSiA, TOtherB>(in Double a, in Double b)
-            {
-                throw new NotImplementedException();
             }
         }
     }

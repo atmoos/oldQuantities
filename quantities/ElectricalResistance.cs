@@ -64,30 +64,17 @@ namespace Quantities
             var builder = new CompoundBuilder<IElectricPotential, IElectricCurrent, IElectricalResistance>(_resistanceFactory);
             return new ElectricalResistance(builder.Build(potential.Quantity, current.Quantity));
         }
-
-        private sealed class ResistanceFactory : ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>, ISiQuantityBuilder<IElectricalResistance>
+        private sealed class ResistanceFactory : SiFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>
         {
-            Quantity<IElectricalResistance> ISiQuantityBuilder<IElectricalResistance>.Create<TPrefix>(in Double value)
+            public override Quantity<IElectricalResistance> Create<TPrefix>(in Double value)
             {
                 return Quantity<IElectricalResistance>.Si<ElectricalResistance<TPrefix, Ohm>>(in value);
             }
-            Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateOther<TOtherA, TOtherB>(in Double a, in Double b)
-            {
-                throw new NotImplementedException();
-            }
-            Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateOtherSi<TOtherA, TSiB>(in Double a, in Double b)
-            {
-                throw new NotImplementedException();
-            }
-            Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateSi<TSiA, TSiB>(in Double a, in Double b)
+            public override Quantity<IElectricalResistance> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IElectricalResistance>(this, a / b);
                 SiDivide<TSiA, Linear, TSiB>.Inject(builder);
                 return builder.Build();
-            }
-            Quantity<IElectricalResistance> ICompoundFactory<IElectricPotential, IElectricCurrent, IElectricalResistance>.CreateSiOther<TSiA, TOtherB>(in Double a, in Double b)
-            {
-                throw new NotImplementedException();
             }
         }
     }

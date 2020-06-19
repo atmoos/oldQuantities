@@ -29,7 +29,9 @@ namespace Quantities.Test
         {
             var volts = ElectricPotential.Si<Kilo, Volt>(70);
             var ampere = ElectricCurrent.Si<Milli, Ampere>(300);
-            var expected = Power.Si<Kilo, Watt>(2.1);
+
+            // ToDo: Implement rounding based on value!
+            var expected = Power.Si<Watt>(21000);
 
             var power = ampere * volts;
 
@@ -40,7 +42,7 @@ namespace Quantities.Test
         {
             var volts = ElectricPotential.Si<Kilo, Volt>(0.6);
             var ohm = ElectricalResistance.Si<Kilo, Ohm>(3);
-            var expected = Power.Si<Kilo, Watt>(120);
+            var expected = Power.Si<Kilo, Watt>(0.120);
 
             var power = volts * (volts / ohm);
 
@@ -51,7 +53,7 @@ namespace Quantities.Test
         {
             var ampere = ElectricCurrent.Si<Kilo, Ampere>(8);
             var ohm = ElectricalResistance.Si<Milli, Ohm>(2);
-            var expected = Power.Si<Watt>(128);
+            var expected = Power.Si<Kilo, Watt>(128);
 
             var power = ohm * ampere * ampere;
 

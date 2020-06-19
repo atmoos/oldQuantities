@@ -13,7 +13,7 @@ namespace Quantities
 {
     public sealed class ElectricCurrent : IQuantity<IElectricCurrent>, IElectricCurrent, IEquatable<ElectricCurrent>, IFormattable
     {
-        private static CurrentFactory _currentFactory = new CurrentFactory();
+        private static readonly CurrentFactory _currentFactory = new CurrentFactory();
         public Double Value => Quantity.Value;
         public IElectricCurrent Dimension => Quantity.Dimension;
         internal Quantity<IElectricCurrent> Quantity { get; }

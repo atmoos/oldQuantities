@@ -1,15 +1,20 @@
 using System;
 using Quantities.Unit.Si;
+using Quantities.Unit.Si.Derived;
 using Quantities.Unit.Imperial;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
+using Quantities.Measures.Core;
 using Quantities.Measures.Si;
+using Quantities.Measures.Si.Core;
+using Quantities.Measures.Builder;
 
 namespace Quantities
 {
     public sealed class Power : IQuantity<IPower>, IPower, IEquatable<Power>, IFormattable
     {
+        private static readonly ElectricPowerFactory _electricPowerFactory = new ElectricPowerFactory();
         public Double Value => Quantity.Value;
         public IPower Dimension => Quantity.Dimension;
         internal Quantity<IPower> Quantity { get; }
@@ -70,7 +75,22 @@ namespace Quantities
         public Boolean Equals(Power other) => Quantity.Equals(other.Quantity);
         internal static Power Create(ElectricCurrent current, ElectricPotential potential)
         {
-            return null;
+            var builder = new CompoundBuilder<IElectricCurrent, IElectricPotential, IPower>(_electricPowerFactory);
+            return new Power(builder.Build(current.Quantity, potential.Quantity));
+        }
+
+        private sealed class ElectricPowerFactory : SiFactory<IElectricCurrent, IElectricPotential, IPower>
+        {
+            public override Quantity<IPower> Create<TPrefix>(in Double value)
+            {
+                return Quantity<IPower>.Si<Power<TPrefix, Watt>>(in value);
+            }
+            public override Quantity<IPower> CreateSi<TSiA, TSiB>(in Double a, in Double b)
+            {
+                var builder = new InjectableBuilder<IPower>(this, a * b);
+                SiMultiply<TSiA, Linear, TSiB>.Inject(builder);
+                return builder.Build();
+            }
         }
     }
 }

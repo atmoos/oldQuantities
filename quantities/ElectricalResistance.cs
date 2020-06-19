@@ -13,7 +13,7 @@ namespace Quantities
 {
     public sealed class ElectricalResistance : IQuantity<IElectricalResistance>, IElectricalResistance, IEquatable<ElectricalResistance>, IFormattable
     {
-        private static ResistanceFactory _resistanceFactory = new ResistanceFactory();
+        private static readonly ResistanceFactory _resistanceFactory = new ResistanceFactory();
         public Double Value => Quantity.Value;
         public IElectricalResistance Dimension => Quantity.Dimension;
         internal Quantity<IElectricalResistance> Quantity { get; }

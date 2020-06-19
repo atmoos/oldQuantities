@@ -13,7 +13,7 @@ namespace Quantities
 {
     public sealed class ElectricPotential : IQuantity<IElectricPotential>, IElectricPotential, IEquatable<ElectricPotential>, IFormattable
     {
-        private static PotentialFactory _potentialFactory = new PotentialFactory();
+        private static readonly PotentialFactory _potentialFactory = new PotentialFactory();
         public Double Value => Quantity.Value;
         public IElectricPotential Dimension => Quantity.Dimension;
         internal Quantity<IElectricPotential> Quantity { get; }

@@ -14,6 +14,7 @@ namespace Quantities
     public sealed class ElectricCurrent : IQuantity<IElectricCurrent>, IElectricCurrent, IEquatable<ElectricCurrent>, IFormattable
     {
         private static readonly CurrentFactory _currentFactory = new CurrentFactory();
+        private static readonly PowerCurrentFactory _powerCurrentFactory = new PowerCurrentFactory();
         public Double Value => Quantity.Value;
         public IElectricCurrent Dimension => Quantity.Dimension;
         internal Quantity<IElectricCurrent> Quantity { get; }
@@ -69,9 +70,24 @@ namespace Quantities
         }
         internal static ElectricCurrent Create(Power power, ElectricPotential potential)
         {
-            return null;
+            var builder = new CompoundBuilder<IPower, IElectricPotential, IElectricCurrent>(_powerCurrentFactory);
+            return new ElectricCurrent(builder.Build(power.Quantity, potential.Quantity));
         }
         private sealed class CurrentFactory : SiFactory<IElectricPotential, IElectricalResistance, IElectricCurrent>
+        {
+            public override Quantity<IElectricCurrent> Create<TPrefix>(in Double value)
+            {
+                return Quantity<IElectricCurrent>.Si<ElectricCurrent<TPrefix, Ampere>>(in value);
+            }
+            public override Quantity<IElectricCurrent> CreateSi<TSiA, TSiB>(in Double a, in Double b)
+            {
+                var builder = new InjectableBuilder<IElectricCurrent>(this, a / b);
+                SiDivide<TSiA, Linear, TSiB>.Inject(builder);
+                return builder.Build();
+            }
+        }
+
+        private sealed class PowerCurrentFactory : SiFactory<IPower, IElectricPotential, IElectricCurrent>
         {
             public override Quantity<IElectricCurrent> Create<TPrefix>(in Double value)
             {

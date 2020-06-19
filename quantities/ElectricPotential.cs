@@ -14,6 +14,7 @@ namespace Quantities
     public sealed class ElectricPotential : IQuantity<IElectricPotential>, IElectricPotential, IEquatable<ElectricPotential>, IFormattable
     {
         private static readonly PotentialFactory _potentialFactory = new PotentialFactory();
+        private static readonly PowerPotentialFactory _powerPotentialFactory = new PowerPotentialFactory();
         public Double Value => Quantity.Value;
         public IElectricPotential Dimension => Quantity.Dimension;
         internal Quantity<IElectricPotential> Quantity { get; }
@@ -73,7 +74,8 @@ namespace Quantities
         }
         internal static ElectricPotential Create(Power power, ElectricCurrent current)
         {
-            return null;
+            var builder = new CompoundBuilder<IPower, IElectricCurrent, IElectricPotential>(_powerPotentialFactory);
+            return new ElectricPotential(builder.Build(power.Quantity, current.Quantity));
         }
         private sealed class PotentialFactory : SiFactory<IElectricalResistance, IElectricCurrent, IElectricPotential>, ISiQuantityBuilder<IElectricPotential>
         {
@@ -84,6 +86,19 @@ namespace Quantities
             public override Quantity<IElectricPotential> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IElectricPotential>(this, a * b);
+                SiMultiply<TSiA, Linear, TSiB>.Inject(builder);
+                return builder.Build();
+            }
+        }
+        private sealed class PowerPotentialFactory : SiFactory<IPower, IElectricCurrent, IElectricPotential>, ISiQuantityBuilder<IElectricPotential>
+        {
+            public override Quantity<IElectricPotential> Create<TPrefix>(in Double value)
+            {
+                return Quantity<IElectricPotential>.Si<ElectricPotential<TPrefix, Volt>>(in value);
+            }
+            public override Quantity<IElectricPotential> CreateSi<TSiA, TSiB>(in Double a, in Double b)
+            {
+                var builder = new InjectableBuilder<IElectricPotential>(this, a / b);
                 SiMultiply<TSiA, Linear, TSiB>.Inject(builder);
                 return builder.Build();
             }

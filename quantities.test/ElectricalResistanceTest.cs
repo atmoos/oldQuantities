@@ -1,13 +1,20 @@
-using System;
 using Xunit;
 using Quantities.Unit.Si;
 using Quantities.Unit.Si.Derived;
 using Quantities.Prefixes;
 
+using static Quantities.Test.Metrics;
+
 namespace Quantities.Test
 {
     public sealed class ElectricalResistanceTest
     {
+        [Fact]
+        public void OhmToString() => FormattingMatches(v => ElectricalResistance.Si<Ohm>(v), "Ω");
+        [Fact]
+        public void KiloOhmToString() => FormattingMatches(v => ElectricalResistance.Si<Kilo, Ohm>(v), "KΩ");
+        [Fact]
+        public void MilliOhmToString() => FormattingMatches(v => ElectricalResistance.Si<Milli, Ohm>(v), "mΩ");
         [Fact]
         public void OhmsLawInBaseUnits()
         {

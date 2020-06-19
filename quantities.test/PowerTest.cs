@@ -14,6 +14,8 @@ namespace Quantities.Test
         [Fact]
         public void KiloWattToString() => FormattingMatches(v => Power.Si<Kilo, Watt>(v), "KW");
         [Fact]
+        public void MicroWattToString() => FormattingMatches(v => Power.Si<Micro, Watt>(v), "μW");
+        [Fact]
         public void PowerLawInBaseUnits()
         {
             var volts = ElectricPotential.Si<Volt>(12);
@@ -42,6 +44,8 @@ namespace Quantities.Test
         {
             var volts = ElectricPotential.Si<Kilo, Volt>(0.6);
             var ohm = ElectricalResistance.Si<Kilo, Ohm>(3);
+
+            // ToDo: Implement rounding based on value!
             var expected = Power.Si<Kilo, Watt>(0.120);
 
             var power = volts * (volts / ohm);

@@ -56,6 +56,10 @@ namespace Quantities
         {
             return ElectricalResistance.Create(potential, current);
         }
+        public static Power operator *(ElectricPotential potential, ElectricCurrent current)
+        {
+            return Power.Create(current, potential);
+        }
 
         public override String ToString() => Quantity.ToString();
 
@@ -67,7 +71,10 @@ namespace Quantities
             var builder = new CompoundBuilder<IElectricalResistance, IElectricCurrent, IElectricPotential>(_potentialFactory);
             return new ElectricPotential(builder.Build(resistance.Quantity, current.Quantity));
         }
-
+        internal static ElectricPotential Create(Power power, ElectricCurrent current)
+        {
+            return null;
+        }
         private sealed class PotentialFactory : ICompoundFactory<IElectricalResistance, IElectricCurrent, IElectricPotential>, ISiQuantityBuilder<IElectricPotential>
         {
             Quantity<IElectricPotential> ISiQuantityBuilder<IElectricPotential>.Create<TPrefix>(in Double value)

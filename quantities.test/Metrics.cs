@@ -33,7 +33,7 @@ namespace Quantities.Test
             const Double value = Math.PI;
             var formattable = formatterFactory(value);
             var formatProvider = CultureInfo.CurrentCulture;
-            Assert.Equal(formattable.ToString(format, formatProvider), $"{value.ToString(format, formatProvider)} {unit}");
+            Assert.Equal($"{value.ToString(format, formatProvider)} {unit}", formattable.ToString(format, formatProvider));
         }
     }
 }

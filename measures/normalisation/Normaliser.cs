@@ -14,11 +14,11 @@ namespace Quantities.Measures.Normalisation
         public abstract Double Renormalise(in Double value);
         public abstract Double Scale(Normaliser normalizer, in Double other);
         internal abstract Double Scale<TOther>(in Double other) where TOther : Prefix, new();
-        internal abstract void InjectPrefix(IPrefixInjectable injectable);
     }
     internal abstract class Normaliser<TDimension> : Normaliser
         where TDimension : Dimension, new()
     {
+        internal abstract void InjectPrefix(IPrefixInjectable injectable);
         internal abstract Normaliser<TDimension> With(Operator normalise, Operator renormalise);
         public static Normaliser<TDimension> Create<TPrefix>()
             where TPrefix : Prefix, new()

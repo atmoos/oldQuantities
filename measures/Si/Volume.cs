@@ -1,11 +1,12 @@
+using Quantities.Unit.Si;
 using Quantities.Dimensions;
 using Quantities.Measures.Core;
-using Quantities.Measures.Si.Core;
 
 namespace Quantities.Measures.Si
 {
-    internal sealed class Volume<TLength> : CubicSiMeasure<TLength>, IVolume<TLength>
-        where TLength : SiMeasure, ILength, new()
+    internal sealed class Volume<TLength> : SiMeasure<Cube, TLength>, IVolume<TLength>
+        where TLength : SiUnit, ILength, new()
     {
+        public TLength LinearDimension => Pool<TLength>.Item;
     }
 }

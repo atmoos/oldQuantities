@@ -88,7 +88,7 @@ namespace Quantities
             public override Quantity<IPower> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IPower>(this, a * b);
-                SiMultiply<TSiA, Linear, TSiB>.Inject(builder);
+                SiMeasure<Linear, Mult<TSiA, TSiB>>.Inject(builder);
                 return builder.Build();
             }
         }

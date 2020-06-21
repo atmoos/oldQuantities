@@ -73,7 +73,7 @@ namespace Quantities
             public override Quantity<IElectricalResistance> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IElectricalResistance>(this, a / b);
-                SiDivide<TSiA, Linear, TSiB>.Inject(builder);
+                SiMeasure<Linear, Div<TSiA, TSiB>>.Inject(builder);
                 return builder.Build();
             }
         }

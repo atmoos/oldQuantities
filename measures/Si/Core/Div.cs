@@ -1,15 +1,17 @@
 using System;
-using Quantities.Unit.Si;
+using Quantities.Measures.Core;
+using Quantities.Measures.Normalisation;
 
 namespace Quantities.Measures.Si.Core
 {
-    internal sealed class Div<TNominator, TDenominator> : SiUnit
-        where TNominator : SiUnit, new()
-        where TDenominator : SiUnit, new()
+    internal sealed class Div<TNominator, TDenominator> : ISiMeasure
+        where TNominator : ISiMeasure, new()
+        where TDenominator : ISiMeasure, new()
     {
         private static readonly TNominator Nominator = Pool<TNominator>.Item;
         private static readonly TDenominator Denominator = Pool<TDenominator>.Item;
-        internal override Int32 Offset => Nominator.Offset - Denominator.Offset;
+        private static readonly Normaliser NORMALISER = Normalisers.Get(Nominator.Normaliser.Exponent - Denominator.Normaliser.Exponent);
+        Normaliser ISiMeasure.Normaliser => NORMALISER;
 
         public override String ToString() => $"{Nominator}/{Denominator}";
     }

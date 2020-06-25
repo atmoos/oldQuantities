@@ -1,39 +1,41 @@
 using System;
-using Quantities.Unit.Si;
 using Quantities.Measures.Normalisation;
 
 namespace Quantities.Measures.Core
 {
-    public abstract class SiMeasure : SiUnit, INormalise
+    internal interface ISiMeasure
     {
-        internal abstract Normaliser Anchor { get; }
+        Normaliser Normaliser { get; }
+    }
+    public abstract class SiMeasure : INormalise, ISiMeasure
+    {
+        Normaliser ISiMeasure.Normaliser => Normaliser;
+        private protected abstract Normaliser Normaliser { get; }
         public abstract Double Renormalise(in Double value);
         public abstract Double Normalise(in Double value);
-        internal abstract Double Scale(SiMeasure measure, in Double other);
+        internal abstract Double Scale<TSiMeasure>(TSiMeasure measure, in Double other) where TSiMeasure : ISiMeasure;
     }
-    internal class SiMeasure<TDim, TSiUnit> : SiMeasure
+    internal class SiMeasure<TDim, TMeasure> : SiMeasure
         where TDim : Dimension, new()
-        where TSiUnit : SiUnit, new()
+        where TMeasure : ISiMeasure, new()
     {
-        private static readonly TSiUnit UNIT = Pool<TSiUnit>.Item;
-        private static readonly Normaliser NORMALIZER = Normalisers.Get(UNIT.Offset);
-        private static readonly String REPRESENTATION = $"{UNIT}{Pool<TDim>.Item}";
-        internal override Int32 Offset => UNIT.Offset;
-        internal override Normaliser Anchor => NORMALIZER;
+        private static readonly TMeasure MEASURE = Pool<TMeasure>.Item;
+        private static readonly String REPRESENTATION = $"{MEASURE}{Pool<TDim>.Item}";
+        private protected override Normaliser Normaliser => MEASURE.Normaliser;
 
         public override String ToString() => REPRESENTATION;
-        internal static void Inject(IPrefixInjectable injectable) => NORMALIZER.InjectPrefix(injectable);
+        internal static void Inject(IPrefixInjectable injectable) => MEASURE.Normaliser.InjectPrefix(injectable);
         public override Double Renormalise(in Double value)
         {
-            return NORMALIZER.Renormalise<TDim>(in value);
+            return MEASURE.Normaliser.Renormalise<TDim>(in value);
         }
         public override Double Normalise(in Double value)
         {
-            return NORMALIZER.Normalise<TDim>(in value);
+            return MEASURE.Normaliser.Normalise<TDim>(in value);
         }
-        internal override Double Scale(SiMeasure measure, in Double other)
+        internal override Double Scale<TSiMeasure>(TSiMeasure measure, in Double other)
         {
-            return measure.Anchor.Scale<TDim>(NORMALIZER, in other);
+            return measure.Normaliser.Scale<TDim>(MEASURE.Normaliser, in other);
         }
     }
 }

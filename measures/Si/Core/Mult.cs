@@ -1,16 +1,18 @@
 using System;
-using Quantities.Unit.Si;
+using Quantities.Measures.Core;
+using Quantities.Measures.Normalisation;
 
 namespace Quantities.Measures.Si.Core
 {
-    internal sealed class Mult<TNominator, TDenominator> : SiUnit
-        where TNominator : SiUnit, new()
-        where TDenominator : SiUnit, new()
+    internal sealed class Mult<TLeft, TRight> : ISiMeasure
+        where TLeft : ISiMeasure, new()
+        where TRight : ISiMeasure, new()
     {
-        private static readonly TNominator Nominator = Pool<TNominator>.Item;
-        private static readonly TDenominator Denominator = Pool<TDenominator>.Item;
-        internal override Int32 Offset => Nominator.Offset + Denominator.Offset;
+        private static readonly TLeft Left = Pool<TLeft>.Item;
+        private static readonly TRight Right = Pool<TRight>.Item;
+        private static readonly Normaliser NORMALISER = Normalisers.Get(Left.Normaliser.Exponent + Right.Normaliser.Exponent);
+        Normaliser ISiMeasure.Normaliser => NORMALISER;
 
-        public override String ToString() => $"{Nominator}\u2009{Denominator}"; // U+2009 is thin space.
+        public override String ToString() => $"{Left}\u2009{Right}"; // U+2009 is thin space.
     }
 }

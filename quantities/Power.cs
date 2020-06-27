@@ -5,7 +5,6 @@ using Quantities.Unit.Imperial;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
-using Quantities.Measures.Core;
 using Quantities.Measures.Si;
 using Quantities.Measures.Si.Core;
 using Quantities.Measures.Builder;
@@ -88,7 +87,7 @@ namespace Quantities
             public override Quantity<IPower> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IPower>(this, a * b);
-                SiMultiply<TSiA, Linear, TSiB>.Inject(builder);
+                SiProduct<TSiA, TSiB>.Inject(builder);
                 return builder.Build();
             }
         }

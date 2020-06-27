@@ -86,7 +86,7 @@ namespace Quantities
             public override Quantity<IElectricPotential> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IElectricPotential>(this, a * b);
-                SiMultiply<TSiA, Linear, TSiB>.Inject(builder);
+                SiProduct<TSiA, TSiB>.Inject(builder);
                 return builder.Build();
             }
         }
@@ -99,7 +99,7 @@ namespace Quantities
             public override Quantity<IElectricPotential> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IElectricPotential>(this, a / b);
-                SiMultiply<TSiA, Linear, TSiB>.Inject(builder);
+                SiFraction<TSiA, TSiB>.Inject(builder);
                 return builder.Build();
             }
         }

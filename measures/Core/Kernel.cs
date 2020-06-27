@@ -31,7 +31,7 @@ namespace Quantities.Measures.Core
             public override TDimesion Dimension => DIMENSION;
             public override Double To<TOtherSiDimesion>(in Double value)
             {
-                return Pool<TOtherSiDimesion>.Item.Scale<TSiDimesion>(in value);
+                return DIMENSION.Scale(Pool<TOtherSiDimesion>.Item, in value);
             }
             public override Double ToOther<TNonSiDimesion>(in Double value)
             {

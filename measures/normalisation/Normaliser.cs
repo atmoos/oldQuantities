@@ -4,28 +4,28 @@ using Quantities.Measures.Core;
 
 namespace Quantities.Measures.Normalisation
 {
-    internal abstract class Normaliser : INormalise
+    internal abstract class Normaliser
     {
         private protected static NoOp NO_OP = new NoOp();
         public Int32 Exponent => Prefix.Exponent;
         public abstract Prefix Prefix { get; }
         private protected Normaliser() { }
-        public abstract Double Normalise(in Double value);
-        public abstract Double Renormalise(in Double value);
-        public abstract Double Scale(Normaliser normalizer, in Double other);
-        internal abstract Double Scale<TOther>(in Double other) where TOther : Prefix, new();
+        public abstract Double Normalise<TDimension>(in Double value) where TDimension : Dimension, new();
+        public abstract Double Renormalise<TDimension>(in Double value) where TDimension : Dimension, new();
+        public abstract Double Scale<TDimension>(Normaliser normalizer, in Double other) where TDimension : Dimension, new();
+        protected abstract Double Scale<TOtherDimension, TOtherPrefix>(in Double other)
+            where TOtherDimension : Dimension, new()
+            where TOtherPrefix : Prefix, new();
+        internal abstract Normaliser With(Operator normalise, Operator renormalise);
         internal abstract void InjectPrefix(IPrefixInjectable injectable);
-    }
-    internal abstract class Normaliser<TDimension> : Normaliser
-        where TDimension : Dimension, new()
-    {
-        internal abstract Normaliser<TDimension> With(Operator normalise, Operator renormalise);
-        public static Normaliser<TDimension> Create<TPrefix>()
+
+        public static Normaliser Create<TPrefix>()
             where TPrefix : Prefix, new()
         {
             return Pool<NormaliserImpl<TPrefix>>.Item;
         }
-        private sealed class NormaliserImpl<TPrefix> : Normaliser<TDimension>
+
+        private sealed class NormaliserImpl<TPrefix> : Normaliser
             where TPrefix : Prefix, new()
         {
             private static readonly TPrefix PREFIX = Pool<TPrefix>.Item;
@@ -42,11 +42,11 @@ namespace Quantities.Measures.Normalisation
                 _normalise = normalise;
                 _renormalise = renormalise;
             }
-            internal override Double Scale<TOther>(in Double other) => Scale<TPrefix, TOther, TDimension>.Lift(other);
-            public override Double Scale(Normaliser normalizer, in Double other) => normalizer.Scale<TPrefix>(in other);
-            public override Double Normalise(in Double value) => Scale<TPrefix, UnitPrefix, TDimension>.Lift(_normalise.Execute(in value));
-            public override Double Renormalise(in Double value) => Scale<UnitPrefix, TPrefix, TDimension>.Lift(_renormalise.Execute(in value));
-            internal override Normaliser<TDimension> With(Operator normalise, Operator renormalise)
+            protected override Double Scale<TOtherDimension, TOtherPrefix>(in Double other) => Scale<TPrefix, TOtherPrefix, TOtherDimension>.Lift(other);
+            public override Double Scale<TOtherDimension>(Normaliser normalizer, in Double other) => normalizer.Scale<TOtherDimension, TPrefix>(in other);
+            public override Double Normalise<TDimension>(in Double value) => Scale<TPrefix, UnitPrefix, TDimension>.Lift(_normalise.Execute(in value));
+            public override Double Renormalise<TDimension>(in Double value) => Scale<UnitPrefix, TPrefix, TDimension>.Lift(_renormalise.Execute(in value));
+            internal override Normaliser With(Operator normalise, Operator renormalise)
             {
                 return new NormaliserImpl<TPrefix>(normalise, renormalise);
             }

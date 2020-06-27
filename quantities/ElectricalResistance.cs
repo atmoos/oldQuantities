@@ -4,7 +4,6 @@ using Quantities.Unit.Si.Derived;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
-using Quantities.Measures.Core;
 using Quantities.Measures.Si.Core;
 using Quantities.Measures.Builder;
 using Quantities.Measures.Si;
@@ -73,7 +72,7 @@ namespace Quantities
             public override Quantity<IElectricalResistance> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IElectricalResistance>(this, a / b);
-                SiDivide<TSiA, Linear, TSiB>.Inject(builder);
+                SiFraction<TSiA, TSiB>.Inject(builder);
                 return builder.Build();
             }
         }

@@ -6,7 +6,7 @@ using Quantities.Measures.Si.Core;
 
 namespace Quantities.Measures.Si
 {
-    internal sealed class ElectricalResistance<TPrefix, TUnit> : SiMeasure<Linear, PrefixedUnit<TPrefix, TUnit>>, IElectricalResistance
+    internal sealed class ElectricalResistance<TPrefix, TUnit> : SiMeasure<Linear, Si<TPrefix, TUnit>>, IElectricalResistance
         where TPrefix : Prefix, new()
         where TUnit : SiUnit, IElectricalResistance, new()
     {

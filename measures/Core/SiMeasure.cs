@@ -24,7 +24,6 @@ namespace Quantities.Measures.Core
         private protected override Normaliser Normaliser => MEASURE.Normaliser;
 
         public override String ToString() => REPRESENTATION;
-        internal static void Inject(IPrefixInjectable injectable) => MEASURE.Normaliser.InjectPrefix(injectable);
         public override Double Renormalise(in Double value)
         {
             return MEASURE.Normaliser.Renormalise<TDim>(in value);

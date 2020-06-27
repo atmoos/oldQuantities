@@ -3,7 +3,6 @@ using Quantities.Unit.Si;
 using Quantities.Dimensions;
 using Quantities.Prefixes;
 using Quantities.Measures;
-using Quantities.Measures.Core;
 using Quantities.Measures.Si.Core;
 using Quantities.Measures.Builder;
 using Quantities.Measures.Si;
@@ -81,7 +80,7 @@ namespace Quantities
             public override Quantity<IElectricCurrent> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IElectricCurrent>(this, a / b);
-                SiMeasure<Linear, Div<TSiA, TSiB>>.Inject(builder);
+                SiFraction<TSiA, TSiB>.Inject(builder);
                 return builder.Build();
             }
         }
@@ -95,7 +94,7 @@ namespace Quantities
             public override Quantity<IElectricCurrent> CreateSi<TSiA, TSiB>(in Double a, in Double b)
             {
                 var builder = new InjectableBuilder<IElectricCurrent>(this, a / b);
-                SiMeasure<Linear, Div<TSiA, TSiB>>.Inject(builder);
+                SiFraction<TSiA, TSiB>.Inject(builder);
                 return builder.Build();
             }
         }

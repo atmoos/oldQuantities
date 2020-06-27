@@ -6,7 +6,7 @@ using Quantities.Measures.Si.Core;
 
 namespace Quantities.Measures.Si
 {
-    internal sealed class Time<TPrefix, TUnit> : SiMeasure<Linear, PrefixedUnit<TPrefix, TUnit>>, ITime
+    internal sealed class Time<TPrefix, TUnit> : SiMeasure<Linear, Si<TPrefix, TUnit>>, ITime
         where TPrefix : Prefix, new()
         where TUnit : SiUnit, ITime, new()
     {

@@ -1,9 +1,14 @@
 using System;
 using Quantities.Unit;
+using Quantities.Prefixes;
 using Quantities.Dimensions;
 
 namespace Quantities.Measures.Core
 {
+    internal interface IPrefixInjectable
+    {
+        void Inject<TPrefix>() where TPrefix : Prefix, new();
+    }
     internal interface ISiInjectable<in TDimension>
         where TDimension : IDimension
     {

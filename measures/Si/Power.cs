@@ -5,9 +5,9 @@ using Quantities.Measures.Si.Core;
 
 namespace Quantities.Measures.Si
 {
-    internal sealed class Mass<TPrefix, TUnit> : LinearSiMeasure<TPrefix, TUnit>, IMass
+    internal sealed class Power<TPrefix, TUnit> : LinearSiMeasure<TPrefix, TUnit>, IPower
         where TPrefix : Prefix, new()
-        where TUnit : SiUnit, IMass, new()
+        where TUnit : SiUnit, IPower, new()
     {
     }
 }

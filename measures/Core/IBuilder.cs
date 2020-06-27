@@ -1,3 +1,5 @@
+using System;
+using Quantities.Prefixes;
 using Quantities.Dimensions;
 
 namespace Quantities.Measures.Core
@@ -6,5 +8,11 @@ namespace Quantities.Measures.Core
         where TDimension : IDimension
     {
         Quantity<TDimension> Build();
+    }
+    internal interface ISiQuantityBuilder<TDimension>
+    where TDimension : IDimension
+    {
+        Quantity<TDimension> Create<TPrefix>(in Double value)
+            where TPrefix : Prefix, new();
     }
 }
